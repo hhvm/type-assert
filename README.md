@@ -33,7 +33,7 @@ class Foo {
     ),
   );
 
-  const getAPI(): self::TAPIResponse {
+  public static function getAPIResponse(): self::TAPIResponse {
     $json_string = file_get_contents('https://api.example.com');
     $array = json_decode($json_string, /* associative = */ true);
     return TypeAssert::isTypeStructure(
