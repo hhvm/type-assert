@@ -1,7 +1,7 @@
 {
   "license": ["ISC"],
   "require": {
-    "hhvm": "~3.9"
+    "hhvm": "~3.12"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.1",
