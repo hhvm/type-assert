@@ -37,6 +37,9 @@ These include:
 `matchesTypeStructure<T>(TypeStructure<T>, mixed): T`
 -----------------------------------------------------
 
+Asserts that a variable matches the given type structure; these can be arbitrary
+nested shapes. This is particular useful for dealing with JSON responses.
+
 ```Hack
 <?hh
 class Foo {
@@ -59,14 +62,16 @@ class Foo {
 }
 ```
 
+You can use `type_structure()` to get a `TypeStructure<T>` for a type constant,
+or `ReflectionTypeAlias::getTypeStructure()` for top-level type aliases.
+
 ### WARNING
 
-`TypeStructure<T>` and the `type_structure()` API are experimental
-features of HHVM, and not supported. Expect them to break with some future
-HHVM release.
+`TypeStructure<T>`, `type_structure()`, and `ReflectionTypeAlias::getTypeStructures()`
+are experimental features of HHVM, and not supported. Expect them to break with some
+future HHVM release.
 
-This library uses them anyway as there is not currently an alternative
-way to do this.
+This library uses them anyway as there is not currently a viable alternative.
 
 `isNotNull<T>(?T): T`
 ---------------------
