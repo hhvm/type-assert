@@ -137,7 +137,9 @@ abstract final class TypeStructureImpl {
         throw new UnsupportedTypeException('OF_UNRESOLVED');
       case TypeStructureKind::OF_ENUM:
         $enum = TypeAssert::isNotNull($ts['classname']);
-        $enum::assert($value);
+        if (!$enum::isValid($value)) {
+          throw IncorrectTypeException::withValue($enum, $value);
+        }
         return;
       case TypeStructureKind::OF_UNRESOLVED:
         throw new UnsupportedTypeException('OF_UNRESOLVED');

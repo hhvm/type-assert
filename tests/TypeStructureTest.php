@@ -136,11 +136,11 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
     ];
   }
-  
+
   /**
    * @dataProvider getExampleValidTypes
    */
-  public function testValidTypes<T>(
+  public function testValidType<T>(
     TypeStructure<T> $ts,
     mixed $input,
   ): void {
@@ -150,6 +150,116 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         $ts,
         $input,
       ),
+    );
+  }
+
+  public function getExampleInvalidTypes(
+  ): array<string, (mixed,mixed)> {
+    return [
+      '"123" as int' => tuple(
+        type_structure(C::class, 'TInt'),
+        '123',
+      ),
+      '1 as bool' => tuple(
+        type_structure(C::class, 'TBool'),
+        1,
+      ),
+      'int as float' => tuple(
+        type_structure(C::class, 'TFloat'),
+        123,
+      ),
+      'int as string' => tuple(
+        type_structure(C::class, 'TString'),
+        123,
+      ),
+      'string as num' => tuple(
+        type_structure(C::class, 'TNum'),
+        '123',
+      ),
+      'float as arraykey' => tuple(
+        type_structure(C::class, 'TArrayKey'),
+        1.23,
+      ),
+      'incorrect tuple field types' => tuple(
+        type_structure(C::class, 'TTuple'),
+        tuple('foo', '123'),
+      ),
+      'too many tuple fields' => tuple(
+        type_structure(C::class, 'TTuple'),
+        tuple('foo', 123, 456),
+      ),
+      'int in array<string>' => tuple(
+        type_structure(C::class, 'TStringArray'),
+        [123],
+      ),
+      'int keys in array<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringArray'),
+        [123 => 'bar', 123 => 'derp'],
+      ),
+      'int values in array<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringArray'),
+        ['foo' => 123, 'bar' => 456],
+      ),
+      '0 as ?string' => tuple(
+        type_structure(C::class, 'TNullableString'),
+        0,
+      ),
+      'wrong object type' => tuple(
+        type_structure(C::class, 'TStdClass'),
+        ImmMap { },
+      ),
+      'ints in Vector<string>' => tuple(
+        type_structure(C::class, 'TStringVector'),
+        Vector { 'foo', 123 },
+      ),
+      'int keys in Map<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringMap'),
+        Map { 123 => 'foo' },
+      ),
+      'int values in Map<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringMap'),
+        Map { 'foo' => 'bar', 'herp' => 123 },
+      ),
+      'shape with incorrect field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape('someString' => 123),
+      ),
+      'nested shape with missing field' => tuple(
+        type_structure(C::class, 'TNestedShape'),
+        shape(
+          'someString' => 'foo',
+          'someOtherShape' => shape(
+            'not the field I want' => 'bar',
+          ),
+        ),
+      ),
+      'nested shape with incorrect subfield' => tuple(
+        type_structure(C::class, 'TNestedShape'),
+        shape(
+          'someString' => 'foo',
+          'someOtherShape' => shape(
+            'someString' => 123,
+          ),
+        ),
+      ),
+      'enum' => tuple(
+        type_structure(C::class, 'TEnum'),
+        ExampleEnum::DERP.'HERP DERP DERP',
+      ),
+    ];
+  }
+
+  /**
+   * @dataProvider getExampleInvalidTypes
+   */
+  public function testInvalidTypes<T>(
+    TypeStructure<T> $ts,
+    mixed $input,
+  ): void {
+    $this->expectException(IncorrectTypeException::class);
+    TypeAssert::matchesTypeStructure(
+      $ts,
+      $input,
     );
   }
 }
