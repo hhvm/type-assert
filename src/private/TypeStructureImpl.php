@@ -19,6 +19,10 @@ abstract final class TypeStructureImpl {
     TypeStructure<T> $ts,
     mixed $value,
   ): void {
+    if ($value === null && Shapes::idx($ts, 'nullable')) {
+      return;
+    }
+
     switch ($ts['kind']) {
       case Kind::OF_VOID:
         throw new UnsupportedTypeException('OF_VOID');
