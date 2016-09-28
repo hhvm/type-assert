@@ -43,7 +43,7 @@ Asserts that a variable matches the given type structure; these can be arbitrary
 nested shapes. This is particular useful for dealing with JSON responses.
 
 ```Hack
-<?hh
+<?hh // strict
 class Foo {
   const TAPIResponse = shape(
     'id' => int,
