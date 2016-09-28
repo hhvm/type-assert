@@ -7,12 +7,11 @@
  * file in the root directory of this source tree.
  */
 
-namespace FredEmmott\TypeAssert\Private;
+namespace FredEmmott\TypeAssert\PrivateImpl;
 
 use \FredEmmott\TypeAssert\IncorrectTypeException;
 use \FredEmmott\TypeAssert\TypeAssert;
 use \FredEmmott\TypeAssert\UnsupportedTypeException;
-use \TypeStructureKind as Kind;
 
 abstract final class TypeStructureImpl {
   final public static function assertMatchesTypeStructure<T>(
@@ -24,34 +23,34 @@ abstract final class TypeStructureImpl {
     }
 
     switch ($ts['kind']) {
-      case Kind::OF_VOID:
+      case TypeStructureKind::OF_VOID:
         throw new UnsupportedTypeException('OF_VOID');
-      case Kind::OF_INT:
+      case TypeStructureKind::OF_INT:
         TypeAssert::isInt($value);
         return;
-      case Kind::OF_BOOL:
+      case TypeStructureKind::OF_BOOL:
         TypeAssert::isBool($value);
         return;
-      case Kind::OF_FLOAT:
+      case TypeStructureKind::OF_FLOAT:
         TypeAssert::isFloat($value);
         return;
-      case Kind::OF_STRING:
+      case TypeStructureKind::OF_STRING:
         TypeAssert::isString($value);
         return;
-      case Kind::OF_RESOURCE:
+      case TypeStructureKind::OF_RESOURCE:
         TypeAssert::isResource($value);
         return;
-      case Kind::OF_NUM:
+      case TypeStructureKind::OF_NUM:
         TypeAssert::isNum($value);
         return;
-      case Kind::OF_ARRAYKEY:
+      case TypeStructureKind::OF_ARRAYKEY:
         TypeAssert::isArrayKey($value);
         return;
-      case Kind::OF_NORETURN:
+      case TypeStructureKind::OF_NORETURN:
         throw new UnsupportedTypeException('OF_NORETURN');
-      case Kind::OF_MIXED:
+      case TypeStructureKind::OF_MIXED:
         return;
-      case Kind::OF_TUPLE:
+      case TypeStructureKind::OF_TUPLE:
         if (!is_array($value)) {
           throw IncorrectTypeException::withValue('tuple', $value);
         }
@@ -69,9 +68,9 @@ abstract final class TypeStructureImpl {
           );
         }
         return;
-      case Kind::OF_FUNCTION:
+      case TypeStructureKind::OF_FUNCTION:
         throw new UnsupportedTypeException('OF_FUNCTION');
-      case Kind::OF_ARRAY:
+      case TypeStructureKind::OF_ARRAY:
         if (!is_array($value)) {
           throw IncorrectTypeException::withValue('array', $value);
         }
@@ -94,9 +93,9 @@ abstract final class TypeStructureImpl {
           return;
         }
         throw new UnsupportedTypeException('OF_ARRAY with > 2 generics');
-      case Kind::OF_GENERIC:
+      case TypeStructureKind::OF_GENERIC:
         throw new UnsupportedTypeException('OF_GENERIC');
-      case Kind::OF_SHAPE:
+      case TypeStructureKind::OF_SHAPE:
         if (!is_array($value)) {
           throw IncorrectTypeException::withValue('shape', $value);
         }
@@ -109,8 +108,8 @@ abstract final class TypeStructureImpl {
           self::assertMatchesTypeStructure($field_ts, $field_value);
         }
         return;
-      case Kind::OF_CLASS:
-      case Kind::OF_INTERFACE:
+      case TypeStructureKind::OF_CLASS:
+      case TypeStructureKind::OF_INTERFACE:
         $class = TypeAssert::isNotNull($ts['classname']);
 
         if (is_a($class, KeyedTraversable::class, /* strings = */ true)) {
@@ -139,18 +138,18 @@ abstract final class TypeStructureImpl {
           $value,
         );
         return;
-      case Kind::OF_TRAIT:
+      case TypeStructureKind::OF_TRAIT:
         throw new UnsupportedTypeException('OF_UNRESOLVED');
-      case Kind::OF_ENUM:
+      case TypeStructureKind::OF_ENUM:
         $enum = TypeAssert::isNotNull($ts['classname']);
         $enum::assert($value);
         return;
-      case Kind::OF_UNRESOLVED:
+      case TypeStructureKind::OF_UNRESOLVED:
         throw new UnsupportedTypeException('OF_UNRESOLVED');
     }
     invariant_violation(
       'Unsupported kind: %s',
-      Kind::getNames()[$ts['kind']] ?? var_export($ts['kind'], true),
+      TypeStructureKind::getNames()[$ts['kind']] ?? var_export($ts['kind'], true),
     );
   }
 

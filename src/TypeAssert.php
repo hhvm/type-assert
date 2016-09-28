@@ -9,7 +9,7 @@
 
 namespace FredEmmott\TypeAssert;
 
-use FredEmmott\TypeAssert\Private\TypeStructureImpl;
+use FredEmmott\TypeAssert\PrivateImpl\TypeStructureImpl;
 
 abstract class TypeAssert {
   final public static function isString(mixed $x): string {
