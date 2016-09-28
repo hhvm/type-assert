@@ -6,17 +6,36 @@ Hack library for converting untyped data to typed data.
 Usage
 -----
 
-```Hack
-<?hh
-function needs_string(string $foo): void {
+TypeAssert provides several static methods that take a mixed input, and will
+either return it unmodified (but with type data) or throw an exception; for example:
+
+```
+<?hh // strict
+use \FredEmmott\TypeAssert\TypeAssert;
+function need_string(string $bar): void {
 }
 
-function main(mixed $foo): void {
-  needs_string(TypeAssert::isString($foo));
+function main(): void {
+  needs_string(TypeAssert::isString('foo')); // type-safe and works fine
+  needs_string(TypeAssert::isString(123)); // type-safe, but throws
 }
 ```
 
-See [the TypeAssert class](https://github.com/fredemmott/type-assert/blob/master/src/TypeAssert.php) for full API.
+These include:
+ - `isString(mixed): string`
+ - `isInt(mixed): int`
+ - `isFloat(mixed): float`
+ - `isBool(mixed): bool`
+ - `isResource(mixed): resource`
+ - `isNum(mixed): num`
+ - `isArrayKey(mixed): arraykey`
+ - `isNotNull<T>(?T): T`
+ - `isInstanceOf<T>(classname<T>, mixed): T`
+ - `isClassnameOf<T>(classname<T>, mixed): classname<T>`
+ - `matchesTypeStructure<T>(TypeStructure<T>, mixed): T`
+
+`matchesTypeStructure<T>(TypeStructure<T>, mixed): T`
+-----------------------------------------------------
 
 ```Hack
 <?hh
@@ -40,8 +59,7 @@ class Foo {
 }
 ```
 
-WARNING
--------
+### WARNING
 
 `TypeStructure<T>` and the `type_structure()` API are experimental
 features of HHVM, and not supported. Expect them to break with some future
@@ -49,6 +67,76 @@ HHVM release.
 
 This library uses them anyway as there is not currently an alternative
 way to do this.
+
+`isNotNull<T>(?T): T`
+---------------------
+
+Throws if it's null, and refines the type otherwise - for example:
+
+```Hack
+<?hh // strict
+use \FredEmmott\TypeAssert\TypeAssert;
+
+function needs_string(string $foo): void {}
+function needs_int(int $bar): void {}
+
+function main(?string $foo, ?int bar): void {
+  needs_string(TypeAssert::isNotNull($foo)); // ?string => string
+  needs_int(TypeAssert::isNotNull($bar)); // ?int => int
+}
+```
+
+`isInstanceOf<T>(classname<T>, mixed): T`
+-----------------------------------------
+
+Asserts that the input is an object of the given type; for example:
+
+```Hack
+<?hh
+use \FredEmmott\TypeAssert\TypeAssert;
+
+class Foo {}
+
+function needs_foo(Foo $foo): void {}
+
+function main(mixed $foo): void {
+  needs_foo(TypeAssert::isInstanceOf(Foo::class, $foo));
+}
+
+main(new Foo());
+```
+
+`isClassnameOf<T>(classname<T>, mixed): classname<T>`
+------------------------------------------------------------
+
+Asserts that the input is the name of a child of the specified class, or
+implements the specified interface.
+
+```Hack
+<?hh // strict
+use \FredEmmott\TypeAssert\TypeAssert;
+
+class Foo {
+  public static function doStuff(): void {}
+}
+class Bar extends Foo {
+  <<__Override>>
+  public static function doStuff(): void {
+    // specialize here
+  }
+}
+
+function needs_foo_class(classname<Foo> $foo): void {
+  $foo::doStuff();
+}
+
+function main(mixed $class): void {
+  needs_foo_class(TypeAssert::isClassnameOf(Foo::class, $class));
+}
+
+main(Bar::class);
+```
+
 
 Credit
 ------
