@@ -55,6 +55,16 @@ abstract class TypeAssert {
     throw IncorrectTypeException::withValue('num', $x);
   }
 
+  final public static function isArrayKey(mixed $x): arraykey{
+    if (is_int($x)) {
+      return $x;
+    }
+    if (is_string($x)) {
+      return $x;
+    }
+    throw IncorrectTypeException::withValue('arraykey', $x);
+  }
+
   final public static function isNotNull<T>(?T $x): T {
     if ($x === null) {
       throw new IncorrectTypeException('not-null', 'null');

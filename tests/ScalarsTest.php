@@ -78,6 +78,22 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
     TypeAssert::isNum('123');
   }
 
+  public function testIsArrayKeyPasses(): void {
+    $this->assertSame(
+      123,
+      TypeAssert::isArrayKey(123),
+    );
+    $this->assertSame(
+      '123',
+      TypeAssert::isArrayKey('123'),
+    );
+  }
+
+  public function testIsArrayKeyThrowsForFloat(): void {
+    $this->expectException(IncorrectTypeException::class);
+    TypeAssert::isArrayKey(1.23);
+  }
+
   public function testIsNotNullPasses(): void {
     $this->assertSame(
       123,
