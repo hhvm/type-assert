@@ -136,6 +136,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
     ];
   }
+  
   /**
    * @dataProvider getExampleValidTypes
    */
