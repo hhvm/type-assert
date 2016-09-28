@@ -68,7 +68,28 @@ abstract final class TypeStructureImpl {
       case Kind::OF_FUNCTION:
         throw new UnsupportedTypeException('OF_FUNCTION');
       case Kind::OF_ARRAY:
-        // FIXME
+        if (!is_array($value)) {
+          throw IncorrectTypeException::withValue('array', $value);
+        }
+        $generics = TypeAssert::isNotNull($ts['generic_types']);
+        $count = count($generics);
+        if ($count === 0) {
+          // not valid strict, but valid mixed
+          return;
+        }
+        if ($count === 1) {
+          self::assertValueTypes($generics[0], $value);
+          return;
+        }
+        if ($count === 2) {
+          self::assertKeyAndValueTypes(
+            $generics[0],
+            $generics[1],
+            $value,
+          );
+          return;
+        }
+        throw new UnsupportedTypeException('OF_ARRAY with > 2 generics');
       case Kind::OF_GENERIC:
         throw new UnsupportedTypeException('OF_GENERIC');
       case Kind::OF_SHAPE:
