@@ -9,7 +9,7 @@
 
 namespace FredEmmott\TypeAssert;
 
-class ScalarsTest extends \PHPUnit\Framework\TestCase {
+final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   public function testIsStringPasses(): void {
     $this->assertSame('foo', TypeAssert::isString('foo'));
   }

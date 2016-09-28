@@ -44,4 +44,25 @@ abstract class TypeAssert {
     }
     return $x;
   }
+
+  final public static function isInstanceOf<T>(
+    classname<T> $type,
+    mixed $what,
+  ): T {
+    if ($what instanceof $type) {
+      return $what;
+    }
+    throw IncorrectTypeException::withValue($type, $what);
+  }
+
+  final public static function isClassnameOf<T>(
+    classname<T> $expected,
+    string $what,
+  ): classname<T> {
+    if (is_a($what, $expected, /* strings = */ true)) {
+      /* HH_IGNORE_ERROR[4110] doesn't understand is_a */
+      return $what;
+    }
+    throw IncorrectTypeException::withType($expected, $what);
+  }
 }
