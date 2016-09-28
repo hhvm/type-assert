@@ -1,5 +1,5 @@
 TypeAssert [![Build Status](https://travis-ci.org/fredemmott/type-assert.svg?branch=master)](https://travis-ci.org/fredemmott/type-assert)
-##########
+==========
 
 Hack library for converting untyped data to typed data.
 
