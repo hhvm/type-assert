@@ -9,6 +9,7 @@
 
 namespace FredEmmott\TypeAssert;
 
+use \FredEmmott\TypeAssert\TestFixtures\ExampleEnum;
 use \FredEmmott\TypeAssert\TestFixtures\TypeConstants as C;
 
 final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
@@ -128,6 +129,10 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
             'someString' => 'bar',
           ),
         ),
+      ),
+      'enum' => tuple(
+        type_structure(C::class, 'TEnum'),
+        ExampleEnum::DERP,
       ),
     ];
   }
