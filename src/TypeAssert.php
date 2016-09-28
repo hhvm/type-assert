@@ -38,6 +38,23 @@ abstract class TypeAssert {
     return $x;
   }
 
+  final public static function isResource(mixed $x): resource {
+    if (!is_resource($x)) {
+      throw IncorrectTypeException::withValue('resource', $x);
+    }
+    return /* UNSAFE_EXPR */ $x;
+  }
+
+  final public static function isNum(mixed $x): num {
+    if (is_int($x)) {
+      return $x;
+    }
+    if (is_float($x)) {
+      return $x;
+    }
+    throw IncorrectTypeException::withValue('num', $x);
+  }
+
   final public static function isNotNull<T>(?T $x): T {
     if ($x === null) {
       throw new IncorrectTypeException('not-null', 'null');

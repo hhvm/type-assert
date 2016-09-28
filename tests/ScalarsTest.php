@@ -50,6 +50,34 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
     TypeAssert::isFloat(123);
   }
 
+  public function testIsResourcePasses(): void {
+    $this->assertSame(
+      STDERR,
+      TypeAssert::isResource(STDERR),
+    );
+  }
+
+  public function testIsResourceThrowsForObject(): void {
+    $this->expectException(IncorrectTypeException::class);
+    TypeAssert::isResource(new \stdClass());
+  }
+
+  public function testIsNumPasses(): void {
+    $this->assertSame(
+      123,
+      TypeAssert::isNum(123),
+    );
+    $this->assertSame(
+      1.23,
+      TypeAssert::isNum(1.23),
+    );
+  }
+
+  public function testIsNumThrowsForString(): void {
+    $this->expectException(IncorrectTypeException::class);
+    TypeAssert::isNum('123');
+  }
+
   public function testIsNotNullPasses(): void {
     $this->assertSame(
       123,
