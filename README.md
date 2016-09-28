@@ -3,12 +3,6 @@ TypeAssert [![Build Status](https://travis-ci.org/fredemmott/type-assert.svg?bra
 
 Hack library for converting untyped data to typed data.
 
-Status
-------
-
-Don't use this yet :) I've written these usage examples before writing
-any code...
-
 Usage
 -----
 
@@ -21,6 +15,8 @@ function main(mixed $foo): void {
   needs_string(TypeAssert::isString($foo));
 }
 ```
+
+See [the TypeAssert class](https://github.com/fredemmott/type-assert/blob/master/src/TypeAssert.php) for full API.
 
 ```Hack
 <?hh
