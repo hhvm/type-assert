@@ -11,7 +11,7 @@ Usage
 TypeAssert provides several static methods that take a mixed input, and will
 either return it unmodified (but with type data) or throw an exception; for example:
 
-```
+```Hack
 <?hh // strict
 use \FredEmmott\TypeAssert\TypeAssert;
 function need_string(string $bar): void {
