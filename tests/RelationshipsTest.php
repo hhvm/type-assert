@@ -9,7 +9,8 @@
 
 namespace FredEmmott\TypeAssert;
 
-use FredEmmott\TypeAssert\TestFixtures\{ParentClass,ChildClass};
+use FredEmmott\TypeAssert\TestFixtures\ChildClass;
+use FredEmmott\TypeAssert\TestFixtures\ParentClass;
 
 final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
   public function testObjectInstanceOfOwnClass(): void {
