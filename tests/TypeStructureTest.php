@@ -67,6 +67,26 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringStringArray'),
         ['foo' => 'bar', 'herp' => 'derp'],
       ),
+      'stdClass' => tuple(
+        type_structure(C::class, 'TStdClass'),
+        new \stdClass(),
+      ),
+      'empty Vector<string>' => tuple(
+        type_structure(C::class, 'TStringVector'),
+        Vector { },
+      ),
+      'Vector<string>' => tuple(
+        type_structure(C::class, 'TStringVector'),
+        Vector { 'foo', 'bar' },
+      ),
+      'empty Map<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringMap'),
+        Map { },
+      ),
+      'Map<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringMap'),
+        Map { 'foo' => 'bar', 'herp' => 'derp' },
+      ),
     ];
   }
   /**

@@ -112,25 +112,20 @@ abstract final class TypeStructureImpl {
       case TypeStructureKind::OF_INTERFACE:
         $class = TypeAssert::isNotNull($ts['classname']);
 
-        if (is_a($class, KeyedTraversable::class, /* strings = */ true)) {
-          list($keys_ts, $values_ts) = TypeAssert::isNotNull(
-            $ts['generic_types'],
-          );
-          self::assertKeyAndValueTypes(
-            $keys_ts,
-            $values_ts,
-            /* HH_IGNORE_ERROR[4110] */ $value,
-          );
-        } else if (
-          is_a($class, Traversable::class, /* strings = */ true)
-        ) {
-          list($values_ts) = TypeAssert::isNotNull(
-            $ts['generic_types'],
-          );
-          self::assertValueTypes(
-            $values_ts,
-            /* HH_IGNORE_ERROR[4110] */ $value,
-          );
+        if (is_a($class, Traversable::class, /* strings = */ true)) {
+          $generics = TypeAssert::isNotNull($ts['generic_types']);
+          if (count($generics) === 2) {
+            self::assertKeyAndValueTypes(
+              $generics[0],
+              $generics[1],
+              /* HH_IGNORE_ERROR[4110] */ $value,
+            );
+          } else if (count($generics) === 1) {
+            self::assertValueTypes(
+              $generics[0],
+              /* HH_IGNORE_ERROR[4110] */ $value,
+            );
+          }
         }
 
         TypeAssert::isInstanceOf(
