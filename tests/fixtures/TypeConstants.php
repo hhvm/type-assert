@@ -20,6 +20,8 @@ class TypeConstants {
   const type TStringArray = array<string>;
   const type TStringStringArray = array<string, string>;
 
+  const type TNullableString = ?string;
+
   const type TStdClass = \stdClass;
   const type TStringVector = Vector<string>;
   const type TStringStringMap = Map<string, string>;

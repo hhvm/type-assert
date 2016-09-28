@@ -67,6 +67,14 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringStringArray'),
         ['foo' => 'bar', 'herp' => 'derp'],
       ),
+      'string as ?string' => tuple(
+        type_structure(C::class, 'TNullableString'),
+        'hello, world',
+      ),
+      'null as ?string' => tuple(
+        type_structure(C::class, 'TNullableString'),
+        null,
+      ),
       'stdClass' => tuple(
         type_structure(C::class, 'TStdClass'),
         new \stdClass(),
@@ -86,6 +94,40 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       'Map<string, string>' => tuple(
         type_structure(C::class, 'TStringStringMap'),
         Map { 'foo' => 'bar', 'herp' => 'derp' },
+      ),
+      'shape with missing ?string field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape('someString' => 'foo'),
+      ),
+      'shape with null ?string field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(
+          'someString' => 'foo',
+          'someNullable' => null,
+        ),
+      ),
+      'shape with string ?string field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(
+          'someString' => 'foo',
+          'someNullable' => 'string',
+        ),
+      ),
+      'shape with extra field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(
+          'someString' => 'foo',
+          'some junk' => 'bar',
+        ),
+      ),
+      'nested shape' => tuple(
+        type_structure(C::class, 'TNestedShape'),
+        shape(
+          'someString' => 'foo',
+          'someOtherShape' => shape(
+            'someString' => 'bar',
+          ),
+        ),
       ),
     ];
   }
