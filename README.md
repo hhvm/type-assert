@@ -45,7 +45,7 @@ nested shapes. This is particular useful for dealing with JSON responses.
 ```Hack
 <?hh // strict
 class Foo {
-  const TAPIResponse = shape(
+  const type TAPIResponse = shape(
     'id' => int,
     'user' => string,
     'data' => shape(
