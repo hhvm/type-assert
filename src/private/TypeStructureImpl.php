@@ -9,6 +9,7 @@
 
 namespace FredEmmott\TypeAssert\Private;
 
+use \FredEmmott\TypeAssert\IncorrectTypeException;
 use \FredEmmott\TypeAssert\TypeAssert;
 use \FredEmmott\TypeAssert\UnsupportedTypeException;
 use \TypeStructureKind as Kind;
@@ -47,7 +48,23 @@ abstract final class TypeStructureImpl {
       case Kind::OF_MIXED:
         return;
       case Kind::OF_TUPLE:
-        // FIXME
+        if (!is_array($value)) {
+          throw IncorrectTypeException::withValue('tuple', $value);
+        }
+        $subtypes = TypeAssert::isNotNull($ts['elem_types']);
+        if (count($value) !== count($subtypes)) {
+          throw new IncorrectTypeException(
+            'tuple with '.count($subtypes).' elements',
+            'array with '.count($value).' elements',
+          );
+        }
+        for ($i = 0; $i < count($subtypes); ++$i) {
+          self::assertMatchesTypeStructure(
+            $subtypes[$i],
+            $value[$i],
+          );
+        }
+        return;
       case Kind::OF_FUNCTION:
         throw new UnsupportedTypeException('OF_FUNCTION');
       case Kind::OF_ARRAY:
@@ -89,7 +106,9 @@ abstract final class TypeStructureImpl {
       case Kind::OF_TRAIT:
         throw new UnsupportedTypeException('OF_UNRESOLVED');
       case Kind::OF_ENUM:
-        // FIXME
+        $enum = TypeAssert::isNotNull($ts['classname']);
+        $enum::assert($value);
+        return;
       case Kind::OF_UNRESOLVED:
         throw new UnsupportedTypeException('OF_UNRESOLVED');
     }
