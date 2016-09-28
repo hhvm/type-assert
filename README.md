@@ -44,6 +44,16 @@ class Foo {
 }
 ```
 
+WARNING
+-------
+
+`TypeStructure<T>` and the `type_structure()` API are experimental
+features of HHVM, and not supported. Expect them to break with some future
+HHVM release.
+
+This library uses them anyway as there is not currently an alternative
+way to do this.
+
 Credit
 ------
 
