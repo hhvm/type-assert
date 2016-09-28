@@ -97,7 +97,18 @@ abstract final class TypeStructureImpl {
       case Kind::OF_GENERIC:
         throw new UnsupportedTypeException('OF_GENERIC');
       case Kind::OF_SHAPE:
-        // FIXME
+        if (!is_array($value)) {
+          throw IncorrectTypeException::withValue('shape', $value);
+        }
+        $fields = TypeAssert::isNotNull($ts['fields']);
+        foreach ($fields as $name => $field_ts) {
+          $field_value = idx($value, $name);
+          if ($field_value === null && Shapes::idx($field_ts, 'nullable')) {
+            continue;
+          }
+          self::assertMatchesTypeStructure($field_ts, $field_value);
+        }
+        return;
       case Kind::OF_CLASS:
       case Kind::OF_INTERFACE:
         $class = TypeAssert::isNotNull($ts['classname']);
