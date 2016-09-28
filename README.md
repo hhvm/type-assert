@@ -3,12 +3,6 @@ TypeAssert [![Build Status](https://travis-ci.org/fredemmott/type-assert.svg?bra
 
 Hack library for converting untyped data to typed data.
 
-Status
-------
-
-Don't use this yet :) I've written these usage examples before writing
-any code...
-
 Usage
 -----
 
@@ -22,37 +16,7 @@ function main(mixed $foo): void {
 }
 ```
 
-```Hack
-<?hh
-class Foo {
-  const TAPIResponse = shape(
-    'id' => int,
-    'user' => string,
-    'data' => shape(
-      /* ... */
-    ),
-  );
-
-  public static function getAPIResponse(): self::TAPIResponse {
-    $json_string = file_get_contents('https://api.example.com');
-    $array = json_decode($json_string, /* associative = */ true);
-    return TypeAssert::isTypeStructure(
-      type_structure(self::class, 'TAPIResponse'),
-      $array,
-    );
-  }
-}
-```
-
-WARNING
--------
-
-`TypeStructure<T>` and the `type_structure()` API are experimental
-features of HHVM, and not supported. Expect them to break with some future
-HHVM release.
-
-This library uses them anyway as there is not currently an alternative
-way to do this.
+See [the TypeAssert class](https://github.com/fredemmott/type-assert/blob/master/src/TypeAssert.php) for full API.
 
 Credit
 ------
