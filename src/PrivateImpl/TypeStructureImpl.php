@@ -22,6 +22,8 @@ abstract final class TypeStructureImpl {
       return;
     }
 
+    /* HH_IGNORE_ERROR[4022] default: with all cases already covered on
+     * HHVM < 3.17 */
     switch ($ts['kind']) {
       case TypeStructureKind::OF_VOID:
         throw new UnsupportedTypeException('OF_VOID');
@@ -134,7 +136,7 @@ abstract final class TypeStructureImpl {
         );
         return;
       case TypeStructureKind::OF_TRAIT:
-        throw new UnsupportedTypeException('OF_UNRESOLVED');
+        throw new UnsupportedTypeException('OF_TRAIT');
       case TypeStructureKind::OF_ENUM:
         $enum = TypeAssert::isNotNull($ts['classname']);
         if (!$enum::isValid($value)) {
@@ -143,11 +145,16 @@ abstract final class TypeStructureImpl {
         return;
       case TypeStructureKind::OF_UNRESOLVED:
         throw new UnsupportedTypeException('OF_UNRESOLVED');
+      /* At least OF_DICT, OF_KEYSET, OF_VEC are currently unsupported in
+       * non-Facebook code as of 2016-12-04; we're using a default: instead of
+       * adding case statements for them to keep compatibility with HHVM
+       * < 3.17
+       */
+      default:
+        $name = TypeStructureKind::getNames()[$ts['kind']]
+          ?? var_export($ts['kind'], true);
+        throw new UnsupportedTypeException($name);
     }
-    invariant_violation(
-      'Unsupported kind: %s',
-      TypeStructureKind::getNames()[$ts['kind']] ?? var_export($ts['kind'], true),
-    );
   }
 
   public static function assertKeyAndValueTypes<Tk, Tv>(

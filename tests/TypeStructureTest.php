@@ -262,4 +262,13 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       $input,
     );
   }
+
+  public function testUnsupportedType(): void {
+    $this->expectException(UnsupportedTypeException::class);
+    TypeAssert::matchesTypeStructure(
+       type_structure(C::class, 'TVec'),
+       /* HH_IGNORE_ERROR[0000] cannot use experimental feature */
+       vec[1, 2, 3],
+    );
+  }
 }
