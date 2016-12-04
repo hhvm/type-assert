@@ -265,9 +265,10 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
 
   public function testUnsupportedType(): void {
     $this->expectException(UnsupportedTypeException::class);
-    TypeAssert::matchesTypeStructure(
-       type_structure(C::class, 'TVec'),
-       null,
-    );
+
+    $ts = type_structure(C::class, 'TStringArray');
+    $ts['kind'] = 20; // TypeStructureKind::OF_VEC in >= 3.17
+    /* HH_IGNORE_ERROR[4110] invalid argument: modified $ts by hand */
+    TypeAssert::matchesTypeStructure($ts, null);
   }
 }

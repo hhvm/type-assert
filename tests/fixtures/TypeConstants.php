@@ -37,8 +37,4 @@ class TypeConstants {
   );
 
   const type TEnum = ExampleEnum;
-
-  /* HH_IGNORE_ERROR[2049] Unbound name unless enable_experimental_tc_features
-   * is on */
-  const type TVec = vec<string>;
 }
