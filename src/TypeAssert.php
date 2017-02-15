@@ -78,6 +78,7 @@ abstract class TypeAssert {
     classname<T> $type,
     mixed $what,
   ): T {
+    /* HH_FIXME[4162] over-aggressive instanceof check */
     if ($what instanceof $type) {
       return $what;
     }
