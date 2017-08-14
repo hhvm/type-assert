@@ -114,6 +114,11 @@ abstract final class TypeStructureImpl {
       case TypeStructureKind::OF_INTERFACE:
         $class = TypeAssert::isNotNull($ts['classname']);
 
+        TypeAssert::isInstanceOf(
+          TypeAssert::isNotNull($ts['classname']),
+          $value,
+        );
+
         if (is_a($class, Traversable::class, /* strings = */ true)) {
           $generics = TypeAssert::isNotNull($ts['generic_types']);
           if (count($generics) === 2) {
@@ -130,10 +135,6 @@ abstract final class TypeStructureImpl {
           }
         }
 
-        TypeAssert::isInstanceOf(
-          TypeAssert::isNotNull($ts['classname']),
-          $value,
-        );
         return;
       case TypeStructureKind::OF_TRAIT:
         throw new UnsupportedTypeException('OF_TRAIT');

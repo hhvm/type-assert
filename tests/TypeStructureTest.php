@@ -96,6 +96,18 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringStringMap'),
         Map { 'foo' => 'bar', 'herp' => 'derp' },
       ),
+      'Vector<Vector<string>>' => tuple(
+        type_structure(C::class, 'TStringVectorVector'),
+        Vector { Vector { 'foo' } },
+      ),
+      'Vector<Vector<string>> with no outer elems' => tuple(
+        type_structure(C::class, 'TStringVectorVector'),
+        Vector { },
+      ),
+      'Vector<Vector<string>> with no inner elems' => tuple(
+        type_structure(C::class, 'TStringVectorVector'),
+        Vector { Vector { } },
+      ),
       'shape with missing ?string field' => tuple(
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 'foo'),
@@ -129,6 +141,14 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
             'someString' => 'bar',
           ),
         ),
+      ),
+      'shape with empty container' => tuple(
+        type_structure(C::class, 'TShapeWithContainer'),
+        array('container' => Vector {} ),
+      ),
+      'shape with non-empty container' => tuple(
+        type_structure(C::class, 'TShapeWithContainer'),
+        array('container' => Vector { 'foo' } ),
       ),
       'enum' => tuple(
         type_structure(C::class, 'TEnum'),
@@ -220,9 +240,21 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringStringMap'),
         Map { 'foo' => 'bar', 'herp' => 123 },
       ),
+      'shape with missing field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(),
+      ),
       'shape with incorrect field' => tuple(
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 123),
+      ),
+      'Vector<Vector<string>> with non-container child' => tuple(
+        type_structure(C::class, 'TStringVectorVector'),
+        Vector { 'foo' },
+      ),
+      'Vector<Vector<string>> with incorrect container child' => tuple(
+        type_structure(C::class, 'TStringVectorVector'),
+        Vector { ImmVector { 'foo' } },
       ),
       'nested shape with missing field' => tuple(
         type_structure(C::class, 'TNestedShape'),
@@ -241,6 +273,14 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
             'someString' => 123,
           ),
         ),
+      ),
+      'shape with missing container field' => tuple(
+        type_structure(C::class, 'TShapeWithContainer'),
+        array()
+      ),
+      'shape with container of wrong kind' => tuple(
+        type_structure(C::class, 'TShapeWithContainer'),
+        array('container' => Vector { 123 }),
       ),
       'enum' => tuple(
         type_structure(C::class, 'TEnum'),

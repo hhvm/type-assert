@@ -25,6 +25,7 @@ class TypeConstants {
   const type TStdClass = \stdClass;
   const type TStringVector = Vector<string>;
   const type TStringStringMap = Map<string, string>;
+  const type TStringVectorVector = Vector<Vector<string>>;
 
   const type TFlatShape = shape(
     'someString' => string,
@@ -34,6 +35,10 @@ class TypeConstants {
   const type TNestedShape = shape(
     'someString' => string,
     'someOtherShape' => self::TFlatShape,
+  );
+
+  const type TShapeWithContainer = shape(
+    'container' => Vector<string>,
   );
 
   const type TEnum = ExampleEnum;
