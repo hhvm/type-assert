@@ -3,8 +3,6 @@ TypeAssert [![Build Status](https://travis-ci.org/fredemmott/type-assert.svg?bra
 
 Hack library for converting untyped data to typed data.
 
-Requires HHVM 3.12 or newer.
-
 Usage
 -----
 
