@@ -69,10 +69,10 @@ or `ReflectionTypeAlias::getTypeStructure()` for top-level type aliases.
 
 `TypeStructure<T>`, `type_structure()`, and `ReflectionTypeAlias::getTypeStructures()`
 are experimental features of HHVM, and not supported by Facebook or the HHVM team.
-Expect them to break with some future HHVM release.
+This means that `matches_type_structure()` may need to be removed in a future release.
 
-This library is based on these APIs anyway as there is not currently a viable
-alternative.
+`matches_type_structure()` iis based on these APIs anyway as there is not
+currently a viable alternative.
 
 `isNotNull<T>(?T): T`
 ---------------------
