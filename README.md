@@ -3,6 +3,23 @@ TypeAssert [![Build Status](https://travis-ci.org/hhvm/type-assert.svg?branch=ma
 
 Hack library for converting untyped data to typed data.
 
+Warning for `TypeAssert::matches_type_structure()`
+--------------------------------------------------
+
+`TypeStructure<T>`, `type_structure()`, and `ReflectionTypeAlias::getTypeStructures()`
+are experimental features of HHVM, and not supported by Facebook or the HHVM team.
+This means that `matches_type_structure()` may need to be removed in a future release.
+
+`matches_type_structure()` is based on these APIs as there is not
+currently a viable alternative.
+
+Installation
+------------
+
+```
+composer require hhvm/type-assert
+```
+
 Usage
 -----
 
@@ -64,15 +81,6 @@ class Foo {
 
 You can use `type_structure()` to get a `TypeStructure<T>` for a type constant,
 or `ReflectionTypeAlias::getTypeStructure()` for top-level type aliases.
-
-### WARNING
-
-`TypeStructure<T>`, `type_structure()`, and `ReflectionTypeAlias::getTypeStructures()`
-are experimental features of HHVM, and not supported by Facebook or the HHVM team.
-This means that `matches_type_structure()` may need to be removed in a future release.
-
-`matches_type_structure()` iis based on these APIs anyway as there is not
-currently a viable alternative.
 
 `isNotNull<T>(?T): T`
 ---------------------
