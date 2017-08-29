@@ -8,10 +8,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace FredEmmott\TypeAssert;
+namespace Facebook\TypeAssert;
 
-use FredEmmott\TypeAssert\TestFixtures\ChildClass;
-use FredEmmott\TypeAssert\TestFixtures\ParentClass;
+use Facebook\TypeAssert\TestFixtures\ChildClass;
+use Facebook\TypeAssert\TestFixtures\ParentClass;
 
 final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
   public function testObjectInstanceOfOwnClass(): void {

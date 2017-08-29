@@ -8,9 +8,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace FredEmmott\TypeAssert;
+namespace Facebook\TypeAssert;
 
-use FredEmmott\TypeAssert\PrivateImpl\TypeStructureImpl;
+use Facebook\TypeAssert\PrivateImpl\TypeStructureImpl;
 
 abstract class TypeAssert {
   final public static function isString(mixed $x): string {

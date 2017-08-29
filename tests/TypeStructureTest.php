@@ -8,10 +8,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace FredEmmott\TypeAssert;
+namespace Facebook\TypeAssert;
 
-use \FredEmmott\TypeAssert\TestFixtures\ExampleEnum;
-use \FredEmmott\TypeAssert\TestFixtures\TypeConstants as C;
+use \Facebook\TypeAssert\TestFixtures\ExampleEnum;
+use \Facebook\TypeAssert\TestFixtures\TypeConstants as C;
 
 final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
   public function getExampleValidTypes(

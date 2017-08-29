@@ -11,7 +11,7 @@ either return it unmodified (but with type data) or throw an exception; for exam
 
 ```Hack
 <?hh // strict
-use \FredEmmott\TypeAssert\TypeAssert;
+use \Facebook\TypeAssert\TypeAssert;
 function need_string(string $bar): void {
 }
 
@@ -81,7 +81,7 @@ Throws if it's null, and refines the type otherwise - for example:
 
 ```Hack
 <?hh // strict
-use \FredEmmott\TypeAssert\TypeAssert;
+use \Facebook\TypeAssert\TypeAssert;
 
 function needs_string(string $foo): void {}
 function needs_int(int $bar): void {}
@@ -99,7 +99,7 @@ Asserts that the input is an object of the given type; for example:
 
 ```Hack
 <?hh
-use \FredEmmott\TypeAssert\TypeAssert;
+use \Facebook\TypeAssert\TypeAssert;
 
 class Foo {}
 
@@ -120,7 +120,7 @@ implements the specified interface.
 
 ```Hack
 <?hh // strict
-use \FredEmmott\TypeAssert\TypeAssert;
+use \Facebook\TypeAssert\TypeAssert;
 
 class Foo {
   public static function doStuff(): void {}

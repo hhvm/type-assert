@@ -8,7 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace FredEmmott\TypeAssert\TestFixtures;
+namespace Facebook\TypeAssert\TestFixtures;
 
 class ParentClass {}
 class ChildClass extends ParentClass {}

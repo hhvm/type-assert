@@ -8,7 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace FredEmmott\TypeAssert;
+namespace Facebook\TypeAssert;
 
 final class UnsupportedTypeException extends \Exception {
   public function __construct(

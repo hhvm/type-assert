@@ -8,11 +8,11 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace FredEmmott\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl;
 
-use \FredEmmott\TypeAssert\IncorrectTypeException;
-use \FredEmmott\TypeAssert\TypeAssert;
-use \FredEmmott\TypeAssert\UnsupportedTypeException;
+use \Facebook\TypeAssert\IncorrectTypeException;
+use \Facebook\TypeAssert\TypeAssert;
+use \Facebook\TypeAssert\UnsupportedTypeException;
 
 abstract final class TypeStructureImpl {
   final public static function assertMatchesTypeStructure<T>(
