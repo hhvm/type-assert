@@ -8,7 +8,8 @@ Warning for `TypeAssert::matches_type_structure()`
 
 `TypeStructure<T>`, `type_structure()`, and `ReflectionTypeAlias::getTypeStructures()`
 are experimental features of HHVM, and not supported by Facebook or the HHVM team.
-This means that `matches_type_structure()` may need to be removed in a future release.
+This means that `matches_type_structure()` may need to be removed in a future release
+without warning.
 
 `matches_type_structure()` is based on these APIs as there is not
 currently a viable alternative.
