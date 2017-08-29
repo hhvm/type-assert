@@ -1,4 +1,4 @@
-TypeAssert [![Build Status](https://travis-ci.org/fredemmott/type-assert.svg?branch=master)](https://travis-ci.org/fredemmott/type-assert)
+TypeAssert [![Build Status](https://travis-ci.org/hhvm/type-assert.svg?branch=master)](https://travis-ci.org/hhvm/type-assert)
 ==========
 
 Hack library for converting untyped data to typed data.
@@ -155,13 +155,17 @@ This library is a reimplementation of ideas from:
  - @periodic1236
  - @schrockn
 
-The good ideas are theirs, any mistakes are mine :)
+Security Issues
+---------------
+
+We use GitHub issues to track public bugs. Please ensure your description is
+clear and has sufficient instructions to be able to reproduce the issue.
+
+Facebook has a [bounty program](https://www.facebook.com/whitehat/) for the safe
+disclosure of security bugs. In those cases, please go through the process
+outlined on that page and do not file a public issue.
 
 License
 -------
 
-This software is distributed under the ISC license - see LICENSE file
-in this directory for details.
-
-I am providing the code to you under an open source license. Because this is my personal
-repository, the license you receive to my code is from me and not from my employer (Facebook).
+Type-Assert is BSD-licensed. We also provide an additional patent grant.

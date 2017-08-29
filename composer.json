@@ -1,8 +1,7 @@
 {
-  "name": "fredemmott/type-assert",
+  "name": "hhvm/type-assert",
   "description": "Convert untyped data to typed data",
   "keywords": ["hack", "TypeAssert" ],
-  "license": ["ISC"],
   "require": {
     "hhvm": "~3.12"
   },
