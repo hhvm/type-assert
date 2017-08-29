@@ -16,18 +16,12 @@ use Facebook\TypeAssert\TestFixtures\ParentClass;
 final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
   public function testObjectInstanceOfOwnClass(): void {
     $x = new ParentClass();
-    $this->assertSame(
-      $x,
-      TypeAssert::isInstanceOf(ParentClass::class, $x),
-    );
+    $this->assertSame($x, TypeAssert::isInstanceOf(ParentClass::class, $x));
   }
 
   public function testObjectInstanceOfParentClass(): void {
     $x = new ChildClass();
-    $this->assertSame(
-      $x,
-      TypeAssert::isInstanceOf(ParentClass::class, $x),
-    );
+    $this->assertSame($x, TypeAssert::isInstanceOf(ParentClass::class, $x));
   }
 
   public function testObjectInstanceOfChildClassThrows(): void {
@@ -43,7 +37,8 @@ final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
   public function testObjectInstanceOfTypechecks(): void {
     return; // this test is just here for hh_client
 
-    $f = (ParentClass $x) ==> {};
+    $f = (ParentClass $x) ==> {
+    };
     $f(TypeAssert::isInstanceOf(ParentClass::class, new ParentClass()));
     $f(TypeAssert::isInstanceOf(ParentClass::class, new ChildClass()));
     // Would actually throw
@@ -74,7 +69,8 @@ final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
   public function testClassnameOfTypechecks(): void {
     return; // this test is just here for hh_client
 
-    $f = (classname<ParentClass> $x) ==> {};
+    $f = (classname<ParentClass> $x) ==> {
+    };
     $f(TypeAssert::isClassnameOf(ParentClass::class, ParentClass::class));
     $f(TypeAssert::isClassnameOf(ParentClass::class, ChildClass::class));
     // Would actually throw

@@ -10,5 +10,7 @@
 
 namespace Facebook\TypeAssert\TestFixtures;
 
-class ParentClass {}
-class ChildClass extends ParentClass {}
+class ParentClass {
+}
+class ChildClass extends ParentClass {
+}

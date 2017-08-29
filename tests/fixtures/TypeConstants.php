@@ -28,19 +28,13 @@ class TypeConstants {
   const type TStringStringMap = Map<string, string>;
   const type TStringVectorVector = Vector<Vector<string>>;
 
-  const type TFlatShape = shape(
-    'someString' => string,
-    'someNullable' => ?string,
-  );
+  const type TFlatShape =
+    shape('someString' => string, 'someNullable' => ?string);
 
-  const type TNestedShape = shape(
-    'someString' => string,
-    'someOtherShape' => self::TFlatShape,
-  );
+  const type TNestedShape =
+    shape('someString' => string, 'someOtherShape' => self::TFlatShape);
 
-  const type TShapeWithContainer = shape(
-    'container' => Vector<string>,
-  );
+  const type TShapeWithContainer = shape('container' => Vector<string>);
 
   const type TEnum = ExampleEnum;
 }

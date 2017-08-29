@@ -35,10 +35,7 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   }
 
   public function testIsFloatPasses(): void {
-    $this->assertSame(
-      1.23,
-      TypeAssert::isFloat(1.23),
-    );
+    $this->assertSame(1.23, TypeAssert::isFloat(1.23));
   }
 
   public function testIsFloatThrowsForString(): void {
@@ -52,10 +49,7 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   }
 
   public function testIsResourcePasses(): void {
-    $this->assertSame(
-      STDERR,
-      TypeAssert::isResource(STDERR),
-    );
+    $this->assertSame(STDERR, TypeAssert::isResource(STDERR));
   }
 
   public function testIsResourceThrowsForObject(): void {
@@ -64,14 +58,8 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   }
 
   public function testIsNumPasses(): void {
-    $this->assertSame(
-      123,
-      TypeAssert::isNum(123),
-    );
-    $this->assertSame(
-      1.23,
-      TypeAssert::isNum(1.23),
-    );
+    $this->assertSame(123, TypeAssert::isNum(123));
+    $this->assertSame(1.23, TypeAssert::isNum(1.23));
   }
 
   public function testIsNumThrowsForString(): void {
@@ -80,14 +68,8 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   }
 
   public function testIsArrayKeyPasses(): void {
-    $this->assertSame(
-      123,
-      TypeAssert::isArrayKey(123),
-    );
-    $this->assertSame(
-      '123',
-      TypeAssert::isArrayKey('123'),
-    );
+    $this->assertSame(123, TypeAssert::isArrayKey(123));
+    $this->assertSame('123', TypeAssert::isArrayKey('123'));
   }
 
   public function testIsArrayKeyThrowsForFloat(): void {
@@ -96,14 +78,8 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   }
 
   public function testIsNotNullPasses(): void {
-    $this->assertSame(
-      123,
-      TypeAssert::isNotNull(123),
-    );
-    $this->assertSame(
-      'foo bar',
-      TypeAssert::isNotNull('foo bar'),
-    );
+    $this->assertSame(123, TypeAssert::isNotNull(123));
+    $this->assertSame('foo bar', TypeAssert::isNotNull('foo bar'));
   }
 
   public function testIsNotNullThrows(): void {
@@ -114,11 +90,13 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   public function testIsNotNullTypechecks(): void {
     return; // this test is just here for hh_client
 
-    $wants_int = (int $x) ==> {};
+    $wants_int = (int $x) ==> {
+    };
     $wants_int(TypeAssert::isNotNull(123));
     $wants_int(TypeAssert::isNotNull(null));
 
-    $wants_string = (string $x) ==> {};
+    $wants_string = (string $x) ==> {
+    };
     $wants_string(TypeAssert::isNotNull('foo bar'));
     $wants_string(TypeAssert::isNotNull(null));
   }

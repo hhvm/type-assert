@@ -65,10 +65,7 @@ abstract final class TypeStructureImpl {
           );
         }
         for ($i = 0; $i < count($subtypes); ++$i) {
-          self::assertMatchesTypeStructure(
-            $subtypes[$i],
-            $value[$i],
-          );
+          self::assertMatchesTypeStructure($subtypes[$i], $value[$i]);
         }
         return;
       case TypeStructureKind::OF_FUNCTION:
@@ -88,11 +85,7 @@ abstract final class TypeStructureImpl {
           return;
         }
         if ($count === 2) {
-          self::assertKeyAndValueTypes(
-            $generics[0],
-            $generics[1],
-            $value,
-          );
+          self::assertKeyAndValueTypes($generics[0], $generics[1], $value);
           return;
         }
         throw new UnsupportedTypeException('OF_ARRAY with > 2 generics');
@@ -153,8 +146,8 @@ abstract final class TypeStructureImpl {
        * < 3.17
        */
       default:
-        $name = TypeStructureKind::getNames()[$ts['kind']]
-          ?? var_export($ts['kind'], true);
+        $name = TypeStructureKind::getNames()[$ts['kind']] ??
+          var_export($ts['kind'], true);
         throw new UnsupportedTypeException($name);
     }
   }

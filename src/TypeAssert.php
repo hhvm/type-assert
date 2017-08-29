@@ -58,7 +58,7 @@ abstract class TypeAssert {
     throw IncorrectTypeException::withValue('num', $x);
   }
 
-  final public static function isArrayKey(mixed $x): arraykey{
+  final public static function isArrayKey(mixed $x): arraykey {
     if (is_int($x)) {
       return $x;
     }
