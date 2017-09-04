@@ -16,24 +16,24 @@ use type Facebook\TypeAssert\{
   TypeSpec
 };
 
-final class IntSpec implements TypeSpec<int> {
-  public function coerceType(mixed $value): int {
-    if (is_int($value)) {
+final class StringSpec implements TypeSpec<string> {
+  public function coerceType(mixed $value): string {
+    if (is_string($value)) {
       return $value;
     }
     if ($value instanceof \Stringish) {
-      $str = (string) $value;
-      if ($str !== '' && ctype_digit($str)) {
-        return (int) $str;
-      }
+      return (string) $value;
     }
-    throw TypeCoercionException::withValue('int', $value);
+    if (is_int($value)) {
+      return (string) $value;
+    }
+    throw TypeCoercionException::withValue('string', $value);
   }
 
-  public function assertType(mixed $value): int {
-    if (is_int($value)) {
+  public function assertType(mixed $value): string {
+    if (is_string($value)) {
       return $value;
     }
-    throw IncorrectTypeException::withValue('int', $value);
+    throw new IncorrectTypeException('string', gettype($value));
   }
 }

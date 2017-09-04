@@ -14,29 +14,27 @@ use namespace Facebook\TypeAssert\TypeSpec;
 use type Facebook\TypeAssert\TypeSpec;
 use function Facebook\FBExpect\expect;
 
-final class IntSpecTest extends TypeSpecTest<int> {
+final class ArrayKeySpecTest extends TypeSpecTest<arraykey> {
   <<__Override>>
-  public function getTypeSpec(): TypeSpec<int> {
-    return TypeSpec\int();
+  public function getTypeSpec(): TypeSpec<arraykey> {
+    return TypeSpec\arraykey();
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, int)> {
+  public function getValidCoercions(): array<(mixed, arraykey)> {
     return [
       tuple(123, 123),
       tuple(0, 0),
-      tuple('0', 0),
-      tuple('123', 123),
-      tuple(new TestStringable('123'), 123),
+      tuple('0', '0'),
+      tuple('123', '123'),
+      tuple('1e23', '1e23'),
+      tuple(new TestStringable('123'), '123'),
     ];
   }
 
   <<__Override>>
   public function getInvalidCoercions(): array<array<mixed>> {
     return [
-      ['1.23'],
-      ['1e123'],
-      [''],
       [1.0],
       [1.23],
       [[123]],
@@ -44,7 +42,6 @@ final class IntSpecTest extends TypeSpecTest<int> {
       [vec[123]],
       [null],
       [false],
-      [new TestStringable('1.23')],
     ];
   }
 }

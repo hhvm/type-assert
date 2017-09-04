@@ -27,7 +27,7 @@ final class TypeCoercionException extends \Exception {
     return $this->actual;
   }
 
-  public static function fromValue(string $expected, mixed $value): this {
+  public static function withValue(string $expected, mixed $value): this {
     return new self(
       $expected,
       is_object($value) ? get_class($value) : gettype($value),

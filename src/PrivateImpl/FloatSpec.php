@@ -27,36 +27,29 @@ final class FloatSpec implements TypeSpec<float> {
     }
 
     if ($value instanceof \Stringish) {
-      $value = (string) $value;
-      if ($value === '') {
-        throw new TypeCoercionException(
-          'float',
-          'empty string',
-        );
+      $str = (string) $value;
+      if ($str === '') {
+        throw TypeCoercionException::withValue('float', $value);
       }
       if (ctype_digit($value)) {
-        return (float) $value;
+        return (float) $str;
       }
       if (
         preg_match(
           "/^(\\d*\\.)?\\d+([eE]\\d+)?$/",
-          $value,
+          $str,
         ) === 1
       ) {
-        return (float) $value;
+        return (float) $str;
       }
-      throw new TypeCoercionException(
-        'float',
-        'non-float-like string',
-      );
     }
-    throw TypeCoercionException::fromValue('float', $value);
+    throw TypeCoercionException::withValue('float', $value);
   }
 
   public function assertType(mixed $value): float {
     if (is_float($value)) {
       return $value;
     }
-    throw new IncorrectTypeException('float', gettype($value));
+    throw IncorrectTypeException::withValue('float', $value);
   }
 }

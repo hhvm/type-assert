@@ -4,7 +4,7 @@
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant 
+ * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
@@ -14,31 +14,19 @@ use Facebook\TypeAssert\PrivateImpl\TypeStructureImpl;
 
 abstract class TypeAssert {
   final public static function isString(mixed $x): string {
-    if (!is_string($x)) {
-      throw IncorrectTypeException::withValue('string', $x);
-    }
-    return $x;
+    return TypeSpec\string()->assertType($x);
   }
 
   final public static function isInt(mixed $x): int {
-    if (!is_int($x)) {
-      throw IncorrectTypeException::withValue('int', $x);
-    }
-    return $x;
+    return TypeSpec\int()->assertType($x);
   }
 
   final public static function isFloat(mixed $x): float {
-    if (!is_float($x)) {
-      throw IncorrectTypeException::withValue('float', $x);
-    }
-    return $x;
+    return TypeSpec\float()->assertType($x);
   }
 
   final public static function isBool(mixed $x): bool {
-    if (!is_bool($x)) {
-      throw IncorrectTypeException::withValue('bool', $x);
-    }
-    return $x;
+    return TypeSpec\bool()->assertType($x);
   }
 
   final public static function isResource(mixed $x): resource {
@@ -49,23 +37,11 @@ abstract class TypeAssert {
   }
 
   final public static function isNum(mixed $x): num {
-    if (is_int($x)) {
-      return $x;
-    }
-    if (is_float($x)) {
-      return $x;
-    }
-    throw IncorrectTypeException::withValue('num', $x);
+    return TypeSpec\num()->assertType($x);
   }
 
   final public static function isArrayKey(mixed $x): arraykey {
-    if (is_int($x)) {
-      return $x;
-    }
-    if (is_string($x)) {
-      return $x;
-    }
-    throw IncorrectTypeException::withValue('arraykey', $x);
+    return TypeSpec\arraykey()->assertType($x);
   }
 
   final public static function isNotNull<T>(?T $x): T {
