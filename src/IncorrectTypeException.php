@@ -11,7 +11,10 @@
 namespace Facebook\TypeAssert;
 
 final class IncorrectTypeException extends \Exception {
-  public function __construct(string $expected, string $actual) {
+  public function __construct(
+    private string $expected,
+    private string $actual,
+  ) {
     $message = sprintf('Expected %s, got %s', $expected, $actual);
     parent::__construct($message);
   }
@@ -35,5 +38,13 @@ final class IncorrectTypeException extends \Exception {
       $actual_type = get_class($value);
     }
     return self::withType($expected_type, $actual_type);
+  }
+
+  public function getExpectedType(): string {
+    return $this->expected;
+  }
+
+  public function getActualType(): string {
+    return $this->actual;
   }
 }
