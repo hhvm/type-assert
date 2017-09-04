@@ -30,10 +30,7 @@ abstract class TypeAssert {
   }
 
   final public static function isResource(mixed $x): resource {
-    if (!is_resource($x)) {
-      throw IncorrectTypeException::withValue('resource', $x);
-    }
-    return /* UNSAFE_EXPR */ $x;
+    return TypeSpec\resource()->assertType($x);
   }
 
   final public static function isNum(mixed $x): num {
@@ -55,22 +52,14 @@ abstract class TypeAssert {
     classname<T> $type,
     mixed $what,
   ): T {
-    /* HH_FIXME[4162] over-aggressive instanceof check */
-    if ($what instanceof $type) {
-      return $what;
-    }
-    throw IncorrectTypeException::withValue($type, $what);
+    return TypeSpec\instance_of($type)->assertType($what);
   }
 
   final public static function isClassnameOf<T>(
     classname<T> $expected,
     string $what,
   ): classname<T> {
-    if (is_a($what, $expected, /* strings = */ true)) {
-      /* HH_IGNORE_ERROR[4110] doesn't understand is_a */
-      return $what;
-    }
-    throw IncorrectTypeException::withType($expected, $what);
+    return TypeSpec\classname($expected)->assertType($what);
   }
 
   final public static function matchesTypeStructure<T>(

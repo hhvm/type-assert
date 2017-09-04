@@ -22,9 +22,12 @@ namespace Facebook\TypeAssert\TypeSpec {
   use type Facebook\TypeAssert\TypeSpec;
   use type Facebook\TypeAssert\PrivateImpl\{
     BoolSpec,
+    ClassnameSpec,
     FloatSpec,
+    InstanceOfSpec,
     IntSpec,
     NullableSpec,
+    ResourceSpec,
     StringSpec,
     UnionSpec
   };
@@ -41,8 +44,16 @@ namespace Facebook\TypeAssert\TypeSpec {
     return new BoolSpec();
   }
 
+  function classname<T>(classname<T> $what): TypeSpec<classname<T>> {
+    return new ClassnameSpec($what);
+  }
+
   function float(): TypeSpec<float> {
     return new FloatSpec();
+  }
+
+  function instance_of<T>(classname<T> $what): TypeSpec<T> {
+    return new InstanceOfSpec($what);
   }
 
   function int(): TypeSpec<int> {
@@ -59,6 +70,10 @@ namespace Facebook\TypeAssert\TypeSpec {
       namespace\int(),
       namespace\float(),
     );
+  }
+
+  function resource(): TypeSpec<resource> {
+    return new ResourceSpec();
   }
 
   function string(): TypeSpec<string> {
