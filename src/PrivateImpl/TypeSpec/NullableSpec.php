@@ -4,16 +4,15 @@
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant 
+ * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
 final class NullableSpec<T> implements TypeSpec<?T> {
@@ -49,4 +48,8 @@ final class NullableSpec<T> implements TypeSpec<?T> {
       );
     }
   }
+}
+
+function nullable<T>(TypeSpec<T> $inner): TypeSpec<?T> {
+  return new NullableSpec($inner);
 }

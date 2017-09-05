@@ -12,9 +12,9 @@ namespace Facebook\TypeAssert;
 
 use type Facebook\TypeAssert\{
     IncorrectTypeException,
-    TypeCoercionException,
-    TypeSpec
+    TypeCoercionException
 };
+use type Facebook\TypeAssert\PrivateImpl\TypeSpec\TypeSpec;
 use function Facebook\FBExpect\expect;
 
 abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {

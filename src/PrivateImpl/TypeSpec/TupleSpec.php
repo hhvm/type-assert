@@ -8,12 +8,11 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
 final class TupleSpec implements TypeSpec<array<mixed>> {

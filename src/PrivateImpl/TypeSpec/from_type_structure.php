@@ -8,23 +8,20 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
-use type Facebook\TypeAssert\{
-  TypeSpec,
-  UnsupportedTypeException
-};
-use namespace Facebook\TypeAssert;
-use namespace Facebook\TypeAssert\TypeSpec;
+use type Facebook\TypeAssert\UnsupportedTypeException;
 use namespace HH\Lib\{C, Dict, Vec};
+use namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+use namespace Facebook\TypeAssert;
 
-function type_spec_from_type_structure<T>(
+function from_type_structure<T>(
   TypeStructure<T> $ts
 ): TypeSpec<T> {
   if ($ts['nullable'] ?? false) {
     $ts['nullable'] = false;
       /* HH_IGNORE_ERROR[4110] */
-    return new NullableSpec(type_spec_from_type_structure($ts));
+    return new NullableSpec(from_type_structure($ts));
   }
 
   /* HH_IGNORE_ERROR[4022] exhaustive + default */
@@ -62,7 +59,7 @@ function type_spec_from_type_structure<T>(
       return new TupleSpec(
         Vec\map(
           TypeAssert\not_null($ts['elem_types']),
-          $elem ==> type_spec_from_type_structure($elem),
+          $elem ==> from_type_structure($elem),
         ),
       );
     case TypeStructureKind::OF_FUNCTION:
@@ -76,13 +73,13 @@ function type_spec_from_type_structure<T>(
         case 1:
           /* HH_IGNORE_ERROR[4110] */
           return new VecLikeArraySpec(
-            type_spec_from_type_structure($generics[0]),
+            from_type_structure($generics[0]),
           );
         case 2:
           /* HH_IGNORE_ERROR[4110] */
           return new DictLikeArraySpec(
-            type_spec_from_type_structure($generics[0]),
-            type_spec_from_type_structure($generics[1]),
+            from_type_structure($generics[0]),
+            from_type_structure($generics[1]),
           );
         default:
           invariant_violation('OF_ARRAY with > 2 generics');
@@ -94,9 +91,9 @@ function type_spec_from_type_structure<T>(
         'dicts must have 2 generics',
       );
       /* HH_IGNORE_ERROR[4110] */
-      return new DictSpec(
-        type_spec_from_type_structure($generics[0]),
-        type_spec_from_type_structure($generics[1]),
+      return TypeSpec\dict(
+        from_type_structure($generics[0]),
+        from_type_structure($generics[1]),
       );
     case TypeStructureKind::OF_KEYSET:
       $generics = TypeAssert\not_null($ts['generic_types']);
@@ -105,8 +102,8 @@ function type_spec_from_type_structure<T>(
         'keysets must have 1 generic',
       );
       /* HH_IGNORE_ERROR[4110] */
-      return new KeysetSpec(
-        type_spec_from_type_structure($generics[0]),
+      return TypeSpec\keyset(
+        from_type_structure($generics[0]),
       );
     case TypeStructureKind::OF_VEC:
       $generics = TypeAssert\not_null($ts['generic_types']);
@@ -115,8 +112,8 @@ function type_spec_from_type_structure<T>(
         'vecs must have 1 generic',
       );
       /* HH_IGNORE_ERROR[4110] */
-      return new VecSpec(
-        type_spec_from_type_structure($generics[0]),
+      return TypeSpec\vec(
+        from_type_structure($generics[0]),
       );
     case TypeStructureKind::OF_GENERIC:
       throw new UnsupportedTypeException('OF_GENERIC');
@@ -126,7 +123,7 @@ function type_spec_from_type_structure<T>(
       return new ShapeSpec(
         Dict\pull_with_key(
           $fields,
-          ($_k, $field_ts) ==> type_spec_from_type_structure($field_ts),
+          ($_k, $field_ts) ==> from_type_structure($field_ts),
           ($k, $_v) ==> $k,
         ),
       );
@@ -139,7 +136,7 @@ function type_spec_from_type_structure<T>(
         case \ConstVector::class:
           return new VectorSpec(
             $classname,
-            type_spec_from_type_structure(
+            from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
             ),
           );
@@ -148,10 +145,10 @@ function type_spec_from_type_structure<T>(
         case \ConstMap::class:
           return new MapSpec(
             $classname,
-            type_spec_from_type_structure(
+            from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
             ),
-            type_spec_from_type_structure(
+            from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[1],
             ),
           );
@@ -160,7 +157,7 @@ function type_spec_from_type_structure<T>(
         case \ConstSet::class:
           return new SetSpec(
             $classname,
-            type_spec_from_type_structure(
+            from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
             ),
           );

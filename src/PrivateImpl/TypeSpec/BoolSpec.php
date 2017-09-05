@@ -8,12 +8,11 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
 final class BoolSpec implements TypeSpec<bool> {
@@ -36,4 +35,8 @@ final class BoolSpec implements TypeSpec<bool> {
     }
     throw IncorrectTypeException::withValue('bool', $value);
   }
+}
+
+function bool(): TypeSpec<bool> {
+  return new BoolSpec();
 }

@@ -8,71 +8,58 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
 use namespace HH\Lib\C;
 
-final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
-  implements TypeSpec<T> {
-
+final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> implements TypeSpec<T> {
   public function __construct(
     private classname<T> $what,
-    private TypeSpec<Tk> $tsk,
-    private TypeSpec<Tv> $tsv,
+    private TypeSpec<Tv> $inner,
   ) {
     $valid = keyset[
-      Map::class,
-      ImmMap::class,
-      \ConstMap::class,
+      Set::class,
+      ImmSet::class,
+      \ConstSet::class,
     ];
     invariant(
       C\contains_key($valid, $what),
-      'Only built-in \ConstMap implementations are supported',
+      'Only built-in \ConstSet implementations are supported',
     );
   }
 
   public function coerceType(mixed $value): T {
-    if (!$value instanceof KeyedTraversable) {
+    if (!$value instanceof Traversable) {
       throw TypeCoercionException::withValue($this->what, $value);
     }
 
-    $tsk = $this->tsk;
-    $tsv = $this->tsv;
+    $map = $container ==> $container->map($v ==> $this->inner->coerceType($v));
 
-    $out = Map {};
-    foreach ($value as $k => $v) {
-      $out[$tsk->coerceType($k)] = $tsv->coerceType($v);
-    }
-
-    if ($this->what === Map::class) {
+    if (is_a($value, $this->what)) {
+      assert($value instanceof \ConstSet);
       /* HH_IGNORE_ERROR[4110] */
-      return $out;
+      return $map($value);
     }
 
+    if ($this->what === Set::class) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $map(new Set($value));
+    }
     /* HH_IGNORE_ERROR[4110] */
-    return $out->immutable();
+    return $map((new ImmSet($value)));
   }
 
   public function assertType(mixed $value): T {
     if (!is_a($value, $this->what)) {
       throw IncorrectTypeException::withValue($this->what, $value);
     }
-    assert($value instanceof \ConstMap);
-    $tsk = $this->tsk;
-    $tsv = $this->tsv;
-    $value->filterWithKey(
-      ($k, $v) ==> {
-        $tsk->assertType($k);
-        $tsv->assertType($v);
-        return false;
-      }
-    );
+    assert($value instanceof \ConstSet);
+    $value->filter($x ==> {$this->inner->assertType($x); return false; });
     /* HH_IGNORE_ERROR[4110] */
     return $value;
   }

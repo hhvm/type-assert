@@ -8,12 +8,11 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
 use namespace HH\Lib\Dict;
@@ -50,4 +49,11 @@ final class DictSpec<Tk as arraykey, Tv>
       ($k, $_v) ==> $this->tsk->assertType($k),
     );
   }
+}
+
+function dict<Tk as arraykey, Tv>(
+  TypeSpec<Tk> $tsk,
+  TypeSpec<Tv> $tsv,
+): TypeSpec<dict<Tk, Tv>> {
+  return new DictSpec($tsk, $tsv);
 }

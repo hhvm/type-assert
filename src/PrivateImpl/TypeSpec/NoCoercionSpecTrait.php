@@ -8,21 +8,21 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
-final class ResourceSpec implements TypeSpec<resource> {
-  use NoCoercionSpecTrait<resource>;
+trait NoCoercionSpecTrait<T> {
+  require implements TypeSpec<T>;
 
-  public function assertType(mixed $value): resource {
-    if (is_resource($value)) {
-      return $value;
+  final public function coerceType(mixed $value): T {
+    try {
+      return $this->assertType($value);
+    } catch (IncorrectTypeException $e) {
+      throw TypeCoercionException::withValue($e->getExpectedType(), $value);
     }
-    throw IncorrectTypeException::withValue('resource', $value);
   }
 }

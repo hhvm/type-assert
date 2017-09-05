@@ -8,15 +8,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
-final class UnionSpec<+T> implements TypeSpec<T> {
+abstract class UnionSpec<+T> implements TypeSpec<T> {
   private vec<TypeSpec<T>> $inners;
   public function __construct(
     private string $name,
@@ -25,7 +24,7 @@ final class UnionSpec<+T> implements TypeSpec<T> {
     $this->inners = vec($inners);
   }
 
-  public function coerceType(mixed $value): T {
+  final public function coerceType(mixed $value): T {
     try {
       return $this->assertType($value);
     } catch (IncorrectTypeException $_) {
@@ -41,7 +40,7 @@ final class UnionSpec<+T> implements TypeSpec<T> {
     throw TypeCoercionException::withValue($this->name, $value);
   }
 
-  public function assertType(mixed $value): T {
+  final public function assertType(mixed $value): T {
     foreach ($this->inners as $spec) {
       try {
         return $spec->assertType($value);

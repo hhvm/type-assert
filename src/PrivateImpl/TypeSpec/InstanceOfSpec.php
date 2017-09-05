@@ -8,26 +8,30 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
-final class ClassnameSpec<Tinner, T as classname<Tinner>>
-  implements TypeSpec<T> {
+final class InstanceOfSpec<T> implements TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
-  public function __construct(private T $what) {
+  public function __construct(
+    private classname<T> $what,
+  ) {
   }
 
   public function assertType(mixed $value): T {
-    if (is_string($value) && is_a($value, $this->what, /* strings = */ true)) {
-      /* HH_IGNORE_ERROR[4110] is_a is not understood by Hack */
+    if ($value instanceof $this->what) {
+      /* HH_IGNORE_ERROR[4110] unsafe for generics */
       return $value;
     }
     throw IncorrectTypeException::withValue($this->what, $value);
   }
+}
+
+function instance_of<T>(classname<T> $what): TypeSpec<T> {
+  return new InstanceOfSpec($what);
 }

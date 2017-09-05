@@ -8,12 +8,11 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
 final class IntSpec implements TypeSpec<int> {
@@ -36,4 +35,8 @@ final class IntSpec implements TypeSpec<int> {
     }
     throw IncorrectTypeException::withValue('int', $value);
   }
+}
+
+function int(): TypeSpec<int> {
+  return new IntSpec();
 }

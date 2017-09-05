@@ -8,22 +8,23 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
-trait NoCoercionSpecTrait<T> {
-  require implements TypeSpec<T>;
-
-  final public function coerceType(mixed $value): T {
-    try {
-      return $this->assertType($value);
-    } catch (IncorrectTypeException $e) {
-      throw TypeCoercionException::withValue($e->getExpectedType(), $value);
-    }
+final class ArrayKeySpec extends UnionSpec<arraykey> {
+  public function __construct() {
+    parent::__construct(
+      'arraykey',
+      new StringSpec(),
+      new IntSpec(),
+    );
   }
+}
+
+function arraykey(): TypeSpec<arraykey> {
+  return new ArrayKeySpec();
 }

@@ -8,41 +8,46 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl;
+namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
-  TypeCoercionException,
-  TypeSpec
+  TypeCoercionException
 };
 
-use namespace HH\Lib\Vec;
+use namespace HH\Lib\Keyset;
 
-final class VecSpec<T> implements TypeSpec<vec<T>> {
+final class KeysetSpec<T as arraykey> implements TypeSpec<keyset<T>> {
   public function __construct(
     private TypeSpec<T> $inner,
   ) {
   }
 
-  public function coerceType(mixed $value): vec<T> {
+  public function coerceType(mixed $value): keyset<T> {
     if (!$value instanceof Traversable) {
-      throw TypeCoercionException::withValue('vec<T>', $value);
+      throw TypeCoercionException::withValue('keyset<T>', $value);
     }
 
-    return Vec\map(
+    return Keyset\map(
       $value,
       $inner ==> $this->inner->coerceType($inner),
     );
   }
 
-  public function assertType(mixed $value): vec<T> {
-    if (!is_vec($value)) {
-      throw IncorrectTypeException::withValue('vec<T>', $value);
+  public function assertType(mixed $value): keyset<T> {
+    if (!is_keyset($value)) {
+      throw IncorrectTypeException::withValue('keyset<T>', $value);
     }
 
-    return Vec\map(
+    return Keyset\map(
       $value,
       $inner ==> $this->inner->assertType($inner),
     );
   }
+}
+
+function keyset<Tk as arraykey>(
+  TypeSpec<Tk> $inner,
+): TypeSpec<keyset<Tk>> {
+  return new KeysetSpec($inner);
 }
