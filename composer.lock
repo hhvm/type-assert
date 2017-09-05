@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f86043141f3b59934be826e6cf2828b5",
+    "content-hash": "963a3cd218c1e0ff2d2d84d3853a3716",
     "packages": [
         {
             "name": "91carriage/phpunit-hhi",
@@ -305,6 +305,34 @@
             ],
             "abandoned": "hhvm/type-assert",
             "time": "2017-08-14T23:59:57+00:00"
+        },
+        {
+            "name": "hhvm/hsl",
+            "version": "v0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhvm/hsl.git",
+                "reference": "1cde7b351cc84a216a21dbe9570a4662fd738467"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhvm/hsl/zipball/1cde7b351cc84a216a21dbe9570a4662fd738467",
+                "reference": "1cde7b351cc84a216a21dbe9570a4662fd738467",
+                "shasum": ""
+            },
+            "require": {
+                "facebook/hhvm-autoload": "^1.4"
+            },
+            "require-dev": {
+                "91carriage/phpunit-hhi": "^5.7",
+                "facebook/definition-finder": "^1.6.1",
+                "facebook/fbexpect": "^0.2",
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "The Hack Standard Library",
+            "time": "2017-08-18T01:08:01+00:00"
         },
         {
             "name": "myclabs/deep-copy",

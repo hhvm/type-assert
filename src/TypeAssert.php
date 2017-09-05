@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeAssert;
 
-use Facebook\TypeAssert\PrivateImpl\TypeStructureImpl;
+use function Facebook\TypeAssert\PrivateImpl\type_spec_from_type_structure;
 
 abstract class TypeAssert {
   final public static function isString(mixed $x): string {
@@ -66,7 +66,6 @@ abstract class TypeAssert {
     TypeStructure<T> $ts,
     mixed $value,
   ): T {
-    TypeStructureImpl::assertMatchesTypeStructure($ts, $value);
-    return /* HH_IGNORE_ERROR[4110] */ $value;
+    return type_spec_from_type_structure($ts)->assertType($value);
   }
 }

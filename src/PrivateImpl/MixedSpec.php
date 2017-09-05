@@ -16,14 +16,12 @@ use type Facebook\TypeAssert\{
   TypeSpec
 };
 
-trait NoCoercionSpecTrait<T> {
-  require implements TypeSpec<T>;
+final class MixedSpec implements TypeSpec<mixed> {
+  public function coerceType(mixed $value): mixed {
+    return $value;
+  }
 
-  final public function coerceType(mixed $value): T {
-    try {
-      return $this->assertType($value);
-    } catch (IncorrectTypeException $e) {
-      throw TypeCoercionException::withValue($e->getExpectedType(), $value);
-    }
+  public function assertType(mixed $value): mixed {
+    return $value;
   }
 }

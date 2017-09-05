@@ -4,7 +4,7 @@
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant 
+ * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
@@ -37,4 +37,10 @@ class TypeConstants {
   const type TShapeWithContainer = shape('container' => Vector<string>);
 
   const type TEnum = ExampleEnum;
+
+  const type TIntVec = vec<int>;
+  const type TIntVecVec = vec<vec<int>>;
+  const type TStringStringDict = dict<string, string>;
+  const type TStringStringVecDict = dict<string, vec<string>>;
+  const type TStringKeyset = keyset<string>;
 }

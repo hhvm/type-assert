@@ -4,7 +4,7 @@
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant 
+ * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
@@ -96,6 +96,32 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         array('container' => Vector { 'foo' }),
       ),
       'enum' => tuple(type_structure(C::class, 'TEnum'), ExampleEnum::DERP),
+      'vec<int>' => tuple(
+        type_structure(C::class, 'TIntVec'),
+        vec[1, 2, 3],
+      ),
+      'vec<vec<string>>' => tuple(
+        type_structure(C::class, 'TIntVecVec'),
+        vec[vec[1, 2, 3], vec[4, 5, 6]],
+      ),
+      'dict<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringDict'),
+        dict[
+          'foo' => 'bar',
+          'herp' => 'derp',
+        ],
+      ),
+      'dict<string, vec<string>>' => tuple(
+        type_structure(C::class, 'TStringStringVecDict'),
+        dict[
+          'foo' => vec['bar', 'baz'],
+          'herp' => vec['derp'],
+        ],
+      ),
+      'keyset<string>' => tuple(
+        type_structure(C::class, 'TStringKeyset'),
+        keyset['foo', 'bar', 'baz', 'herp', 'derp'],
+      ),
     ];
   }
 
@@ -179,6 +205,22 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TEnum'),
         ExampleEnum::DERP.'HERP DERP DERP',
       ),
+      'vec with wrong value types' => tuple(
+        type_structure(C::class, 'TIntVec'),
+        vec['foo'],
+      ),
+      'dict with wrong key types' => tuple(
+        type_structure(C::class, 'TStringStringDict'),
+        dict[123 => 'foo'],
+      ),
+      'dict with wrong value types' => tuple(
+        type_structure(C::class, 'TStringStringDict'),
+        dict['foo' => 123],
+      ),
+      'keyset with wrong value types' => tuple(
+        type_structure(C::class, 'TStringKeyset'),
+        keyset[123, 456],
+      ),
     ];
   }
 
@@ -197,7 +239,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     $this->expectException(UnsupportedTypeException::class);
 
     $ts = type_structure(C::class, 'TStringArray');
-    $ts['kind'] = TypeStructureKind::OF_VEC;
+    $ts['kind'] = TypeStructureKind::OF_GENERIC;
     /* HH_IGNORE_ERROR[4110] invalid argument: modified $ts by hand */
     TypeAssert::matchesTypeStructure($ts, null);
   }
