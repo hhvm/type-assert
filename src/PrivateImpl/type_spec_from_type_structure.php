@@ -11,10 +11,10 @@
 namespace Facebook\TypeAssert\PrivateImpl;
 
 use type Facebook\TypeAssert\{
-  TypeAssert,
   TypeSpec,
   UnsupportedTypeException
 };
+use namespace Facebook\TypeAssert;
 use namespace Facebook\TypeAssert\TypeSpec;
 use namespace HH\Lib\{C, Dict, Vec};
 
@@ -61,14 +61,14 @@ function type_spec_from_type_structure<T>(
       /* HH_IGNORE_ERROR[4110] */
       return new TupleSpec(
         Vec\map(
-          TypeAssert::isNotNull($ts['elem_types']),
+          TypeAssert\not_null($ts['elem_types']),
           $elem ==> type_spec_from_type_structure($elem),
         ),
       );
     case TypeStructureKind::OF_FUNCTION:
       throw new UnsupportedTypeException('OF_FUNCTION');
     case TypeStructureKind::OF_ARRAY:
-      $generics = TypeAssert::isNotNull($ts['generic_types']);
+      $generics = TypeAssert\not_null($ts['generic_types']);
       switch (C\count($generics)) {
         case 0:
           /* HH_IGNORE_ERROR[4110] */
@@ -88,7 +88,7 @@ function type_spec_from_type_structure<T>(
           invariant_violation('OF_ARRAY with > 2 generics');
       }
     case TypeStructureKind::OF_DICT:
-      $generics = TypeAssert::isNotNull($ts['generic_types']);
+      $generics = TypeAssert\not_null($ts['generic_types']);
       invariant(
         C\count($generics) === 2,
         'dicts must have 2 generics',
@@ -99,7 +99,7 @@ function type_spec_from_type_structure<T>(
         type_spec_from_type_structure($generics[1]),
       );
     case TypeStructureKind::OF_KEYSET:
-      $generics = TypeAssert::isNotNull($ts['generic_types']);
+      $generics = TypeAssert\not_null($ts['generic_types']);
       invariant(
         C\count($generics) === 1,
         'keysets must have 1 generic',
@@ -109,7 +109,7 @@ function type_spec_from_type_structure<T>(
         type_spec_from_type_structure($generics[0]),
       );
     case TypeStructureKind::OF_VEC:
-      $generics = TypeAssert::isNotNull($ts['generic_types']);
+      $generics = TypeAssert\not_null($ts['generic_types']);
       invariant(
         C\count($generics) === 1,
         'vecs must have 1 generic',
@@ -121,7 +121,7 @@ function type_spec_from_type_structure<T>(
     case TypeStructureKind::OF_GENERIC:
       throw new UnsupportedTypeException('OF_GENERIC');
     case TypeStructureKind::OF_SHAPE:
-      $fields = TypeAssert::isNotNull($ts['fields']);
+      $fields = TypeAssert\not_null($ts['fields']);
       /* HH_IGNORE_ERROR[4110] */
       return new ShapeSpec(
         Dict\pull_with_key(
@@ -132,7 +132,7 @@ function type_spec_from_type_structure<T>(
       );
     case TypeStructureKind::OF_CLASS:
     case TypeStructureKind::OF_INTERFACE:
-      $classname = TypeAssert::isNotNull($ts['classname']);
+      $classname = TypeAssert\not_null($ts['classname']);
       switch($classname) {
         case Vector::class:
         case ImmVector::class:
@@ -140,7 +140,7 @@ function type_spec_from_type_structure<T>(
           return new VectorSpec(
             $classname,
             type_spec_from_type_structure(
-              TypeAssert::isNotNull($ts['generic_types'] ?? null)[0],
+              TypeAssert\not_null($ts['generic_types'] ?? null)[0],
             ),
           );
         case Map::class:
@@ -149,10 +149,10 @@ function type_spec_from_type_structure<T>(
           return new MapSpec(
             $classname,
             type_spec_from_type_structure(
-              TypeAssert::isNotNull($ts['generic_types'] ?? null)[0],
+              TypeAssert\not_null($ts['generic_types'] ?? null)[0],
             ),
             type_spec_from_type_structure(
-              TypeAssert::isNotNull($ts['generic_types'] ?? null)[1],
+              TypeAssert\not_null($ts['generic_types'] ?? null)[1],
             ),
           );
         case Set::class:
@@ -161,18 +161,18 @@ function type_spec_from_type_structure<T>(
           return new SetSpec(
             $classname,
             type_spec_from_type_structure(
-              TypeAssert::isNotNull($ts['generic_types'] ?? null)[0],
+              TypeAssert\not_null($ts['generic_types'] ?? null)[0],
             ),
           );
         default:
           return new InstanceOfSpec(
-            TypeAssert::isNotNull($ts['classname']),
+            TypeAssert\not_null($ts['classname']),
           );
       }
     case TypeStructureKind::OF_TRAIT:
       throw new UnsupportedTypeException('OF_TRAIT');
     case TypeStructureKind::OF_ENUM:
-      $enum = TypeAssert::isNotNull($ts['classname']);
+      $enum = TypeAssert\not_null($ts['classname']);
       /* HH_IGNORE_ERROR[4110] */
       return new EnumSpec($enum);
     case TypeStructureKind::OF_UNRESOLVED:

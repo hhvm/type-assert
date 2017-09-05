@@ -10,62 +10,58 @@
 
 namespace Facebook\TypeAssert;
 
-use function Facebook\TypeAssert\PrivateImpl\type_spec_from_type_structure;
+function string(mixed $x): string {
+  return TypeSpec\string()->assertType($x);
+}
 
-abstract class TypeAssert {
-  final public static function isString(mixed $x): string {
-    return TypeSpec\string()->assertType($x);
-  }
+function int(mixed $x): int {
+  return TypeSpec\int()->assertType($x);
+}
 
-  final public static function isInt(mixed $x): int {
-    return TypeSpec\int()->assertType($x);
-  }
+function float(mixed $x): float {
+  return TypeSpec\float()->assertType($x);
+}
 
-  final public static function isFloat(mixed $x): float {
-    return TypeSpec\float()->assertType($x);
-  }
+function bool(mixed $x): bool {
+  return TypeSpec\bool()->assertType($x);
+}
 
-  final public static function isBool(mixed $x): bool {
-    return TypeSpec\bool()->assertType($x);
-  }
+function resource(mixed $x): resource {
+  return TypeSpec\resource()->assertType($x);
+}
 
-  final public static function isResource(mixed $x): resource {
-    return TypeSpec\resource()->assertType($x);
-  }
+function num(mixed $x): num {
+  return TypeSpec\num()->assertType($x);
+}
 
-  final public static function isNum(mixed $x): num {
-    return TypeSpec\num()->assertType($x);
-  }
+function arraykey(mixed $x): arraykey {
+  return TypeSpec\arraykey()->assertType($x);
+}
 
-  final public static function isArrayKey(mixed $x): arraykey {
-    return TypeSpec\arraykey()->assertType($x);
+function not_null<T>(?T $x): T {
+  if ($x === null) {
+    throw new IncorrectTypeException('not-null', 'null');
   }
+  return $x;
+}
 
-  final public static function isNotNull<T>(?T $x): T {
-    if ($x === null) {
-      throw new IncorrectTypeException('not-null', 'null');
-    }
-    return $x;
-  }
+function instance_of<T>(
+  classname<T> $type,
+  mixed $what,
+): T {
+  return TypeSpec\instance_of($type)->assertType($what);
+}
 
-  final public static function isInstanceOf<T>(
-    classname<T> $type,
-    mixed $what,
-  ): T {
-    return TypeSpec\instance_of($type)->assertType($what);
-  }
+function classname_of<T>(
+  classname<T> $expected,
+  string $what,
+): classname<T> {
+  return TypeSpec\classname($expected)->assertType($what);
+}
 
-  final public static function isClassnameOf<T>(
-    classname<T> $expected,
-    string $what,
-  ): classname<T> {
-    return TypeSpec\classname($expected)->assertType($what);
-  }
-
-  final public static function matchesTypeStructure<T>(
-    TypeStructure<T> $ts,
-    mixed $value,
-  ): T {
-    return type_spec_from_type_structure($ts)->assertType($value);
-  }
+function matches_type_structure<T>(
+  TypeStructure<T> $ts,
+  mixed $value,
+): T {
+  return PrivateImpl\type_spec_from_type_structure($ts)->assertType($value);
 }

@@ -129,7 +129,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
    * @dataProvider getExampleValidTypes
    */
   public function testValidType<T>(TypeStructure<T> $ts, mixed $input): void {
-    $this->assertSame($input, TypeAssert::matchesTypeStructure($ts, $input));
+    $this->assertSame($input, namespace\matches_type_structure($ts, $input));
   }
 
   public function getExampleInvalidTypes(): array<string, (mixed, mixed)> {
@@ -232,7 +232,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     mixed $input,
   ): void {
     $this->expectException(IncorrectTypeException::class);
-    TypeAssert::matchesTypeStructure($ts, $input);
+    namespace\matches_type_structure($ts, $input);
   }
 
   public function testUnsupportedType(): void {
@@ -241,6 +241,6 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     $ts = type_structure(C::class, 'TStringArray');
     $ts['kind'] = TypeStructureKind::OF_GENERIC;
     /* HH_IGNORE_ERROR[4110] invalid argument: modified $ts by hand */
-    TypeAssert::matchesTypeStructure($ts, null);
+    namespace\matches_type_structure($ts, null);
   }
 }
