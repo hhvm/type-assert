@@ -24,35 +24,53 @@ composer require hhvm/type-assert
 Usage
 -----
 
-TypeAssert provides several static methods that take a mixed input, and will
+TypeAssert provides functions that take a mixed input, and will
 either return it unmodified (but with type data) or throw an exception; for example:
 
 ```Hack
 <?hh // strict
-use \Facebook\TypeAssert\TypeAssert;
+use namespace Facebook\TypeAssert;
 function need_string(string $bar): void {
 }
 
 function main(): void {
-  needs_string(TypeAssert::isString('foo')); // type-safe and works fine
-  needs_string(TypeAssert::isString(123)); // type-safe, but throws
+  needs_string(TypeAssert\string('foo')); // type-safe and works fine
+  needs_string(TypeAssert\string(123)); // type-safe, but throws
 }
 ```
 
 These include:
- - `isString(mixed): string`
- - `isInt(mixed): int`
- - `isFloat(mixed): float`
- - `isBool(mixed): bool`
- - `isResource(mixed): resource`
- - `isNum(mixed): num`
- - `isArrayKey(mixed): arraykey`
- - `isNotNull<T>(?T): T`
- - `isInstanceOf<T>(classname<T>, mixed): T`
- - `isClassnameOf<T>(classname<T>, mixed): classname<T>`
- - `matchesTypeStructure<T>(TypeStructure<T>, mixed): T`
+ - `string(mixed): string`
+ - `int(mixed): int`
+ - `float(mixed): float`
+ - `bool(mixed): bool`
+ - `resource(mixed): resource`
+ - `num(mixed): num`
+ - `arraykey(mixed): arraykey`
+ - `not_null<T>(?T): T`
+ - `instance_of<T>(classname<T>, mixed): T`
+ - `classname_of<T>(classname<T>, mixed): classname<T>`
+ - `matches_type_structure<T>(TypeStructure<T>, mixed): T`
 
-`matchesTypeStructure<T>(TypeStructure<T>, mixed): T`
+Coercion
+--------
+
+TypeAssert also contains the `Facebook\TypeCoerce` namespace, which includes a
+similar set of functions:
+
+ - `string(mixed): string`
+ - `int(mixed): int`
+ - `float(mixed): float`
+ - `bool(mixed): bool`
+ - `resource(mixed): resource`
+ - `num(mixed): num`
+ - `arraykey(mixed): arraykey`
+ - `matche_type_structure<T>(TypeStructure<T>, mixed): T`
+
+These will do 'safe' transformations, such as int-ish strings to int, ints to
+strings, arrays to vecs, arrays to dicts, and so on.
+
+`matches_type_structure<T>(TypeStructure<T>, mixed): T`
 -----------------------------------------------------
 
 Asserts that a variable matches the given type structure; these can be arbitrary
@@ -72,7 +90,7 @@ class Foo {
   public static function getAPIResponse(): self::TAPIResponse {
     $json_string = file_get_contents('https://api.example.com');
     $array = json_decode($json_string, /* associative = */ true);
-    return TypeAssert::matchesTypeStructure(
+    return TypeAssert\matches_type_structure(
       type_structure(self::class, 'TAPIResponse'),
       $array,
     );
@@ -83,45 +101,45 @@ class Foo {
 You can use `type_structure()` to get a `TypeStructure<T>` for a type constant,
 or `ReflectionTypeAlias::getTypeStructure()` for top-level type aliases.
 
-`isNotNull<T>(?T): T`
+`not_null<T>(?T): T`
 ---------------------
 
 Throws if it's null, and refines the type otherwise - for example:
 
 ```Hack
 <?hh // strict
-use \Facebook\TypeAssert\TypeAssert;
+use namespace \Facebook\TypeAssert;
 
 function needs_string(string $foo): void {}
 function needs_int(int $bar): void {}
 
 function main(?string $foo, ?int bar): void {
-  needs_string(TypeAssert::isNotNull($foo)); // ?string => string
-  needs_int(TypeAssert::isNotNull($bar)); // ?int => int
+  needs_string(TypeAssert\not_null($foo)); // ?string => string
+  needs_int(TypeAssert\not_null($bar)); // ?int => int
 }
 ```
 
-`isInstanceOf<T>(classname<T>, mixed): T`
+`is_instance_of<T>(classname<T>, mixed): T`
 -----------------------------------------
 
 Asserts that the input is an object of the given type; for example:
 
 ```Hack
 <?hh
-use \Facebook\TypeAssert\TypeAssert;
+use namespace Facebook\TypeAssert;
 
 class Foo {}
 
 function needs_foo(Foo $foo): void {}
 
 function main(mixed $foo): void {
-  needs_foo(TypeAssert::isInstanceOf(Foo::class, $foo));
+  needs_foo(TypeAssert::is_instance_of(Foo::class, $foo));
 }
 
 main(new Foo());
 ```
 
-`isClassnameOf<T>(classname<T>, mixed): classname<T>`
+`is_classname_of<T>(classname<T>, mixed): classname<T>`
 ------------------------------------------------------------
 
 Asserts that the input is the name of a child of the specified class, or
@@ -129,7 +147,7 @@ implements the specified interface.
 
 ```Hack
 <?hh // strict
-use \Facebook\TypeAssert\TypeAssert;
+use namespace Facebook\TypeAssert;
 
 class Foo {
   public static function doStuff(): void {}
@@ -146,7 +164,7 @@ function needs_foo_class(classname<Foo> $foo): void {
 }
 
 function main(mixed $class): void {
-  needs_foo_class(TypeAssert::isClassnameOf(Foo::class, $class));
+  needs_foo_class(TypeAssert::is_classname_of(Foo::class, $class));
 }
 
 main(Bar::class);
