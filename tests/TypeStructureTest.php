@@ -13,6 +13,11 @@ namespace Facebook\TypeAssert;
 use \Facebook\TypeAssert\TestFixtures\ExampleEnum;
 use \Facebook\TypeAssert\TestFixtures\TypeConstants as C;
 
+use namespace Facebook\{TypeAssert, TypeCoerce};
+use namespace HH\Lib\Dict;
+
+use function Facebook\FBExpect\expect;
+
 final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
   public function getExampleValidTypes(): array<string, (mixed, mixed)> {
     return [
@@ -128,8 +133,9 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
   /**
    * @dataProvider getExampleValidTypes
    */
-  public function testValidType<T>(TypeStructure<T> $ts, mixed $input): void {
-    $this->assertSame($input, namespace\matches_type_structure($ts, $input));
+  public function testValidType<T>(TypeStructure<T> $ts, T $input): void {
+    expect(TypeAssert\matches_type_structure($ts, $input))
+      ->toBeSame($input);
   }
 
   public function getExampleInvalidTypes(): array<string, (mixed, mixed)> {
@@ -231,16 +237,91 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     TypeStructure<T> $ts,
     mixed $input,
   ): void {
-    $this->expectException(IncorrectTypeException::class);
-    namespace\matches_type_structure($ts, $input);
+    expect(
+      () ==> TypeAssert\matches_type_structure($ts, $input),
+    )->toThrow(IncorrectTypeException::class);
   }
 
   public function testUnsupportedType(): void {
-    $this->expectException(UnsupportedTypeException::class);
-
     $ts = type_structure(C::class, 'TStringArray');
     $ts['kind'] = TypeStructureKind::OF_GENERIC;
-    /* HH_IGNORE_ERROR[4110] invalid argument: modified $ts by hand */
-    namespace\matches_type_structure($ts, null);
+
+    expect(
+      () ==> TypeAssert\matches_type_structure($ts, null),
+    )->toThrow(UnsupportedTypeException::class);
+  }
+
+  public function getExampleValidCoercions(
+  ): array<string, (mixed, mixed, mixed)> {
+    $coercions = [
+      'vec<intish string> to vec<int>' => tuple(
+        type_structure(C::class, 'TIntVec'),
+        vec['123'],
+        vec[123],
+      ),
+      'vec<Stringable> to keyset<string>' => tuple(
+        type_structure(C::class, 'TStringKeyset'),
+        vec[new TestStringable('foo')],
+        keyset['foo'],
+      ),
+      'array<intish string> to vec<int>' => tuple(
+        type_structure(C::class, 'TIntVec'),
+        ['123'],
+        vec[123],
+      ),
+      'array<intish string> to keyset<string>' => tuple(
+        type_structure(C::class, 'TStringKeyset'),
+        vec['123'],
+        keyset['123'],
+      ),
+      'array<string, int> to dict<string, string>' => tuple(
+        type_structure(C::class, 'TStringStringDict'),
+        ['foo' => 123, 'bar' => 456],
+        dict['foo' => '123', 'bar' => '456'],
+      ),
+    ];
+    return Dict\map(
+      $this->getExampleValidTypes(),
+      $tuple ==> {
+        list($ts, $v) = $tuple;
+        return tuple($ts, $v, $v);
+      },
+    )
+      |> Dict\merge($$, $coercions)
+      |> array_map($x ==> $x, $$);
+  }
+
+  /**
+   * @dataProvider getExampleValidCoercions
+   */
+  public function testValidCoercion<T>(
+    TypeStructure<T> $ts,
+    mixed $value,
+    T $expected,
+  ): void {
+    $actual = TypeCoerce\match_type_structure($ts, $value);
+    expect($actual)->toEqual($expected);
+  }
+
+  public function getExampleInvalidCoercions(
+  ): array<string, (mixed, mixed)> {
+    return [
+      'vec<non-intish string> to vec<int>' => tuple(
+        type_structure(C::class, 'TIntVec'),
+        vec['1.23'],
+      ),
+    ];
+  }
+
+  /**
+   * @dataProvider getExampleInvalidCoercions
+   */
+  public function testInvalidCoercion<T>(
+    TypeStructure<T> $ts,
+    mixed $value,
+  ): void {
+    expect(
+      () ==> TypeCoerce\match_type_structure($ts, $value),
+    )->toThrow(TypeCoercionException::class);
   }
 }
