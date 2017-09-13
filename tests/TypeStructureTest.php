@@ -348,4 +348,30 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       () ==> TypeCoerce\match_type_structure($ts, $value),
     )->toThrow(TypeCoercionException::class);
   }
+
+  public function testShapeCoercionsInAssertMode(): void {
+    // This is for:
+    // - json_decode(..., FB_JSON_HACK_ARRAYS)
+    // - likely future changes to the implementation of shapes
+    $shape = shape('someString' => 'foobar');
+    $dict = dict['someString' => 'foobar'];
+    $array = ['someString' => 'foobar'];
+    $ts = type_structure(C::class, 'TFlatShape');
+
+    expect(TypeAssert\matches_type_structure($ts, $dict))->toBeSame($shape);
+    expect(TypeAssert\matches_type_structure($ts, $array))->toBeSame($shape);
+  }
+
+  public function testTupleCoercionsInAssertMode(): void {
+    // This is for:
+    // - json_decode(..., FB_JSON_HACK_ARRAYS)
+    // - likely future changes to the implementation of tuples
+    $tuple = tuple('foo', 123);
+    $vec = vec['foo', 123];
+    $array = ['foo', 123];
+    $ts = type_structure(C::class, 'TTuple');
+
+    expect(TypeAssert\matches_type_structure($ts, $vec))->toBeSame($tuple);
+    expect(TypeAssert\matches_type_structure($ts, $array))->toBeSame($tuple);
+  }
 }

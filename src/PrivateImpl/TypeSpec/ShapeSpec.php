@@ -15,22 +15,22 @@ use type Facebook\TypeAssert\{
   TypeCoercionException
 };
 
-use namespace HH\Lib\C;
+use namespace HH\Lib\{C, Dict};
 
-final class ShapeSpec implements TypeSpec<array<string, mixed>> {
+final class ShapeSpec implements TypeSpec<shape()> {
 
   public function __construct(
     private dict<string, TypeSpec<mixed>> $inners,
   ) {
   }
 
-  public function coerceType(mixed $value): array<string, mixed> {
+  public function coerceType(mixed $value): shape() {
     if (!$value instanceof KeyedTraversable) {
       throw TypeCoercionException::withValue('shape', $value);
     }
 
     $value = dict($value);
-    $out = array();
+    $out = dict[];
     foreach ($this->inners as $key => $spec) {
       if (C\contains_key($value, $key)) {
         $out[$key] = $spec->coerceType($value[$key] ?? null);
@@ -51,16 +51,29 @@ final class ShapeSpec implements TypeSpec<array<string, mixed>> {
         $out[$k] = $v;
       }
     }
-    return $out;
+
+    return self::dictToShapeUNSAFE($out);
   }
 
-  public function assertType(mixed $value): array<string, mixed> {
-    if (!is_array($value)) {
+  public function assertType(mixed $value): shape() {
+    if (is_array($value)) {
+      $value = Dict\pull_with_key(
+        $value,
+        ($_k, $v) ==> $v,
+        ($k, $_v) ==> (new StringSpec())->assertType($k),
+      );
+    } else if (is_dict($value)) {
+      $value = dict(
+        (new DictSpec(
+          new StringSpec(),
+          new MixedSpec(),
+        ))->assertType($value)
+      );
+    } else {
       throw IncorrectTypeException::withValue('shape', $value);
     }
 
-    $value = dict($value);
-    $out = array();
+    $out = dict[];
     foreach ($this->inners as $key => $spec) {
       if (C\contains_key($value, $key)) {
         $out[$key] = $spec->assertType($value[$key] ?? null);
@@ -72,7 +85,7 @@ final class ShapeSpec implements TypeSpec<array<string, mixed>> {
       } catch (IncorrectTypeException $e) {
         throw new IncorrectTypeException(
           $e->getExpectedType(),
-          'missing shape field',
+          'missing shape field ("'.$key.'")',
         );
       }
     }
@@ -81,6 +94,18 @@ final class ShapeSpec implements TypeSpec<array<string, mixed>> {
         $out[$k] = $v;
       }
     }
-    return $out;
+
+    return self::dictToShapeUNSAFE($out);
+  }
+
+  private static function dictToShapeUNSAFE(
+    dict<string, mixed> $shape,
+  ): shape() {
+    if (is_dict(shape())) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $shape;
+    }
+    /* HH_IGNORE_ERROR[4007] */
+    return (array) $shape;
   }
 }

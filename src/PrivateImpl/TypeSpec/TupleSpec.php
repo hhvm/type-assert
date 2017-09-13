@@ -15,13 +15,15 @@ use type Facebook\TypeAssert\{
   TypeCoercionException
 };
 
-final class TupleSpec implements TypeSpec<array<mixed>> {
+newtype BogusTuple = (mixed, mixed);
+
+final class TupleSpec implements TypeSpec<BogusTuple> {
   public function __construct(
     private vec<TypeSpec<mixed>> $inners
   ) {
   }
 
-  public function coerceType(mixed $value): array<mixed> {
+  public function coerceType(mixed $value): BogusTuple {
     if (!(is_array($value) || is_vec($value))) {
       throw TypeCoercionException::withValue('tuple', $value);
     }
@@ -33,15 +35,17 @@ final class TupleSpec implements TypeSpec<array<mixed>> {
       throw TypeCoercionException::withValue('tuple', $value);
     }
 
-    $out = [];
+    $out = vec[];
     for ($i = 0; $i < $count; ++$i) {
       $out[] = $this->inners[$i]->coerceType($values[$i]);
     }
-    return $out;
+    return self::vecToTuple($out);
   }
 
-  public function assertType(mixed $value): array<mixed> {
-    if (!is_array($value)) {
+  public function assertType(mixed $value): BogusTuple {
+    if (is_array($value)) {
+      $value = vec($value);
+    } else if (!is_vec($value)) {
       throw IncorrectTypeException::withValue('tuple', $value);
     }
     $values = $value;
@@ -51,10 +55,21 @@ final class TupleSpec implements TypeSpec<array<mixed>> {
       throw IncorrectTypeException::withValue('tuple', $value);
     }
 
-    $out = [];
+    $out = vec[];
     for ($i = 0; $i < $count; ++$i) {
       $out[] = $this->inners[$i]->assertType($values[$i]);
     }
-    return $out;
+    return self::vecToTuple($out);
+  }
+
+  private static function vecToTuple(
+    vec<mixed> $tuple,
+  ): BogusTuple {
+    if (is_vec(tuple('foo'))) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $tuple;
+    }
+    /* HH_IGNORE_ERROR[4007] */
+    return (array) $tuple;
   }
 }
