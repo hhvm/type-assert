@@ -127,6 +127,30 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringKeyset'),
         keyset['foo', 'bar', 'baz', 'herp', 'derp'],
       ),
+      'empty array as array<>' => tuple(
+        type_structure(C::class, 'TArrayWithoutGenerics'),
+        [],
+      ),
+      'vec-like array as array<>' => tuple(
+        type_structure(C::class, 'TArrayWithoutGenerics'),
+        ['foo', 'bar'],
+      ),
+      'dict-like array as array<>' => tuple(
+        type_structure(C::class, 'TArrayWithoutGenerics'),
+        ['foo' => 'bar'],
+      ),
+      'empty array in array<> shape field' => tuple(
+        type_structure(C::class, 'TShapeWithArrayWithoutGenerics'),
+        shape('one' => true, 'two' => []),
+      ),
+      'vec-like array in array<> shape field' => tuple(
+        type_structure(C::class, 'TShapeWithArrayWithoutGenerics'),
+        shape('one' => true, 'two' => ['foo', 'bar']),
+      ),
+      'dict-like array in array<> shape field' => tuple(
+        type_structure(C::class, 'TShapeWithArrayWithoutGenerics'),
+        shape('one' => true, 'two' => ['foo' => 'bar']),
+      ),
     ];
   }
 

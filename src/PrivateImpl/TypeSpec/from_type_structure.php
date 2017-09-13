@@ -65,7 +65,7 @@ function from_type_structure<T>(
     case TypeStructureKind::OF_FUNCTION:
       throw new UnsupportedTypeException('OF_FUNCTION');
     case TypeStructureKind::OF_ARRAY:
-      $generics = TypeAssert\not_null($ts['generic_types']);
+      $generics = $ts['generic_types'] ?? vec[];
       switch (C\count($generics)) {
         case 0:
           /* HH_IGNORE_ERROR[4110] */

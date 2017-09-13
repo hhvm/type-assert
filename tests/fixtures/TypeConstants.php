@@ -43,4 +43,12 @@ class TypeConstants {
   const type TStringStringDict = dict<string, string>;
   const type TStringStringVecDict = dict<string, vec<string>>;
   const type TStringKeyset = keyset<string>;
+
+  /* HH_IGNORE_ERROR[4045] array without generics */
+  const type TArrayWithoutGenerics = array;
+  const type TShapeWithArrayWithoutGenerics = shape(
+    'one' => bool,
+    /* HH_IGNORE_ERROR[4045] array without generics */
+    'two' => array,
+  );
 }
