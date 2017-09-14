@@ -162,54 +162,76 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ->toBeSame($input);
   }
 
-  public function getExampleInvalidTypes(): array<string, (mixed, mixed)> {
+  public function getExampleInvalidTypes(
+  ): array<string, (mixed, mixed, vec<string>)> {
     return [
-      '"123" as int' => tuple(type_structure(C::class, 'TInt'), '123'),
-      '1 as bool' => tuple(type_structure(C::class, 'TBool'), 1),
-      'int as float' => tuple(type_structure(C::class, 'TFloat'), 123),
-      'int as string' => tuple(type_structure(C::class, 'TString'), 123),
-      'string as num' => tuple(type_structure(C::class, 'TNum'), '123'),
-      'float as arraykey' => tuple(type_structure(C::class, 'TArrayKey'), 1.23),
-      'incorrect tuple field types' =>
-        tuple(type_structure(C::class, 'TTuple'), tuple('foo', '123')),
-      'too many tuple fields' =>
-        tuple(type_structure(C::class, 'TTuple'), tuple('foo', 123, 456)),
+      '"123" as int' => tuple(type_structure(C::class, 'TInt'), '123', vec[]),
+      '1 as bool' => tuple(type_structure(C::class, 'TBool'), 1, vec[]),
+      'int as float' => tuple(type_structure(C::class, 'TFloat'), 123, vec[]),
+      'int as string' => tuple(type_structure(C::class, 'TString'), 123, vec[]),
+      'string as num' => tuple(type_structure(C::class, 'TNum'), '123', vec[]),
+      'float as arraykey' =>
+        tuple(type_structure(C::class, 'TArrayKey'), 1.23, vec[]),
+      'incorrect tuple field types' => tuple(
+        type_structure(C::class, 'TTuple'),
+        tuple('foo', '123'),
+        vec['tuple[1]'],
+      ),
+      'too many tuple fields' => tuple(
+        type_structure(C::class, 'TTuple'),
+        tuple('foo', 123, 456),
+        vec[],
+      ),
       'int in array<string>' =>
-        tuple(type_structure(C::class, 'TStringArray'), [123]),
+        tuple(type_structure(C::class, 'TStringArray'), [123], vec['array[0]']),
       'int keys in array<string, string>' => tuple(
         type_structure(C::class, 'TStringStringArray'),
         [123 => 'bar', 123 => 'derp'],
+        vec['array<Tk, _>'],
       ),
       'int values in array<string, string>' => tuple(
         type_structure(C::class, 'TStringStringArray'),
         ['foo' => 123, 'bar' => 456],
+        vec['array<_, Tv>'],
       ),
-      '0 as ?string' => tuple(type_structure(C::class, 'TNullableString'), 0),
+      '0 as ?string' =>
+        tuple(type_structure(C::class, 'TNullableString'), 0, vec[]),
       'wrong object type' =>
-        tuple(type_structure(C::class, 'TStdClass'), ImmMap {}),
-      'ints in Vector<string>' =>
-        tuple(type_structure(C::class, 'TStringVector'), Vector { 'foo', 123 }),
+        tuple(type_structure(C::class, 'TStdClass'), ImmMap {}, vec[]),
+      'ints in Vector<string>' => tuple(
+        type_structure(C::class, 'TStringVector'),
+        Vector { 'foo', 123 },
+        vec['HH\\Vector<T>'],
+      ),
       'int keys in Map<string, string>' => tuple(
         type_structure(C::class, 'TStringStringMap'),
         Map { 123 => 'foo' },
+        vec['HH\\Map<Tk, _>'],
       ),
       'int values in Map<string, string>' => tuple(
         type_structure(C::class, 'TStringStringMap'),
         Map { 'foo' => 'bar', 'herp' => 123 },
+        vec['HH\\Map<_, Tv>'],
       ),
-      'shape with missing field' =>
-        tuple(type_structure(C::class, 'TFlatShape'), shape()),
+      'shape with missing field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(),
+        vec['shape[someString]'],
+      ),
       'shape with incorrect field' => tuple(
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 123),
+        vec['shape[someString]'],
       ),
       'Vector<Vector<string>> with non-container child' => tuple(
         type_structure(C::class, 'TStringVectorVector'),
         Vector { 'foo' },
+        vec['HH\\Vector<T>'],
       ),
       'Vector<Vector<string>> with incorrect container child' => tuple(
         type_structure(C::class, 'TStringVectorVector'),
         Vector { ImmVector { 'foo' } },
+        vec['HH\\Vector<T>'],
       ),
       'nested shape with missing field' => tuple(
         type_structure(C::class, 'TNestedShape'),
@@ -217,6 +239,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
           'someString' => 'foo',
           'someOtherShape' => shape('not the field I want' => 'bar'),
         ),
+        vec['shape[someOtherShape]', 'shape[someString]'],
       ),
       'nested shape with incorrect subfield' => tuple(
         type_structure(C::class, 'TNestedShape'),
@@ -224,32 +247,38 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
           'someString' => 'foo',
           'someOtherShape' => shape('someString' => 123),
         ),
+        vec['shape[someOtherShape]', 'shape[someString]'],
       ),
-      'shape with missing container field' =>
-        tuple(type_structure(C::class, 'TShapeWithContainer'), array()),
+      'shape with missing container field' => tuple(
+        type_structure(C::class, 'TShapeWithContainer'),
+        array(),
+        vec['shape[container]'],
+      ),
       'shape with container of wrong kind' => tuple(
         type_structure(C::class, 'TShapeWithContainer'),
         array('container' => Vector { 123 }),
+        vec['shape[container]', 'HH\\Vector<T>'],
       ),
       'enum' => tuple(
         type_structure(C::class, 'TEnum'),
         ExampleEnum::DERP.'HERP DERP DERP',
+        vec[],
       ),
-      'vec with wrong value types' => tuple(
-        type_structure(C::class, 'TIntVec'),
-        vec['foo'],
-      ),
+      'vec with wrong value types' =>         tuple(type_structure(C::class, 'TIntVec'), vec['foo'], vec['vec<T>']),
       'dict with wrong key types' => tuple(
         type_structure(C::class, 'TStringStringDict'),
         dict[123 => 'foo'],
+        vec['dict<Tk, _>'],
       ),
       'dict with wrong value types' => tuple(
         type_structure(C::class, 'TStringStringDict'),
         dict['foo' => 123],
+        vec['dict<_, Tv>'],
       ),
       'keyset with wrong value types' => tuple(
         type_structure(C::class, 'TStringKeyset'),
         keyset[123, 456],
+        vec['keyset<T>'],
       ),
     ];
   }
@@ -260,10 +289,21 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
   public function testInvalidTypes<T>(
     TypeStructure<T> $ts,
     mixed $input,
+    vec<string> $frames,
   ): void {
-    expect(
-      () ==> TypeAssert\matches_type_structure($ts, $input),
-    )->toThrow(IncorrectTypeException::class);
+    $e = null;
+    try {
+      TypeAssert\matches_type_structure($ts, $input);
+    } catch (IncorrectTypeException $caught) {
+      $e = $caught;
+    }
+
+    $e = expect($e)->toBeInstanceOf(IncorrectTypeException::class);
+
+    expect($e->getSpecTrace()->getFrames())->toBeSame(
+      $frames,
+      'error trace differs',
+    );
   }
 
   public function testUnsupportedType(): void {
