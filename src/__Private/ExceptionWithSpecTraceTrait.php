@@ -15,7 +15,7 @@ use namespace HH\Lib\{C, Vec};
 trait ExceptionWithSpecTraceTrait {
   require extends \Exception;
 
-  abstract protected function getSpecTrace(): Trace;
+  abstract public function getSpecTrace(): Trace;
 
   final public function getMessage(): string {
     $message = parent::getMessage();

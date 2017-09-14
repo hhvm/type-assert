@@ -15,7 +15,7 @@ use type Facebook\TypeSpec\__Private\ExceptionWithSpecTraceTrait;
 
 final class TypeCoercionException extends \Exception {
   use ExceptionWithSpecTraceTrait;
-  
+
   public function __construct(
     private SpecTrace $specTrace,
     private string $target,
@@ -25,7 +25,7 @@ final class TypeCoercionException extends \Exception {
     parent::__construct($message);
   }
 
-  protected function getSpecTrace(): SpecTrace {
+  public function getSpecTrace(): SpecTrace {
     return $this->specTrace;
   }
 

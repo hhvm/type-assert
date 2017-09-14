@@ -28,18 +28,17 @@ final class ShapeSpec extends TypeSpec<shape()> {
     $value = dict($value);
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
+      $trace = $this->getTrace()->withFrame('shape['.$key.']');
       if (C\contains_key($value, $key)) {
-        $out[$key] = $spec
-          ->withTrace($this->getTrace()->withFrame('shape['.$key.']'))
-          ->coerceType($value[$key] ?? null);
+        $out[$key] = $spec->withTrace($trace)->coerceType($value[$key] ?? null);
         continue;
       }
 
       try {
-        $spec->coerceType(null);
+        $spec->withTrace($trace)->coerceType(null);
       } catch (TypeCoercionException $e) {
         throw new TypeCoercionException(
-          $this->getTrace(),
+          $trace,
           $e->getTargetType(),
           'missing shape field',
         );
@@ -55,35 +54,25 @@ final class ShapeSpec extends TypeSpec<shape()> {
   }
 
   public function assertType(mixed $value): shape() {
-    if (is_array($value)) {
-      $value = Dict\pull_with_key(
-        $value,
-        ($_k, $v) ==> $v,
-        ($k, $_v) ==> (new StringSpec())->assertType($k),
-      );
-    } else if (is_dict($value)) {
-      $value = dict(
-        (new DictSpec(new StringSpec(), new MixedSpec()))->assertType($value),
-      );
-    } else {
+    if (!(is_array($value) || is_dict($value))) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'shape', $value);
     }
+    assert($value instanceof KeyedContainer);
 
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
+      $trace = $this->getTrace()->withFrame('shape['.$key.']');
       if (C\contains_key($value, $key)) {
-        $out[$key] = $spec
-          ->withTrace($this->getTrace()->withFrame('shape['.$key.']'))
-          ->assertType($value[$key] ?? null);
+        $out[$key] = $spec->withTrace($trace)->assertType($value[$key] ?? null);
         continue;
       }
 
       try {
-        $spec->assertType(null);
+        $spec->withTrace($trace)->assertType(null);
       } catch (IncorrectTypeException $e) {
         throw new IncorrectTypeException(
-          $this->getTrace(),
+          $trace,
           $e->getExpectedType(),
           'missing shape field ("'.$key.'")',
         );

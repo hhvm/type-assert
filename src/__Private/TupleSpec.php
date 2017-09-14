@@ -29,13 +29,18 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
 
     $count = count($values);
     if ($count !== count($this->inners)) {
-      throw
-        TypeCoercionException::withValue($this->getTrace(), 'tuple', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        count($this->inners).'-tuple',
+        $value,
+      );
     }
 
     $out = vec[];
     for ($i = 0; $i < $count; ++$i) {
-      $out[] = $this->inners[$i]->coerceType($values[$i]);
+      $out[] = $this->inners[$i]
+        ->withTrace($this->getTrace()->withFrame('tuple['.$i.']'))
+        ->coerceType($values[$i]);
     }
     return self::vecToTuple($out);
   }
@@ -51,13 +56,18 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
 
     $count = count($values);
     if ($count !== count($this->inners)) {
-      throw
-        IncorrectTypeException::withValue($this->getTrace(), 'tuple', $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        count($this->inners).'-tuple',
+        $value,
+      );
     }
 
     $out = vec[];
     for ($i = 0; $i < $count; ++$i) {
-      $out[] = $this->inners[$i]->assertType($values[$i]);
+      $out[] = $this->inners[$i]
+        ->withTrace($this->getTrace()->withFrame('tuple['.$i.']'))
+        ->assertType($values[$i]);
     }
     return self::vecToTuple($out);
   }

@@ -31,16 +31,13 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
       );
     }
 
+    $kt = $this->getTrace()->withFrame('dict<Tk, _>');
+    $vt = $this->getTrace()->withFrame('dict<_, Tv>');
+
     return Dict\pull_with_key(
       $value,
-      ($_k, $v) ==> $this
-        ->tsv
-        ->withTrace($this->getTrace()->withFrame('dict<Tk, _>'))
-        ->coerceType($v),
-      ($k, $_v) ==> $this
-        ->tsk
-        ->withTrace($this->getTrace()->withFrame('dict<_, Tv>'))
-        ->coerceType($k),
+      ($_k, $v) ==> $this->tsv->withTrace($vt)->coerceType($v),
+      ($k, $_v) ==> $this->tsk->withTrace($kt)->coerceType($k),
     );
   }
 
@@ -53,16 +50,13 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
       );
     }
 
+    $kt = $this->getTrace()->withFrame('dict<Tk, _>');
+    $vt = $this->getTrace()->withFrame('dict<_, Tv>');
+
     return Dict\pull_with_key(
       $value,
-      ($_k, $v) ==> $this
-        ->tsv
-        ->withTrace($this->getTrace()->withFrame('dict<_, Tv>'))
-        ->assertType($v),
-      ($k, $_v) ==> $this
-        ->tsk
-        ->withTrace($this->getTrace()->withFrame('dict<Tk, _>'))
-        ->assertType($k),
+      ($_k, $v) ==> $this->tsv->withTrace($vt)->assertType($v),
+      ($k, $_v) ==> $this->tsk->withTrace($kt)->assertType($k),
     );
   }
 }

@@ -35,7 +35,9 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
       );
     }
 
-    $map = $container ==> $container->map($v ==> $this->inner->coerceType($v));
+    $trace = $this->getTrace()->withFrame($this->what.'<T>');
+    $map = $container ==>
+      $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
 
     if (is_a($value, $this->what)) {
       assert($value instanceof \ConstVector);
@@ -60,11 +62,28 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
       );
     }
     assert($value instanceof \ConstVector);
-    $value->filter($x ==> {
-      $this->inner->assertType($x);
-      return false;
+
+    // TupleSpec and ShapeSpec may change their values, and can be nested here
+    $changed = false;
+
+    $trace = $this->getTrace()->withFrame($this->what.'<T>');
+    $new_value = $value->map($x ==> {
+      $y = $this->inner->withTrace($trace)->assertType($x);
+      $changed = $changed || $x !== $y;
+      return $y;
     });
+
+    if (!$changed) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $value;
+    }
+
+    $value = new Vector($new_value);
+    if ($this->what === Vector::class) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $value;
+    }
     /* HH_IGNORE_ERROR[4110] */
-    return $value;
+    return $value->immutable();
   }
 }

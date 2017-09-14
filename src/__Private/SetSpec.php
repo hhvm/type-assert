@@ -35,7 +35,9 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
       );
     }
 
-    $map = $container ==> $container->map($v ==> $this->inner->coerceType($v));
+    $trace = $this->getTrace()->withFrame($this->what.'<T>');
+    $map = $container ==>
+      $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
 
     if (is_a($value, $this->what)) {
       assert($value instanceof \ConstSet);
@@ -59,9 +61,12 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
         $value,
       );
     }
+
     assert($value instanceof \ConstSet);
+
+    $trace = $this->getTrace()->withFrame($this->what.'<T>');
     $value->filter($x ==> {
-      $this->inner->assertType($x);
+      $this->inner->withTrace($trace)->assertType($x);
       return false;
     });
     /* HH_IGNORE_ERROR[4110] */

@@ -24,12 +24,10 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
         TypeCoercionException::withValue($this->getTrace(), 'vec<T>', $value);
     }
 
+    $trace = $this->getTrace()->withFrame('vec<T>');
     return Vec\map(
       $value,
-      $inner ==> $this
-        ->inner
-        ->withTrace($this->getTrace()->withFrame('vec<T>'))
-        ->coerceType($inner),
+      $inner ==> $this->inner->withTrace($trace)->coerceType($inner),
     );
   }
 
@@ -39,12 +37,10 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
         IncorrectTypeException::withValue($this->getTrace(), 'vec<T>', $value);
     }
 
+    $trace = $this->getTrace()->withFrame('vec<T>');
     return Vec\map(
       $value,
-      $inner ==> $this
-        ->inner
-        ->withTrace($this->getTrace()->withFrame('vec<T>'))
-        ->assertType($inner),
+      $inner ==> $this->inner->withTrace($trace)->assertType($inner),
     );
   }
 }

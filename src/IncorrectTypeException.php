@@ -25,7 +25,7 @@ final class IncorrectTypeException extends \Exception {
     parent::__construct($message);
   }
 
-  protected function getSpecTrace(): SpecTrace {
+  public function getSpecTrace(): SpecTrace {
     return $this->specTrace;
   }
 

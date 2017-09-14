@@ -27,12 +27,11 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
       );
     }
 
+    $trace = $this->getTrace()->withFrame('keyset<T>');
+
     return Keyset\map(
       $value,
-      $inner ==> $this
-        ->inner
-        ->withTrace($this->getTrace()->withFrame('keyset<T>'))
-        ->coerceType($inner),
+      $inner ==> $this->inner->withTrace($trace)->coerceType($inner),
     );
   }
 
@@ -45,12 +44,11 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
       );
     }
 
+    $trace = $this->getTrace()->withFrame('keyset<T>');
+
     return Keyset\map(
       $value,
-      $inner ==> $this
-        ->inner
-        ->withTrace($this->getTrace()->withFrame('keyset<T>'))
-        ->assertType($inner),
+      $inner ==> $this->inner->withTrace($trace)->assertType($inner),
     );
   }
 }

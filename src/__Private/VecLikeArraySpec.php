@@ -37,7 +37,30 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
       );
     }
 
-    return Vec\map($value, $inner ==> $this->inner->assertType($inner))
+    $counter = (
+      function(): \Generator<int, int, void> {
+        $i = 0;
+        while (true) {
+          yield $i++;
+        }
+      }
+    )();
+
+    return Vec\map_with_key(
+      $value,
+      ($k, $inner) ==> {
+        $i = $counter->current();
+        $counter->next();
+        if ($k !== $i) {
+          throw
+            IncorrectTypeException::withValue($this->getTrace(), 'key '.$i, $k);
+        }
+        return $this
+          ->inner
+          ->withTrace($this->getTrace()->withFrame('array['.$i.']'))
+          ->assertType($inner);
+      },
+    )
       |> array_values($$);
   }
 }

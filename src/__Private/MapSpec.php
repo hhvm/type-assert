@@ -12,7 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\C;
+use namespace HH\Lib\{C, Dict};
 
 final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
   extends TypeSpec<T> {
@@ -41,9 +41,13 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     $tsk = $this->tsk;
     $tsv = $this->tsv;
 
+    $kt = $this->getTrace()->withFrame($this->what.'<Tk, _>');
+    $vt = $this->getTrace()->withFrame($this->what.'<_, Tv>');
+
     $out = Map {};
     foreach ($value as $k => $v) {
-      $out[$tsk->coerceType($k)] = $tsv->coerceType($v);
+      $out[$tsk->withTrace($kt)->coerceType($k)] =
+        $tsv->withTrace($vt)->coerceType($v);
     }
 
     if ($this->what === Map::class) {
@@ -64,16 +68,34 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
       );
     }
     assert($value instanceof \ConstMap);
+
     $tsk = $this->tsk;
     $tsv = $this->tsv;
-    $value->filterWithKey(
+    $kt = $this->getTrace()->withFrame($this->what.'<Tk, _>');
+    $vt = $this->getTrace()->withFrame($this->what.'<_, Tv>');
+
+    // TupleSpec and ShapeSpec may change their values, and can be nested here
+    $changed = false;
+
+    $tuples = $value->mapWithKey(
       ($k, $v) ==> {
-        $tsk->assertType($k);
-        $tsv->assertType($v);
-        return false;
+        $k2 = $tsk->withTrace($kt)->assertType($k);
+        $v2 = $tsv->withTrace($vt)->assertType($v);
+        $changed = $changed || $k2 !== $k || $v2 !== $v;
+        return tuple($k2, $v2);
       },
     );
+    if (!$changed) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $value;
+    }
+
+    $value = new Map(Dict\from_entries($tuples));
+    if ($this->what === Map::class) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $value;
+    }
     /* HH_IGNORE_ERROR[4110] */
-    return $value;
+    return $value->immutable();
   }
 }

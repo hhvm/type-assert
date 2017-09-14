@@ -33,10 +33,13 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
       );
     }
 
+    $kt = $this->getTrace()->withFrame('array<Tk, _>');
+    $vt = $this->getTrace()->withFrame('array<_, Tv>');
+
     return Dict\pull_with_key(
       $value,
-      ($_k, $v) ==> $this->tsv->coerceType($v),
-      ($k, $_v) ==> $this->tsk->coerceType($k),
+      ($_k, $v) ==> $this->tsv->withTrace($vt)->coerceType($v),
+      ($k, $_v) ==> $this->tsk->withTrace($kt)->coerceType($k),
     )
       |> /* HH_IGNORE_ERROR[4007] PHP array cast */ (array)$$;
   }
@@ -50,10 +53,13 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
       );
     }
 
+    $kt = $this->getTrace()->withFrame('array<Tk, _>');
+    $vt = $this->getTrace()->withFrame('array<_, Tv>');
+
     return Dict\pull_with_key(
       $value,
-      ($_k, $v) ==> $this->tsv->assertType($v),
-      ($k, $_v) ==> $this->tsk->assertType($k),
+      ($_k, $v) ==> $this->tsv->withTrace($vt)->assertType($v),
+      ($k, $_v) ==> $this->tsk->withTrace($kt)->assertType($k),
     )
       |> /* HH_IGNORE_ERROR[4007] PHP array cast */ (array)$$;
   }
