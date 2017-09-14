@@ -8,11 +8,12 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\UnsupportedTypeException;
+use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict, Vec};
-use namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+use namespace Facebook\TypeSpec;
 use namespace Facebook\TypeAssert;
 
 function from_type_structure<T>(

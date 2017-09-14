@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeCoerce;
 
-use namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+use namespace Facebook\TypeSpec;
 
 function string(mixed $x): string {
   return TypeSpec\string()->coerceType($x);
@@ -44,5 +44,5 @@ function match_type_structure<T>(
   TypeStructure<T> $ts,
   mixed $value,
 ): T {
-  return TypeSpec\from_type_structure($ts)->coerceType($value);
+  return TypeSpec\__Private\from_type_structure($ts)->coerceType($value);
 }

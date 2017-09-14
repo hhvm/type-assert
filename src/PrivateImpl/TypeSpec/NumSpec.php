@@ -8,7 +8,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
+
+use type Facebook\TypeSpec\TypeSpec;
 
 final class NumSpec extends UnionSpec<num> {
   public function __construct() {
@@ -18,8 +20,4 @@ final class NumSpec extends UnionSpec<num> {
       new FloatSpec(),
     );
   }
-}
-
-function num(): TypeSpec<num> {
-  return new NumSpec();
 }

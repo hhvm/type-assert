@@ -8,7 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
@@ -16,7 +16,7 @@ use type Facebook\TypeAssert\{
 };
 
 trait NoCoercionSpecTrait<T> {
-  require implements TypeSpec<T>;
+  require implements \Facebook\TypeSpec\TypeSpec<T>;
 
   final public function coerceType(mixed $value): T {
     try {

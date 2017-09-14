@@ -8,12 +8,13 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
 final class StringSpec implements TypeSpec<string> {
   public function coerceType(mixed $value): string {
@@ -35,8 +36,4 @@ final class StringSpec implements TypeSpec<string> {
     }
     throw new IncorrectTypeException('string', gettype($value));
   }
-}
-
-function string(): TypeSpec<string> {
-  return new StringSpec();
 }

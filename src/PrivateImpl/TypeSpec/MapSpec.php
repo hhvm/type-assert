@@ -8,13 +8,13 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
-
+use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\C;
 
 final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>

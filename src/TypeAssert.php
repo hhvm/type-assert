@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeAssert;
 
-use namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+use namespace Facebook\TypeSpec;
 
 function string(mixed $x): string {
   return TypeSpec\string()->assertType($x);
@@ -65,5 +65,5 @@ function matches_type_structure<T>(
   TypeStructure<T> $ts,
   mixed $value,
 ): T {
-  return TypeSpec\from_type_structure($ts)->assertType($value);
+  return TypeSpec\__Private\from_type_structure($ts)->assertType($value);
 }

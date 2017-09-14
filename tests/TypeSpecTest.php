@@ -14,7 +14,7 @@ use type Facebook\TypeAssert\{
     IncorrectTypeException,
     TypeCoercionException
 };
-use type Facebook\TypeAssert\PrivateImpl\TypeSpec\TypeSpec;
+use type Facebook\TypeSpec\TypeSpec;
 use function Facebook\FBExpect\expect;
 
 abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {

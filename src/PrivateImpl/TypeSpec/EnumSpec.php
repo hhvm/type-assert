@@ -8,7 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
@@ -18,7 +18,7 @@ use type Facebook\TypeAssert\{
 final class EnumSpec<
   Tinner,
   T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>
-> implements TypeSpec<T> {
+> implements \Facebook\TypeSpec\TypeSpec<T> {
   public function __construct(
     private classname<T> $what,
   ) {

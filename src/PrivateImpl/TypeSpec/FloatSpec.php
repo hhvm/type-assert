@@ -8,14 +8,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
 
-final class FloatSpec implements TypeSpec<float> {
+final class FloatSpec implements \Facebook\TypeSpec\TypeSpec<float> {
   public function coerceType(mixed $value): float {
     if (is_float($value)) {
       return $value;
@@ -51,8 +51,4 @@ final class FloatSpec implements TypeSpec<float> {
     }
     throw IncorrectTypeException::withValue('float', $value);
   }
-}
-
-function float(): TypeSpec<float> {
-  return new FloatSpec();
 }

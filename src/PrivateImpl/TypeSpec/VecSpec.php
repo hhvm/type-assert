@@ -8,13 +8,13 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
-
+use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Vec;
 
 final class VecSpec<T> implements TypeSpec<vec<T>> {
@@ -44,9 +44,4 @@ final class VecSpec<T> implements TypeSpec<vec<T>> {
       $inner ==> $this->inner->assertType($inner),
     );
   }
-}
-
-
-function vec<Tv>(TypeSpec<Tv> $inner): TypeSpec<vec<Tv>> {
-  return new VecSpec($inner);
 }

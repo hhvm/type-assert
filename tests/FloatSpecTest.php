@@ -10,8 +10,8 @@
 
 namespace Facebook\TypeAssert;
 
-use namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
-use type Facebook\TypeAssert\PrivateImpl\TypeSpec\TypeSpec;
+use namespace Facebook\TypeSpec;
+use type Facebook\TypeSpec\TypeSpec;
 use function Facebook\FBExpect\expect;
 
 final class FloatSpecTest extends TypeSpecTest<float> {

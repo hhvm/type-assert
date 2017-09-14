@@ -8,13 +8,13 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
-
+use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Keyset;
 
 final class KeysetSpec<T as arraykey> implements TypeSpec<keyset<T>> {
@@ -44,10 +44,4 @@ final class KeysetSpec<T as arraykey> implements TypeSpec<keyset<T>> {
       $inner ==> $this->inner->assertType($inner),
     );
   }
-}
-
-function keyset<Tk as arraykey>(
-  TypeSpec<Tk> $inner,
-): TypeSpec<keyset<Tk>> {
-  return new KeysetSpec($inner);
 }

@@ -8,12 +8,13 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
 final class NullableSpec<T> implements TypeSpec<?T> {
   public function __construct(
@@ -48,8 +49,4 @@ final class NullableSpec<T> implements TypeSpec<?T> {
       );
     }
   }
-}
-
-function nullable<T>(TypeSpec<T> $inner): TypeSpec<?T> {
-  return new NullableSpec($inner);
 }

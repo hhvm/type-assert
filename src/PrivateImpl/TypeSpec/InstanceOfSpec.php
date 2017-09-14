@@ -8,14 +8,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
 
-final class InstanceOfSpec<T> implements TypeSpec<T> {
+final class InstanceOfSpec<T> implements \Facebook\TypeSpec\TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
   public function __construct(
@@ -30,8 +30,4 @@ final class InstanceOfSpec<T> implements TypeSpec<T> {
     }
     throw IncorrectTypeException::withValue($this->what, $value);
   }
-}
-
-function instance_of<T>(classname<T> $what): TypeSpec<T> {
-  return new InstanceOfSpec($what);
 }

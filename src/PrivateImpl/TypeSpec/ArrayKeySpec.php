@@ -8,7 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeAssert\PrivateImpl\TypeSpec;
+namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
@@ -23,8 +23,4 @@ final class ArrayKeySpec extends UnionSpec<arraykey> {
       new IntSpec(),
     );
   }
-}
-
-function arraykey(): TypeSpec<arraykey> {
-  return new ArrayKeySpec();
 }
