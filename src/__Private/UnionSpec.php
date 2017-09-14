@@ -10,18 +10,12 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 abstract class UnionSpec<+T> extends TypeSpec<T> {
   private vec<TypeSpec<T>> $inners;
-  public function __construct(
-    private string $name,
-    TypeSpec<T> ...$inners
-  ) {
+  public function __construct(private string $name, TypeSpec<T> ...$inners) {
     $this->inners = vec($inners);
   }
 
@@ -38,7 +32,8 @@ abstract class UnionSpec<+T> extends TypeSpec<T> {
         // try next
       }
     }
-    throw TypeCoercionException::withValue($this->name, $value);
+    throw
+      TypeCoercionException::withValue($this->getTrace(), $this->name, $value);
   }
 
   final public function assertType(mixed $value): T {
@@ -49,6 +44,7 @@ abstract class UnionSpec<+T> extends TypeSpec<T> {
         // try next
       }
     }
-    throw IncorrectTypeException::withValue($this->name, $value);
+    throw
+      IncorrectTypeException::withValue($this->getTrace(), $this->name, $value);
   }
 }

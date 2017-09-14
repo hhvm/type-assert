@@ -10,30 +10,27 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 newtype BogusTuple = (mixed, mixed);
 
 final class TupleSpec extends TypeSpec<BogusTuple> {
-  public function __construct(
-    private vec<TypeSpec<mixed>> $inners
-  ) {
+  public function __construct(private vec<TypeSpec<mixed>> $inners) {
   }
 
   public function coerceType(mixed $value): BogusTuple {
     if (!(is_array($value) || is_vec($value))) {
-      throw TypeCoercionException::withValue('tuple', $value);
+      throw
+        TypeCoercionException::withValue($this->getTrace(), 'tuple', $value);
     }
     assert($value instanceof Traversable);
     $values = vec($value);
 
     $count = count($values);
     if ($count !== count($this->inners)) {
-      throw TypeCoercionException::withValue('tuple', $value);
+      throw
+        TypeCoercionException::withValue($this->getTrace(), 'tuple', $value);
     }
 
     $out = vec[];
@@ -47,13 +44,15 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     if (is_array($value)) {
       $value = vec($value);
     } else if (!is_vec($value)) {
-      throw IncorrectTypeException::withValue('tuple', $value);
+      throw
+        IncorrectTypeException::withValue($this->getTrace(), 'tuple', $value);
     }
     $values = $value;
 
     $count = count($values);
     if ($count !== count($this->inners)) {
-      throw IncorrectTypeException::withValue('tuple', $value);
+      throw
+        IncorrectTypeException::withValue($this->getTrace(), 'tuple', $value);
     }
 
     $out = vec[];
@@ -63,14 +62,12 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     return self::vecToTuple($out);
   }
 
-  private static function vecToTuple(
-    vec<mixed> $tuple,
-  ): BogusTuple {
+  private static function vecToTuple(vec<mixed> $tuple): BogusTuple {
     if (is_vec(tuple('foo'))) {
       /* HH_IGNORE_ERROR[4110] */
       return $tuple;
     }
     /* HH_IGNORE_ERROR[4007] */
-    return (array) $tuple;
+    return (array)$tuple;
   }
 }

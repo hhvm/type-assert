@@ -10,16 +10,11 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class NullableSpec<T> extends TypeSpec<?T> {
-  public function __construct(
-    private TypeSpec<T> $inner,
-  ) {
+  public function __construct(private TypeSpec<T> $inner) {
   }
 
   public function coerceType(mixed $value): ?T {
@@ -30,6 +25,7 @@ final class NullableSpec<T> extends TypeSpec<?T> {
       return $this->inner->coerceType($value);
     } catch (TypeCoercionException $e) {
       throw new TypeCoercionException(
+        $this->getTrace(),
         '?'.$e->getTargetType(),
         $e->getActualType(),
       );
@@ -44,6 +40,7 @@ final class NullableSpec<T> extends TypeSpec<?T> {
       return $this->inner->assertType($value);
     } catch (IncorrectTypeException $e) {
       throw new IncorrectTypeException(
+        $this->getTrace(),
         '?'.$e->getExpectedType(),
         $e->getActualType(),
       );

@@ -10,10 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 
 trait NoCoercionSpecTrait<T> {
   require extends \Facebook\TypeSpec\TypeSpec<T>;
@@ -22,7 +19,11 @@ trait NoCoercionSpecTrait<T> {
     try {
       return $this->assertType($value);
     } catch (IncorrectTypeException $e) {
-      throw TypeCoercionException::withValue($e->getExpectedType(), $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        $e->getExpectedType(),
+        $value,
+      );
     }
   }
 }

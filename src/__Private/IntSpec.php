@@ -10,10 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class IntSpec extends TypeSpec<int> {
@@ -22,18 +19,18 @@ final class IntSpec extends TypeSpec<int> {
       return $value;
     }
     if ($value instanceof \Stringish) {
-      $str = (string) $value;
+      $str = (string)$value;
       if ($str !== '' && ctype_digit($str)) {
-        return (int) $str;
+        return (int)$str;
       }
     }
-    throw TypeCoercionException::withValue('int', $value);
+    throw TypeCoercionException::withValue($this->getTrace(), 'int', $value);
   }
 
   public function assertType(mixed $value): int {
     if (is_int($value)) {
       return $value;
     }
-    throw IncorrectTypeException::withValue('int', $value);
+    throw IncorrectTypeException::withValue($this->getTrace(), 'int', $value);
   }
 }

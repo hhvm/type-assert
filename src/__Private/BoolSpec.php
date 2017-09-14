@@ -10,10 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class BoolSpec extends TypeSpec<bool> {
@@ -27,13 +24,13 @@ final class BoolSpec extends TypeSpec<bool> {
     if ($value === 1) {
       return true;
     }
-    throw TypeCoercionException::withValue('bool', $value);
+    throw TypeCoercionException::withValue($this->getTrace(), 'bool', $value);
   }
 
   public function assertType(mixed $value): bool {
     if (is_bool($value)) {
       return $value;
     }
-    throw IncorrectTypeException::withValue('bool', $value);
+    throw IncorrectTypeException::withValue($this->getTrace(), 'bool', $value);
   }
 }

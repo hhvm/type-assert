@@ -16,12 +16,10 @@ use namespace HH\Lib\{C, Dict, Vec};
 use namespace Facebook\TypeSpec;
 use namespace Facebook\TypeAssert;
 
-function from_type_structure<T>(
-  TypeStructure<T> $ts
-): TypeSpec<T> {
+function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
   if ($ts['nullable'] ?? false) {
     $ts['nullable'] = false;
-      /* HH_IGNORE_ERROR[4110] */
+    /* HH_IGNORE_ERROR[4110] */
     return new NullableSpec(from_type_structure($ts));
   }
 
@@ -73,9 +71,7 @@ function from_type_structure<T>(
           return new UntypedArraySpec();
         case 1:
           /* HH_IGNORE_ERROR[4110] */
-          return new VecLikeArraySpec(
-            from_type_structure($generics[0]),
-          );
+          return new VecLikeArraySpec(from_type_structure($generics[0]));
         case 2:
           /* HH_IGNORE_ERROR[4110] */
           return new DictLikeArraySpec(
@@ -87,10 +83,7 @@ function from_type_structure<T>(
       }
     case TypeStructureKind::OF_DICT:
       $generics = TypeAssert\not_null($ts['generic_types']);
-      invariant(
-        C\count($generics) === 2,
-        'dicts must have 2 generics',
-      );
+      invariant(C\count($generics) === 2, 'dicts must have 2 generics');
       /* HH_IGNORE_ERROR[4110] */
       return TypeSpec\dict(
         from_type_structure($generics[0]),
@@ -98,24 +91,14 @@ function from_type_structure<T>(
       );
     case TypeStructureKind::OF_KEYSET:
       $generics = TypeAssert\not_null($ts['generic_types']);
-      invariant(
-        C\count($generics) === 1,
-        'keysets must have 1 generic',
-      );
+      invariant(C\count($generics) === 1, 'keysets must have 1 generic');
       /* HH_IGNORE_ERROR[4110] */
-      return TypeSpec\keyset(
-        from_type_structure($generics[0]),
-      );
+      return TypeSpec\keyset(from_type_structure($generics[0]));
     case TypeStructureKind::OF_VEC:
       $generics = TypeAssert\not_null($ts['generic_types']);
-      invariant(
-        C\count($generics) === 1,
-        'vecs must have 1 generic',
-      );
+      invariant(C\count($generics) === 1, 'vecs must have 1 generic');
       /* HH_IGNORE_ERROR[4110] */
-      return TypeSpec\vec(
-        from_type_structure($generics[0]),
-      );
+      return TypeSpec\vec(from_type_structure($generics[0]));
     case TypeStructureKind::OF_GENERIC:
       throw new UnsupportedTypeException('OF_GENERIC');
     case TypeStructureKind::OF_SHAPE:
@@ -131,7 +114,7 @@ function from_type_structure<T>(
     case TypeStructureKind::OF_CLASS:
     case TypeStructureKind::OF_INTERFACE:
       $classname = TypeAssert\not_null($ts['classname']);
-      switch($classname) {
+      switch ($classname) {
         case Vector::class:
         case ImmVector::class:
         case \ConstVector::class:
@@ -163,9 +146,7 @@ function from_type_structure<T>(
             ),
           );
         default:
-          return new InstanceOfSpec(
-            TypeAssert\not_null($ts['classname']),
-          );
+          return new InstanceOfSpec(TypeAssert\not_null($ts['classname']));
       }
     case TypeStructureKind::OF_TRAIT:
       throw new UnsupportedTypeException('OF_TRAIT');

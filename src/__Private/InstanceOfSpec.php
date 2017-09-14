@@ -10,18 +10,13 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class InstanceOfSpec<T> extends TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
-  public function __construct(
-    private classname<T> $what,
-  ) {
+  public function __construct(private classname<T> $what) {
   }
 
   public function assertType(mixed $value): T {
@@ -29,6 +24,7 @@ final class InstanceOfSpec<T> extends TypeSpec<T> {
       /* HH_IGNORE_ERROR[4110] unsafe for generics */
       return $value;
     }
-    throw IncorrectTypeException::withValue($this->what, $value);
+    throw
+      IncorrectTypeException::withValue($this->getTrace(), $this->what, $value);
   }
 }

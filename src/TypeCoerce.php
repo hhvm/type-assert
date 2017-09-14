@@ -40,9 +40,6 @@ function arraykey(mixed $x): arraykey {
   return TypeSpec\arraykey()->coerceType($x);
 }
 
-function match_type_structure<T>(
-  TypeStructure<T> $ts,
-  mixed $value,
-): T {
+function match_type_structure<T>(TypeStructure<T> $ts, mixed $value): T {
   return TypeSpec\__Private\from_type_structure($ts)->coerceType($value);
 }

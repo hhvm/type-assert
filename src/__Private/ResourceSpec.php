@@ -10,27 +10,30 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class ResourceSpec extends TypeSpec<resource> {
-  public function __construct(
-    private ?string $kind= null,
-  ) {
+  public function __construct(private ?string $kind = null) {
   }
   use NoCoercionSpecTrait<resource>;
 
   public function assertType(mixed $value): resource {
     if (!is_resource($value)) {
-      throw IncorrectTypeException::withValue($this->getPrettyType(), $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        $this->getPrettyType(),
+        $value,
+      );
     }
 
     $kind = $this->kind;
     if ($kind !== null && get_resource_type($value) !== $kind) {
-      throw IncorrectTypeException::withValue($this->getPrettyType(), $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        $this->getPrettyType(),
+        $value,
+      );
     }
 
     return $value;

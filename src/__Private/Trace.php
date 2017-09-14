@@ -10,10 +10,17 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeSpec\TypeSpec;
+final class Trace {
+  const type TFrame = string;
+  private vec<self::TFrame> $frames = vec[];
 
-final class NumSpec extends UnionSpec<num> {
-  public function __construct() {
-    parent::__construct('num', new IntSpec(), new FloatSpec());
+  public function withFrame(self::TFrame $frame): this {
+    $new = clone $this;
+    $new->frames[] = $frame;
+    return $new;
+  }
+
+  public function getFrames(): vec<self::TFrame> {
+    return $this->frames;
   }
 }

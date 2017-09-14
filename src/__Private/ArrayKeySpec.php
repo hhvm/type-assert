@@ -10,17 +10,10 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 
 final class ArrayKeySpec extends UnionSpec<arraykey> {
   public function __construct() {
-    parent::__construct(
-      'arraykey',
-      new StringSpec(),
-      new IntSpec(),
-    );
+    parent::__construct('arraykey', new StringSpec(), new IntSpec());
   }
 }

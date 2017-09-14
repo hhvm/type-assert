@@ -10,15 +10,11 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Dict;
 
-final class DictSpec<Tk as arraykey, Tv>
-  extends TypeSpec<dict<Tk, Tv>> {
+final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
 
   public function __construct(
     private TypeSpec<Tk> $tsk,
@@ -28,25 +24,45 @@ final class DictSpec<Tk as arraykey, Tv>
 
   public function coerceType(mixed $value): dict<Tk, Tv> {
     if (!$value instanceof KeyedTraversable) {
-      throw TypeCoercionException::withValue('dict<Tk, Tv>', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        'dict<Tk, Tv>',
+        $value,
+      );
     }
 
     return Dict\pull_with_key(
       $value,
-      ($_k, $v) ==> $this->tsv->coerceType($v),
-      ($k, $_v) ==> $this->tsk->coerceType($k),
+      ($_k, $v) ==> $this
+        ->tsv
+        ->withTrace($this->getTrace()->withFrame('dict<Tk, _>'))
+        ->coerceType($v),
+      ($k, $_v) ==> $this
+        ->tsk
+        ->withTrace($this->getTrace()->withFrame('dict<_, Tv>'))
+        ->coerceType($k),
     );
   }
 
   public function assertType(mixed $value): dict<Tk, Tv> {
     if (!is_dict($value)) {
-      throw TypeCoercionException::withValue('dict<Tk, Tv>', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        'dict<Tk, Tv>',
+        $value,
+      );
     }
 
     return Dict\pull_with_key(
       $value,
-      ($_k, $v) ==> $this->tsv->assertType($v),
-      ($k, $_v) ==> $this->tsk->assertType($k),
+      ($_k, $v) ==> $this
+        ->tsv
+        ->withTrace($this->getTrace()->withFrame('dict<_, Tv>'))
+        ->assertType($v),
+      ($k, $_v) ==> $this
+        ->tsk
+        ->withTrace($this->getTrace()->withFrame('dict<Tk, _>'))
+        ->assertType($k),
     );
   }
 }

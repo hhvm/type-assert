@@ -10,38 +10,41 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Vec;
 
 final class VecSpec<T> extends TypeSpec<vec<T>> {
-  public function __construct(
-    private TypeSpec<T> $inner,
-  ) {
+  public function __construct(private TypeSpec<T> $inner) {
   }
 
   public function coerceType(mixed $value): vec<T> {
     if (!$value instanceof Traversable) {
-      throw TypeCoercionException::withValue('vec<T>', $value);
+      throw
+        TypeCoercionException::withValue($this->getTrace(), 'vec<T>', $value);
     }
 
     return Vec\map(
       $value,
-      $inner ==> $this->inner->coerceType($inner),
+      $inner ==> $this
+        ->inner
+        ->withTrace($this->getTrace()->withFrame('vec<T>'))
+        ->coerceType($inner),
     );
   }
 
   public function assertType(mixed $value): vec<T> {
     if (!is_vec($value)) {
-      throw IncorrectTypeException::withValue('vec<T>', $value);
+      throw
+        IncorrectTypeException::withValue($this->getTrace(), 'vec<T>', $value);
     }
 
     return Vec\map(
       $value,
-      $inner ==> $this->inner->assertType($inner),
+      $inner ==> $this
+        ->inner
+        ->withTrace($this->getTrace()->withFrame('vec<T>'))
+        ->assertType($inner),
     );
   }
 }

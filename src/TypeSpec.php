@@ -11,8 +11,20 @@
 namespace Facebook\TypeSpec;
 
 abstract class TypeSpec<+T> {
+  private ?__Private\Trace $trace = null;
+
   abstract public function coerceType(mixed $value): T;
   abstract public function assertType(mixed $value): T;
+
+  final protected function getTrace(): __Private\Trace {
+    return $this->trace ?? new __Private\Trace();
+  }
+
+  final protected function withTrace(__Private\Trace $trace): TypeSpec<T> {
+    $new = clone $this;
+    $new->trace = $trace;
+    return $new;
+  }
 }
 
 function arraykey(): TypeSpec<arraykey> {
@@ -34,9 +46,7 @@ function constmap<Tk as arraykey, Tv>(
   return new __Private\MapSpec(\ConstMap::class, $tsk, $tsv);
 }
 
-function constset<Tv as arraykey>(
-  TypeSpec<Tv> $tsv,
-): TypeSpec<\ConstSet<Tv>> {
+function constset<Tv as arraykey>(TypeSpec<Tv> $tsv): TypeSpec<\ConstSet<Tv>> {
   return new __Private\SetSpec(\ConstSet::class, $tsv);
 }
 
@@ -58,10 +68,9 @@ function dict_like_array<Tk as arraykey, Tv>(
   return new __Private\DictLikeArraySpec($tsk, $tsv);
 }
 
-function enum<
-  Tinner,
-  T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>
->(classname<T> $what): TypeSpec<T> {
+function enum<Tinner, T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>>(
+  classname<T> $what,
+): TypeSpec<T> {
   return new __Private\EnumSpec($what);
 }
 
@@ -84,9 +93,7 @@ function immmap<Tk as arraykey, Tv>(
   return new __Private\MapSpec(ImmMap::class, $tsk, $tsv);
 }
 
-function immset<Tv as arraykey>(
-  TypeSpec<Tv> $tsv,
-): TypeSpec<ImmSet<Tv>> {
+function immset<Tv as arraykey>(TypeSpec<Tv> $tsv): TypeSpec<ImmSet<Tv>> {
   return new __Private\SetSpec(ImmSet::class, $tsv);
 }
 
@@ -94,9 +101,7 @@ function immvector<Tv>(TypeSpec<Tv> $inner): TypeSpec<ImmVector<Tv>> {
   return new __Private\VectorSpec(ImmVector::class, $inner);
 }
 
-function keyset<Tk as arraykey>(
-  TypeSpec<Tk> $inner,
-): TypeSpec<keyset<Tk>> {
+function keyset<Tk as arraykey>(TypeSpec<Tk> $inner): TypeSpec<keyset<Tk>> {
   return new __Private\KeysetSpec($inner);
 }
 
@@ -120,15 +125,11 @@ function num(): TypeSpec<num> {
   return new __Private\NumSpec();
 }
 
-function resource(
-  ?string $kind = null,
-): TypeSpec<resource> {
+function resource(?string $kind = null): TypeSpec<resource> {
   return new __Private\ResourceSpec($kind);
 }
 
-function set<Tv as arraykey>(
-  TypeSpec<Tv> $tsv,
-): TypeSpec<Set<Tv>> {
+function set<Tv as arraykey>(TypeSpec<Tv> $tsv): TypeSpec<Set<Tv>> {
   return new __Private\SetSpec(Set::class, $tsv);
 }
 

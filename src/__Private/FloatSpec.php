@@ -10,10 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class FloatSpec extends TypeSpec<float> {
@@ -23,33 +20,29 @@ final class FloatSpec extends TypeSpec<float> {
     }
 
     if (is_int($value)) {
-      return (float) $value;
+      return (float)$value;
     }
 
     if ($value instanceof \Stringish) {
-      $str = (string) $value;
+      $str = (string)$value;
       if ($str === '') {
-        throw TypeCoercionException::withValue('float', $value);
+        throw
+          TypeCoercionException::withValue($this->getTrace(), 'float', $value);
       }
       if (ctype_digit($value)) {
-        return (float) $str;
+        return (float)$str;
       }
-      if (
-        preg_match(
-          "/^(\\d*\\.)?\\d+([eE]\\d+)?$/",
-          $str,
-        ) === 1
-      ) {
-        return (float) $str;
+      if (preg_match("/^(\\d*\\.)?\\d+([eE]\\d+)?$/", $str) === 1) {
+        return (float)$str;
       }
     }
-    throw TypeCoercionException::withValue('float', $value);
+    throw TypeCoercionException::withValue($this->getTrace(), 'float', $value);
   }
 
   public function assertType(mixed $value): float {
     if (is_float($value)) {
       return $value;
     }
-    throw IncorrectTypeException::withValue('float', $value);
+    throw IncorrectTypeException::withValue($this->getTrace(), 'float', $value);
   }
 }

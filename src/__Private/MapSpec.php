@@ -10,10 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\C;
 
@@ -25,11 +22,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     private TypeSpec<Tk> $tsk,
     private TypeSpec<Tv> $tsv,
   ) {
-    $valid = keyset[
-      Map::class,
-      ImmMap::class,
-      \ConstMap::class,
-    ];
+    $valid = keyset[Map::class, ImmMap::class, \ConstMap::class];
     invariant(
       C\contains_key($valid, $what),
       'Only built-in \ConstMap implementations are supported',
@@ -38,7 +31,11 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
 
   public function coerceType(mixed $value): T {
     if (!$value instanceof KeyedTraversable) {
-      throw TypeCoercionException::withValue($this->what, $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        $this->what,
+        $value,
+      );
     }
 
     $tsk = $this->tsk;
@@ -60,7 +57,11 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
 
   public function assertType(mixed $value): T {
     if (!is_a($value, $this->what)) {
-      throw IncorrectTypeException::withValue($this->what, $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        $this->what,
+        $value,
+      );
     }
     assert($value instanceof \ConstMap);
     $tsk = $this->tsk;
@@ -70,7 +71,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
         $tsk->assertType($k);
         $tsv->assertType($v);
         return false;
-      }
+      },
     );
     /* HH_IGNORE_ERROR[4110] */
     return $value;

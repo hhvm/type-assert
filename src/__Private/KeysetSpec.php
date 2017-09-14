@@ -10,38 +10,47 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Keyset;
 
 final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
-  public function __construct(
-    private TypeSpec<T> $inner,
-  ) {
+  public function __construct(private TypeSpec<T> $inner) {
   }
 
   public function coerceType(mixed $value): keyset<T> {
     if (!$value instanceof Traversable) {
-      throw TypeCoercionException::withValue('keyset<T>', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        'keyset<T>',
+        $value,
+      );
     }
 
     return Keyset\map(
       $value,
-      $inner ==> $this->inner->coerceType($inner),
+      $inner ==> $this
+        ->inner
+        ->withTrace($this->getTrace()->withFrame('keyset<T>'))
+        ->coerceType($inner),
     );
   }
 
   public function assertType(mixed $value): keyset<T> {
     if (!is_keyset($value)) {
-      throw IncorrectTypeException::withValue('keyset<T>', $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        'keyset<T>',
+        $value,
+      );
     }
 
     return Keyset\map(
       $value,
-      $inner ==> $this->inner->assertType($inner),
+      $inner ==> $this
+        ->inner
+        ->withTrace($this->getTrace()->withFrame('keyset<T>'))
+        ->assertType($inner),
     );
   }
 }

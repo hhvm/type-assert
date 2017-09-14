@@ -10,30 +10,28 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict};
 
 final class ShapeSpec extends TypeSpec<shape()> {
 
-  public function __construct(
-    private dict<string, TypeSpec<mixed>> $inners,
-  ) {
+  public function __construct(private dict<string, TypeSpec<mixed>> $inners) {
   }
 
   public function coerceType(mixed $value): shape() {
     if (!$value instanceof KeyedTraversable) {
-      throw TypeCoercionException::withValue('shape', $value);
+      throw
+        TypeCoercionException::withValue($this->getTrace(), 'shape', $value);
     }
 
     $value = dict($value);
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       if (C\contains_key($value, $key)) {
-        $out[$key] = $spec->coerceType($value[$key] ?? null);
+        $out[$key] = $spec
+          ->withTrace($this->getTrace()->withFrame('shape['.$key.']'))
+          ->coerceType($value[$key] ?? null);
         continue;
       }
 
@@ -41,6 +39,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
         $spec->coerceType(null);
       } catch (TypeCoercionException $e) {
         throw new TypeCoercionException(
+          $this->getTrace(),
           $e->getTargetType(),
           'missing shape field',
         );
@@ -64,19 +63,19 @@ final class ShapeSpec extends TypeSpec<shape()> {
       );
     } else if (is_dict($value)) {
       $value = dict(
-        (new DictSpec(
-          new StringSpec(),
-          new MixedSpec(),
-        ))->assertType($value)
+        (new DictSpec(new StringSpec(), new MixedSpec()))->assertType($value),
       );
     } else {
-      throw IncorrectTypeException::withValue('shape', $value);
+      throw
+        IncorrectTypeException::withValue($this->getTrace(), 'shape', $value);
     }
 
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       if (C\contains_key($value, $key)) {
-        $out[$key] = $spec->assertType($value[$key] ?? null);
+        $out[$key] = $spec
+          ->withTrace($this->getTrace()->withFrame('shape['.$key.']'))
+          ->assertType($value[$key] ?? null);
         continue;
       }
 
@@ -84,6 +83,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
         $spec->assertType(null);
       } catch (IncorrectTypeException $e) {
         throw new IncorrectTypeException(
+          $this->getTrace(),
           $e->getExpectedType(),
           'missing shape field ("'.$key.'")',
         );
@@ -106,6 +106,6 @@ final class ShapeSpec extends TypeSpec<shape()> {
       return $shape;
     }
     /* HH_IGNORE_ERROR[4007] */
-    return (array) $shape;
+    return (array)$shape;
   }
 }

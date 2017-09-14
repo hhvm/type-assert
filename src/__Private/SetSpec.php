@@ -10,10 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\C;
 
@@ -22,11 +19,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     private classname<T> $what,
     private TypeSpec<Tv> $inner,
   ) {
-    $valid = keyset[
-      Set::class,
-      ImmSet::class,
-      \ConstSet::class,
-    ];
+    $valid = keyset[Set::class, ImmSet::class, \ConstSet::class];
     invariant(
       C\contains_key($valid, $what),
       'Only built-in \ConstSet implementations are supported',
@@ -35,7 +28,11 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
 
   public function coerceType(mixed $value): T {
     if (!$value instanceof Traversable) {
-      throw TypeCoercionException::withValue($this->what, $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        $this->what,
+        $value,
+      );
     }
 
     $map = $container ==> $container->map($v ==> $this->inner->coerceType($v));
@@ -56,10 +53,17 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
 
   public function assertType(mixed $value): T {
     if (!is_a($value, $this->what)) {
-      throw IncorrectTypeException::withValue($this->what, $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        $this->what,
+        $value,
+      );
     }
     assert($value instanceof \ConstSet);
-    $value->filter($x ==> {$this->inner->assertType($x); return false; });
+    $value->filter($x ==> {
+      $this->inner->assertType($x);
+      return false;
+    });
     /* HH_IGNORE_ERROR[4110] */
     return $value;
   }

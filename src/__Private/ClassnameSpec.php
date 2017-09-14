@@ -10,14 +10,10 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  TypeCoercionException
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
-final class ClassnameSpec<Tinner, T as classname<Tinner>>
-  extends TypeSpec<T> {
+final class ClassnameSpec<Tinner, T as classname<Tinner>> extends TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
   public function __construct(private T $what) {
@@ -28,6 +24,7 @@ final class ClassnameSpec<Tinner, T as classname<Tinner>>
       /* HH_IGNORE_ERROR[4110] is_a is not understood by Hack */
       return $value;
     }
-    throw IncorrectTypeException::withValue($this->what, $value);
+    throw
+      IncorrectTypeException::withValue($this->getTrace(), $this->what, $value);
   }
 }

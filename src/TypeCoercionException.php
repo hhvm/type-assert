@@ -10,13 +10,23 @@
 
 namespace Facebook\TypeAssert;
 
+use type Facebook\TypeSpec\__Private\Trace as SpecTrace;
+use type Facebook\TypeSpec\__Private\ExceptionWithSpecTraceTrait;
+
 final class TypeCoercionException extends \Exception {
+  use ExceptionWithSpecTraceTrait;
+  
   public function __construct(
+    private SpecTrace $specTrace,
     private string $target,
     private string $actual,
   ) {
     $message = sprintf('Could not coerce %s to type %s', $actual, $target);
     parent::__construct($message);
+  }
+
+  protected function getSpecTrace(): SpecTrace {
+    return $this->specTrace;
   }
 
   public function getTargetType(): string {
@@ -27,8 +37,13 @@ final class TypeCoercionException extends \Exception {
     return $this->actual;
   }
 
-  public static function withValue(string $expected, mixed $value): this {
+  public static function withValue(
+    SpecTrace $trace,
+    string $expected,
+    mixed $value,
+  ): this {
     return new self(
+      $trace,
       $expected,
       is_object($value) ? get_class($value) : gettype($value),
     );
