@@ -16,7 +16,7 @@ use type Facebook\TypeAssert\{
 };
 use type Facebook\TypeSpec\TypeSpec;
 
-final class ResourceSpec implements TypeSpec<resource> {
+final class ResourceSpec extends TypeSpec<resource> {
   public function __construct(
     private ?string $kind= null,
   ) {

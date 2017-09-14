@@ -16,7 +16,7 @@ use type Facebook\TypeAssert\{
 };
 use type Facebook\TypeSpec\TypeSpec;
 
-final class NullableSpec<T> implements TypeSpec<?T> {
+final class NullableSpec<T> extends TypeSpec<?T> {
   public function __construct(
     private TypeSpec<T> $inner,
   ) {

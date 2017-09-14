@@ -18,7 +18,7 @@ use type Facebook\TypeSpec\TypeSpec;
 
 newtype BogusTuple = (mixed, mixed);
 
-final class TupleSpec implements TypeSpec<BogusTuple> {
+final class TupleSpec extends TypeSpec<BogusTuple> {
   public function __construct(
     private vec<TypeSpec<mixed>> $inners
   ) {

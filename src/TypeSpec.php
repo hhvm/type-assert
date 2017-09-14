@@ -10,9 +10,9 @@
 
 namespace Facebook\TypeSpec;
 
-interface TypeSpec<+T> {
-  public function coerceType(mixed $value): T;
-  public function assertType(mixed $value): T;
+abstract class TypeSpec<+T> {
+  abstract public function coerceType(mixed $value): T;
+  abstract public function assertType(mixed $value): T;
 }
 
 function arraykey(): TypeSpec<arraykey> {

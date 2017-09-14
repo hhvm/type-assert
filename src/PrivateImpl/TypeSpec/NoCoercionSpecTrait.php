@@ -16,7 +16,7 @@ use type Facebook\TypeAssert\{
 };
 
 trait NoCoercionSpecTrait<T> {
-  require implements \Facebook\TypeSpec\TypeSpec<T>;
+  require extends \Facebook\TypeSpec\TypeSpec<T>;
 
   final public function coerceType(mixed $value): T {
     try {

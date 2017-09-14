@@ -16,7 +16,7 @@ use type Facebook\TypeAssert\{
 };
 use type Facebook\TypeSpec\TypeSpec;
 
-abstract class UnionSpec<+T> implements TypeSpec<T> {
+abstract class UnionSpec<+T> extends TypeSpec<T> {
   private vec<TypeSpec<T>> $inners;
   public function __construct(
     private string $name,

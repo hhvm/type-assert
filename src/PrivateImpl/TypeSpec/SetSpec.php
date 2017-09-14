@@ -17,7 +17,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\C;
 
-final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> implements TypeSpec<T> {
+final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
   public function __construct(
     private classname<T> $what,
     private TypeSpec<Tv> $inner,

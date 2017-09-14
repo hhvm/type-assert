@@ -14,8 +14,9 @@ use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
-final class IntSpec implements \Facebook\TypeSpec\TypeSpec<int> {
+final class IntSpec extends TypeSpec<int> {
   public function coerceType(mixed $value): int {
     if (is_int($value)) {
       return $value;

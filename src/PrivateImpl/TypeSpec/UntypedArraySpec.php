@@ -17,7 +17,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 
 /* HH_IGNORE_ERROR[4045] array without generics */
-final class UntypedArraySpec implements TypeSpec<array> {
+final class UntypedArraySpec extends TypeSpec<array> {
 
   /* HH_IGNORE_ERROR[4045] array without generics */
   public function coerceType(mixed $value): array {

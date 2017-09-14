@@ -19,7 +19,7 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Dict;
 
 final class DictLikeArraySpec<Tk as arraykey, Tv>
-  implements TypeSpec<array<Tk, Tv>> {
+  extends TypeSpec<array<Tk, Tv>> {
 
   public function __construct(
     private TypeSpec<Tk> $tsk,

@@ -14,8 +14,9 @@ use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
-final class BoolSpec implements \Facebook\TypeSpec\TypeSpec<bool> {
+final class BoolSpec extends TypeSpec<bool> {
   public function coerceType(mixed $value): bool {
     if (is_bool($value)) {
       return $value;

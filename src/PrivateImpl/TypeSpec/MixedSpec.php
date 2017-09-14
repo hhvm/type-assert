@@ -16,7 +16,7 @@ use type Facebook\TypeAssert\{
 };
 use type Facebook\TypeSpec\TypeSpec;
 
-final class MixedSpec implements TypeSpec<mixed> {
+final class MixedSpec extends TypeSpec<mixed> {
   public function coerceType(mixed $value): mixed {
     return $value;
   }

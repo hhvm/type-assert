@@ -17,7 +17,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\C;
 
-final class VectorSpec<Tv, T as \ConstVector<Tv>> implements TypeSpec<T> {
+final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
   public function __construct(
     private classname<T> $what,
     private TypeSpec<Tv> $inner,

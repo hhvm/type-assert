@@ -18,7 +18,7 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\C;
 
 final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
-  implements TypeSpec<T> {
+  extends TypeSpec<T> {
 
   public function __construct(
     private classname<T> $what,

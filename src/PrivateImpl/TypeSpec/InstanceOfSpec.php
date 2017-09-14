@@ -14,8 +14,9 @@ use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
-final class InstanceOfSpec<T> implements \Facebook\TypeSpec\TypeSpec<T> {
+final class InstanceOfSpec<T> extends TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
   public function __construct(

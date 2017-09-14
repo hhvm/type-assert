@@ -16,7 +16,7 @@ use type Facebook\TypeAssert\{
 };
 use type Facebook\TypeSpec\TypeSpec;
 
-final class StringSpec implements TypeSpec<string> {
+final class StringSpec extends TypeSpec<string> {
   public function coerceType(mixed $value): string {
     if (is_string($value)) {
       return $value;

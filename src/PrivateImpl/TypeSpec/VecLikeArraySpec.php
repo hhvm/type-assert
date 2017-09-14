@@ -17,7 +17,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Vec;
 
-final class VecLikeArraySpec<T> implements TypeSpec<array<T>> {
+final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
   public function __construct(
     private TypeSpec<T> $inner,
   ) {

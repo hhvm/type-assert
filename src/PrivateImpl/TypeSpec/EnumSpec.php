@@ -14,11 +14,12 @@ use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
 final class EnumSpec<
   Tinner,
   T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>
-> implements \Facebook\TypeSpec\TypeSpec<T> {
+> extends TypeSpec<T> {
   public function __construct(
     private classname<T> $what,
   ) {

@@ -17,7 +17,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Vec;
 
-final class VecSpec<T> implements TypeSpec<vec<T>> {
+final class VecSpec<T> extends TypeSpec<vec<T>> {
   public function __construct(
     private TypeSpec<T> $inner,
   ) {

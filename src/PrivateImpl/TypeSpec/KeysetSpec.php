@@ -17,7 +17,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Keyset;
 
-final class KeysetSpec<T as arraykey> implements TypeSpec<keyset<T>> {
+final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
   public function __construct(
     private TypeSpec<T> $inner,
   ) {

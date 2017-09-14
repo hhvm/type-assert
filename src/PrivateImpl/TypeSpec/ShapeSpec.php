@@ -17,7 +17,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict};
 
-final class ShapeSpec implements TypeSpec<shape()> {
+final class ShapeSpec extends TypeSpec<shape()> {
 
   public function __construct(
     private dict<string, TypeSpec<mixed>> $inners,

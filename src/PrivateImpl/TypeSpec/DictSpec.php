@@ -18,7 +18,7 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Dict;
 
 final class DictSpec<Tk as arraykey, Tv>
-  implements TypeSpec<dict<Tk, Tv>> {
+  extends TypeSpec<dict<Tk, Tv>> {
 
   public function __construct(
     private TypeSpec<Tk> $tsk,

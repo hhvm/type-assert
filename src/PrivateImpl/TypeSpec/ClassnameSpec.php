@@ -14,9 +14,10 @@ use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
 final class ClassnameSpec<Tinner, T as classname<Tinner>>
-  implements \Facebook\TypeSpec\TypeSpec<T> {
+  extends TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
   public function __construct(private T $what) {

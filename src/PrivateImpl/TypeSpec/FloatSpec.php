@@ -14,8 +14,9 @@ use type Facebook\TypeAssert\{
   IncorrectTypeException,
   TypeCoercionException
 };
+use type Facebook\TypeSpec\TypeSpec;
 
-final class FloatSpec implements \Facebook\TypeSpec\TypeSpec<float> {
+final class FloatSpec extends TypeSpec<float> {
   public function coerceType(mixed $value): float {
     if (is_float($value)) {
       return $value;
