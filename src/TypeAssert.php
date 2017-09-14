@@ -43,7 +43,7 @@ function arraykey(mixed $x): arraykey {
 function not_null<T>(?T $x): T {
   if ($x === null) {
     throw new IncorrectTypeException(
-      new TypeSpec\__Private\Trace(),
+      new TypeSpec\Trace(),
       'not-null',
       'null',
     );

@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeAssert;
 
-use type Facebook\TypeSpec\__Private\Trace as SpecTrace;
+use type Facebook\TypeSpec\Trace as SpecTrace;
 use type Facebook\TypeSpec\__Private\ExceptionWithSpecTraceTrait;
 
 final class TypeCoercionException extends \Exception {

@@ -11,16 +11,16 @@
 namespace Facebook\TypeSpec;
 
 abstract class TypeSpec<+T> {
-  private ?__Private\Trace $trace = null;
+  private ?Trace $trace = null;
 
   abstract public function coerceType(mixed $value): T;
   abstract public function assertType(mixed $value): T;
 
-  final protected function getTrace(): __Private\Trace {
-    return $this->trace ?? new __Private\Trace();
+  final protected function getTrace(): Trace {
+    return $this->trace ?? new Trace();
   }
 
-  final protected function withTrace(__Private\Trace $trace): TypeSpec<T> {
+  final protected function withTrace(Trace $trace): TypeSpec<T> {
     $new = clone $this;
     $new->trace = $trace;
     return $new;

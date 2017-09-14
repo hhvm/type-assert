@@ -8,7 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-namespace Facebook\TypeSpec\__Private;
+namespace Facebook\TypeSpec;
 
 final class Trace {
   const type TFrame = string;

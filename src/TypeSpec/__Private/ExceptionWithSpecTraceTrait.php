@@ -10,6 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
+use type Facebook\TypeSpec\Trace;
 use namespace HH\Lib\{C, Vec};
 
 trait ExceptionWithSpecTraceTrait {
