@@ -65,10 +65,35 @@ similar set of functions:
  - `resource(mixed): resource`
  - `num(mixed): num`
  - `arraykey(mixed): arraykey`
- - `matche_type_structure<T>(TypeStructure<T>, mixed): T`
+ - `match_type_structure<T>(TypeStructure<T>, mixed): T`
 
 These will do 'safe' transformations, such as int-ish strings to int, ints to
 strings, arrays to vecs, arrays to dicts, and so on.
+
+TypeSpec
+--------
+
+You can also assert/coerce complex types (except for shapes and tuples) without
+a type_structure:
+
+```Hack
+<?hh
+
+use namespace Facebook\TypeSpec;
+
+$spec = TypeSpec\dict(
+  TypeSpec\string(),
+  TypeSpec\int(),
+);
+$x = $spec->assertType(dict['foo' => 123]); // passes: $x is a dict<string, int>
+$x = $spec->assertType(dict['foo' => '123']); // fails
+$x = $spec->assertType(dict[123 => 456]); // fails
+$x = $spec->assertType(dict[123 => 456]); // fails
+
+$x = $spec->coerceType(dict[123 => '456']); // passes: $x is dict['123' => 456];
+```
+
+Shapes and tuples are not supported, as they can not be expressed generically.
 
 `matches_type_structure<T>(TypeStructure<T>, mixed): T`
 -----------------------------------------------------
@@ -78,6 +103,9 @@ nested shapes. This is particular useful for dealing with JSON responses.
 
 ```Hack
 <?hh // strict
+
+use namespace Facebook\TypeAssert;
+
 class Foo {
   const type TAPIResponse = shape(
     'id' => int,
