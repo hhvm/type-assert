@@ -137,16 +137,16 @@
         },
         {
             "name": "hhvm/hsl",
-            "version": "v0.3",
+            "version": "v0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/hsl.git",
-                "reference": "69c536bcfdd1ee0d50e37ef87ec69a13a73b62f3"
+                "reference": "fbfdfc04c2fb1a7f48479949007e4fd875828aa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hsl/zipball/69c536bcfdd1ee0d50e37ef87ec69a13a73b62f3",
-                "reference": "69c536bcfdd1ee0d50e37ef87ec69a13a73b62f3",
+                "url": "https://api.github.com/repos/hhvm/hsl/zipball/fbfdfc04c2fb1a7f48479949007e4fd875828aa2",
+                "reference": "fbfdfc04c2fb1a7f48479949007e4fd875828aa2",
                 "shasum": ""
             },
             "require": {
@@ -161,7 +161,7 @@
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "description": "The Hack Standard Library",
-            "time": "2017-09-08T00:53:44+00:00"
+            "time": "2017-09-20T21:59:22+00:00"
         }
     ],
     "packages-dev": [
@@ -802,16 +802,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.21",
+            "version": "5.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db"
+                "reference": "10df877596c9906d4110b5b905313829043f2ada"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3b91adfb64264ddec5a2dee9851f354aa66327db",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/10df877596c9906d4110b5b905313829043f2ada",
+                "reference": "10df877596c9906d4110b5b905313829043f2ada",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-21T08:11:54+00:00"
+            "time": "2017-09-24T07:23:38+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
