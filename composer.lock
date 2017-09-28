@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba2593c688b077d24fe0b31d1167e5cb",
+    "content-hash": "082640e4232ebfa08abedc2be8dee48c",
     "packages": [
         {
             "name": "facebook/definition-finder",
@@ -1566,7 +1566,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "hhvm": "~3.21"
+        "hhvm": ">= 3.21.3"
     },
     "platform-dev": []
 }
