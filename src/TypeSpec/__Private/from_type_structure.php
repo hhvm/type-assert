@@ -146,6 +146,14 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
             ),
           );
         default:
+          if (is_a($ts['classname'], Traversable::class, /* strings = */ true)) {
+            return new TraversableSpec(
+              TypeAssert\not_null($ts['classname']),
+              from_type_structure(
+                TypeAssert\not_null($ts['generic_types'][0] ?? null),
+              ),
+            );
+          }
           return new InstanceOfSpec(TypeAssert\not_null($ts['classname']));
       }
     case TypeStructureKind::OF_TRAIT:

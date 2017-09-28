@@ -53,6 +53,14 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringVector'),
         Vector { 'foo', 'bar' },
       ),
+      'Traversable<int>' => tuple(
+        type_structure(C::class, 'TIntTraversable'),
+        Vector { 123, 456 },
+      ),
+      'Container<int>' => tuple(
+        type_structure(C::class, 'TIntContainer'),
+        Vector { 123, 456 },
+      ),
       'empty Map<string, string>' =>
         tuple(type_structure(C::class, 'TStringStringMap'), Map {}),
       'Map<string, string>' => tuple(
@@ -104,6 +112,10 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       'vec<int>' => tuple(
         type_structure(C::class, 'TIntVec'),
         vec[1, 2, 3],
+      ),
+      'vec of shapes' => tuple(
+        type_structure(C::class, 'TVecOfShapes'),
+        vec[shape('someString' => 'foo')],
       ),
       'vec<vec<string>>' => tuple(
         type_structure(C::class, 'TIntVecVec'),
@@ -222,6 +234,21 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 123),
         vec['shape[someString]'],
+      ),
+      'bad value in shape in vec of shapes' => tuple(
+        type_structure(C::class, 'TVecOfShapes'),
+        vec[shape('someString' => 123)],
+        vec['vec<T>', 'shape[someString]'],
+      ),
+      'string in Traversable<int>' => tuple(
+        type_structure(C::class, 'TIntTraversable'),
+        Vector { 123, '456' },
+        vec['HH\\Traversable<T>'],
+      ),
+      'string in Container<int>' => tuple(
+        type_structure(C::class, 'TIntContainer'),
+        Vector { 123, '456' },
+        vec['HH\\Container<T>'],
       ),
       'Vector<Vector<string>> with non-container child' => tuple(
         type_structure(C::class, 'TStringVectorVector'),
