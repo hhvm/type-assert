@@ -148,13 +148,13 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         default:
           if (
             is_a(
-              $ts['classname'],
-              KeyedTraversable::class, /* strings = */
-              true,
+              $classname,
+              KeyedTraversable::class,
+              /* strings = */ true,
             )
           ) {
             return new KeyedTraversableSpec(
-              TypeAssert\not_null($ts['classname']),
+              $classname,
               from_type_structure(
                 TypeAssert\not_null($ts['generic_types'][0] ?? null),
               ),
@@ -164,10 +164,10 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
             );
           }
           if (
-            is_a($ts['classname'], Traversable::class, /* strings = */ true)
+            is_a($classname, Traversable::class, /* strings = */ true)
           ) {
             return new TraversableSpec(
-              TypeAssert\not_null($ts['classname']),
+              $classname,
               from_type_structure(
                 TypeAssert\not_null($ts['generic_types'][0] ?? null),
               ),
