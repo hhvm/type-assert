@@ -29,6 +29,8 @@ class TypeConstants {
   const type TStringVectorVector = Vector<Vector<string>>;
   const type TIntTraversable = Traversable<int>;
   const type TIntContainer = Container<int>;
+  const type TStringIntKeyedTraversable = KeyedTraversable<string, int>;
+  const type TStringIntKeyedContainer = KeyedContainer<string, int>;
 
   const type TFlatShape =
     shape('someString' => string, 'someNullable' => ?string);

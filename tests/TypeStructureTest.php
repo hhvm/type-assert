@@ -57,6 +57,13 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         tuple(type_structure(C::class, 'TIntTraversable'), Vector { 123, 456 }),
       'Container<int>' =>
         tuple(type_structure(C::class, 'TIntContainer'), Vector { 123, 456 }),
+      'KeyedTraversable<string, int>' => tuple(
+        type_structure(C::class, 'TStringIntKeyedTraversable'),
+        Map { 'foo' => 123 },
+      ),
+      'KeyedContainer<string, int>' => tuple(
+        type_structure(C::class, 'TStringIntKeyedContainer'),
+        Map { 'foo' => 123 },
       ),
       'empty Map<string, string>' =>
         tuple(type_structure(C::class, 'TStringStringMap'), Map {}),
@@ -246,6 +253,26 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TIntContainer'),
         Vector { 123, '456' },
         vec['HH\\Container<T>'],
+      ),
+      'string value in KeyedTraversable<string, int>' => tuple(
+        type_structure(C::class, 'TStringIntKeyedTraversable'),
+        Map { 'foo' => 'bar' },
+        vec['HH\\KeyedTraversable<_, Tv>'],
+      ),
+      'int key in KeyedTraversable<string, int>' => tuple(
+        type_structure(C::class, 'TStringIntKeyedTraversable'),
+        Map { 123 => 456 },
+        vec['HH\\KeyedTraversable<Tk, _>'],
+      ),
+      'string value in KeyedContainer<string, int>' => tuple(
+        type_structure(C::class, 'TStringIntKeyedContainer'),
+        Map { 'foo' => 'bar' },
+        vec['HH\\KeyedContainer<_, Tv>'],
+      ),
+      'int key in KeyedContainer<string, int>' => tuple(
+        type_structure(C::class, 'TStringIntKeyedContainer'),
+        Map { 123 => 456 },
+        vec['HH\\KeyedContainer<Tk, _>'],
       ),
       'Vector<Vector<string>> with non-container child' => tuple(
         type_structure(C::class, 'TStringVectorVector'),
@@ -446,5 +473,16 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     expect(
       () ==> TypeAssert\matches_type_structure($ts, $generator)
     )->toThrow(UnsupportedTypeException::class);
+
+    $ts = type_structure(C::class, 'TStringIntKeyedTraversable');
+    $generator = (
+      function() {
+        yield 'foo' => 123;
+      }
+    )();
+
+    expect(() ==> TypeAssert\matches_type_structure($ts, $generator))->toThrow(
+      UnsupportedTypeException::class,
+    );
   }
 }
