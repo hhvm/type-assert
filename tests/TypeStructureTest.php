@@ -441,4 +441,13 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     expect(TypeAssert\matches_type_structure($ts, $vec))->toBeSame($tuple);
     expect(TypeAssert\matches_type_structure($ts, $array))->toBeSame($tuple);
   }
+
+  public function testThrowsUnsupportedTypeForGenerators(): void {
+    $ts = type_structure(C::class, 'TIntTraversable');
+    $generator = (function() { yield 123; })();
+
+    expect(
+      () ==> TypeAssert\matches_type_structure($ts, $generator)
+    )->toThrow(UnsupportedTypeException::class);
+  }
 }
