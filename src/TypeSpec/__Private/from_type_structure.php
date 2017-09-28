@@ -156,24 +156,22 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
             return new KeyedTraversableSpec(
               $classname,
               from_type_structure(
-                TypeAssert\not_null($ts['generic_types'][0] ?? null),
+                TypeAssert\not_null($ts['generic_types'] ?? null)[0],
               ),
               from_type_structure(
-                TypeAssert\not_null($ts['generic_types'][1] ?? null),
+                TypeAssert\not_null($ts['generic_types'] ?? null)[1],
               ),
             );
           }
-          if (
-            is_a($classname, Traversable::class, /* strings = */ true)
-          ) {
+          if (is_a($classname, Traversable::class, /* strings = */ true)) {
             return new TraversableSpec(
               $classname,
               from_type_structure(
-                TypeAssert\not_null($ts['generic_types'][0] ?? null),
+                TypeAssert\not_null($ts['generic_types'] ?? null)[0],
               ),
             );
           }
-          return new InstanceOfSpec(TypeAssert\not_null($ts['classname']));
+          return new InstanceOfSpec($classname);
       }
     case TypeStructureKind::OF_TRAIT:
       throw new UnsupportedTypeException('OF_TRAIT');
