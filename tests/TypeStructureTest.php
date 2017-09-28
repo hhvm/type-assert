@@ -53,13 +53,10 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringVector'),
         Vector { 'foo', 'bar' },
       ),
-      'Traversable<int>' => tuple(
-        type_structure(C::class, 'TIntTraversable'),
-        Vector { 123, 456 },
-      ),
-      'Container<int>' => tuple(
-        type_structure(C::class, 'TIntContainer'),
-        Vector { 123, 456 },
+      'Traversable<int>' =>
+        tuple(type_structure(C::class, 'TIntTraversable'), Vector { 123, 456 }),
+      'Container<int>' =>
+        tuple(type_structure(C::class, 'TIntContainer'), Vector { 123, 456 }),
       ),
       'empty Map<string, string>' =>
         tuple(type_structure(C::class, 'TStringStringMap'), Map {}),
@@ -411,9 +408,9 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     TypeStructure<T> $ts,
     mixed $value,
   ): void {
-    expect(
-      () ==> TypeCoerce\match_type_structure($ts, $value),
-    )->toThrow(TypeCoercionException::class);
+    expect(() ==> TypeCoerce\match_type_structure($ts, $value))->toThrow(
+      TypeCoercionException::class,
+    );
   }
 
   public function testShapeCoercionsInAssertMode(): void {

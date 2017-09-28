@@ -146,7 +146,9 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
             ),
           );
         default:
-          if (is_a($ts['classname'], Traversable::class, /* strings = */ true)) {
+          if (
+            is_a($ts['classname'], Traversable::class, /* strings = */ true)
+          ) {
             return new TraversableSpec(
               TypeAssert\not_null($ts['classname']),
               from_type_structure(
