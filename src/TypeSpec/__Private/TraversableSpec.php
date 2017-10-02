@@ -31,7 +31,19 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
   public function assertType(mixed $value): T {
     $frame = $this->outer.'<T>';
 
-    if (!is_a($value, $this->outer)) {
+    // Switch is needed as values such as PHP arrays pass instanceof, but not is_a()
+    switch ($this->outer) {
+      case Container::class:
+        $valid_outer = $value instanceof Container;
+        break;
+      case Traversable::class:
+        $valid_outer = $value instanceof Traversable;
+        break;
+      default:
+        $valid_outer = is_a($value, $this->outer);
+    }
+
+    if (!$valid_outer) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), $frame, $value);
     }

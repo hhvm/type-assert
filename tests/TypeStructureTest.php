@@ -55,6 +55,8 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
       'Traversable<int>' =>
         tuple(type_structure(C::class, 'TIntTraversable'), Vector { 123, 456 }),
+      'array as Container<int>' =>
+        tuple(type_structure(C::class, 'TIntContainer'), [123, 456]),
       'Container<int>' =>
         tuple(type_structure(C::class, 'TIntContainer'), Vector { 123, 456 }),
       'KeyedTraversable<string, int>' => tuple(
@@ -64,6 +66,10 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       'KeyedContainer<string, int>' => tuple(
         type_structure(C::class, 'TStringIntKeyedContainer'),
         Map { 'foo' => 123 },
+      ),
+      'PHP array as KeyedContainer<string, int>' => tuple(
+        type_structure(C::class, 'TStringIntKeyedContainer'),
+        ['foo' => 123],
       ),
       'empty Map<string, string>' =>
         tuple(type_structure(C::class, 'TStringStringMap'), Map {}),

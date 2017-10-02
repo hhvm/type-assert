@@ -26,9 +26,24 @@ extends TypeSpec<T> {
   }
 
   public function assertType(mixed $value): T {
-    if (!is_a($value, $this->outer)) {
-      throw
-        IncorrectTypeException::withValue($this->getTrace(), $this->outer.'<Tk, Tv>', $value);
+    // Switch is needed as values such as PHP arrays pass instanceof, but not is_a()
+    switch ($this->outer) {
+      case KeyedContainer::class:
+        $valid_outer = $value instanceof KeyedContainer;
+        break;
+      case KeyedTraversable::class:
+        $valid_outer = $value instanceof KeyedTraversable;
+        break;
+      default:
+        $valid_outer = is_a($value, $this->outer);
+    }
+
+    if (!$valid_outer) {
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        $this->outer.'<Tk, Tv>',
+        $value,
+      );
     }
 
     invariant(
