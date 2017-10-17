@@ -33,7 +33,7 @@ class TypeConstants {
   const type TStringIntKeyedContainer = KeyedContainer<string, int>;
 
   const type TFlatShape =
-    shape('someString' => string, 'someNullable' => ?string);
+    shape('someString' => string, 'someNullable' => ?string, ?'someOptional' => string);
 
   const type TNestedShape =
     shape('someString' => string, 'someOtherShape' => self::TFlatShape);

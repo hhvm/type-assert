@@ -87,9 +87,9 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringVectorVector'),
         Vector { Vector {} },
       ),
-      'shape with missing ?string field' => tuple(
+      'shape with missing string ?field' => tuple(
         type_structure(C::class, 'TFlatShape'),
-        shape('someString' => 'foo'),
+        shape('someString' => 'foo', 'someOptional' => 'foo'),
       ),
       'shape with null ?string field' => tuple(
         type_structure(C::class, 'TFlatShape'),

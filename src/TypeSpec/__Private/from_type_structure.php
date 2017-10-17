@@ -17,6 +17,10 @@ use namespace Facebook\TypeSpec;
 use namespace Facebook\TypeAssert;
 
 function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
+  if ($ts['optional_shape_field'] ?? false) {
+    $ts['optional_shape_field'] = false;
+    return new OptionalSpec(from_type_structure($ts));
+  }
   if ($ts['nullable'] ?? false) {
     $ts['nullable'] = false;
     /* HH_IGNORE_ERROR[4110] */

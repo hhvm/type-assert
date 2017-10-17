@@ -16,6 +16,10 @@ abstract class TypeSpec<+T> {
   abstract public function coerceType(mixed $value): T;
   abstract public function assertType(mixed $value): T;
 
+  public function isOptional(): bool {
+    return false;
+  }
+
   final protected function getTrace(): Trace {
     return $this->trace ?? new Trace();
   }

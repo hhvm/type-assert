@@ -34,6 +34,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
         continue;
       }
 
+      if ($spec->isOptional()) {
+        continue;
+      }
+
       try {
         $spec->withTrace($trace)->coerceType(null);
       } catch (TypeCoercionException $e) {
@@ -65,6 +69,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
       if (C\contains_key($value, $key)) {
         $out[$key] = $spec->withTrace($trace)->assertType($value[$key] ?? null);
+        continue;
+      }
+
+      if ($spec->isOptional()) {
         continue;
       }
 

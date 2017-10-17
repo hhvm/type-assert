@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "082640e4232ebfa08abedc2be8dee48c",
+    "content-hash": "452013bd80d9fafe5c9eec8e2096f22f",
     "packages": [
         {
             "name": "facebook/definition-finder",
-            "version": "v1.6.2",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/definition-finder.git",
-                "reference": "3d1faa5f7d9c954ca1793cddeaf187e3631c4ed8"
+                "reference": "38f37b3eafec26fd5030c0f9f3584fc6493c9a9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/3d1faa5f7d9c954ca1793cddeaf187e3631c4ed8",
-                "reference": "3d1faa5f7d9c954ca1793cddeaf187e3631c4ed8",
+                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/38f37b3eafec26fd5030c0f9f3584fc6493c9a9b",
+                "reference": "38f37b3eafec26fd5030c0f9f3584fc6493c9a9b",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                 "hack",
                 "hhvm"
             ],
-            "time": "2017-08-25T16:56:25+00:00"
+            "time": "2017-10-10T23:29:38+00:00"
         },
         {
             "name": "fredemmott/hack-error-suppressor",
@@ -87,16 +87,16 @@
         },
         {
             "name": "hhvm/hhvm-autoload",
-            "version": "v1.5.0",
+            "version": "v1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/hhvm-autoload.git",
-                "reference": "68878416e3197457b067d7a208f0f9f36f060c16"
+                "reference": "4c373d9af5764d46f0093cc34eed7c875267bace"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hhvm-autoload/zipball/68878416e3197457b067d7a208f0f9f36f060c16",
-                "reference": "68878416e3197457b067d7a208f0f9f36f060c16",
+                "url": "https://api.github.com/repos/hhvm/hhvm-autoload/zipball/4c373d9af5764d46f0093cc34eed7c875267bace",
+                "reference": "4c373d9af5764d46f0093cc34eed7c875267bace",
                 "shasum": ""
             },
             "require": {
@@ -133,35 +133,36 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2017-09-16T19:00:56+00:00"
+            "time": "2017-10-10T23:42:41+00:00"
         },
         {
             "name": "hhvm/hsl",
-            "version": "v0.4",
+            "version": "v0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/hsl.git",
-                "reference": "fbfdfc04c2fb1a7f48479949007e4fd875828aa2"
+                "reference": "c5a3f28fad4e379bd305085fc2c28e8df450c6a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hsl/zipball/fbfdfc04c2fb1a7f48479949007e4fd875828aa2",
-                "reference": "fbfdfc04c2fb1a7f48479949007e4fd875828aa2",
+                "url": "https://api.github.com/repos/hhvm/hsl/zipball/c5a3f28fad4e379bd305085fc2c28e8df450c6a2",
+                "reference": "c5a3f28fad4e379bd305085fc2c28e8df450c6a2",
                 "shasum": ""
             },
             "require": {
-                "facebook/hhvm-autoload": "^1.4"
+                "hhvm/hhvm-autoload": "^1.4"
             },
             "require-dev": {
                 "91carriage/phpunit-hhi": "^5.7",
                 "facebook/definition-finder": "^1.6.1",
                 "facebook/fbexpect": "^0.2",
+                "hhvm": "^3.21.3",
                 "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "description": "The Hack Standard Library",
-            "time": "2017-09-20T21:59:22+00:00"
+            "time": "2017-10-09T22:38:19+00:00"
         }
     ],
     "packages-dev": [
@@ -802,16 +803,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.22",
+            "version": "5.7.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada"
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/10df877596c9906d4110b5b905313829043f2ada",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/78532d5269d984660080d8e0f4c99c5c2ea65ffe",
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +881,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-24T07:23:38+00:00"
+            "time": "2017-10-15T06:13:55+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1456,16 +1457,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.3.9",
+            "version": "v3.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "1d8c2a99c80862bdc3af94c1781bf70f86bccac0"
+                "reference": "8c7bf1e7d5d6b05a690b715729cb4cd0c0a99c46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/1d8c2a99c80862bdc3af94c1781bf70f86bccac0",
-                "reference": "1d8c2a99c80862bdc3af94c1781bf70f86bccac0",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/8c7bf1e7d5d6b05a690b715729cb4cd0c0a99c46",
+                "reference": "8c7bf1e7d5d6b05a690b715729cb4cd0c0a99c46",
                 "shasum": ""
             },
             "require": {
@@ -1507,7 +1508,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-29T21:54:42+00:00"
+            "time": "2017-10-05T14:43:42+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -1566,7 +1567,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "hhvm": ">= 3.21.3"
+        "hhvm": ">= 3.22.0 <3.23.0"
     },
     "platform-dev": []
 }
