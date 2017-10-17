@@ -95,6 +95,14 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 'foo', 'someNullable' => null),
       ),
+      'shape with null ?string ?field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(
+          'someString' => 'foo',
+          'someNullable' => null,
+          'someOptionalNullable' => null,
+        ),
+      ),
       'shape with string ?string field' => tuple(
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 'foo', 'someNullable' => 'string'),

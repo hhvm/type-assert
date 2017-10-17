@@ -32,8 +32,12 @@ class TypeConstants {
   const type TStringIntKeyedTraversable = KeyedTraversable<string, int>;
   const type TStringIntKeyedContainer = KeyedContainer<string, int>;
 
-  const type TFlatShape =
-    shape('someString' => string, 'someNullable' => ?string, ?'someOptional' => string);
+  const type TFlatShape = shape(
+    'someString' => string,
+    'someNullable' => ?string,
+    ?'someOptional' => string,
+    ?'someOptionalNullable' => ?string,
+  );
 
   const type TNestedShape =
     shape('someString' => string, 'someOtherShape' => self::TFlatShape);
