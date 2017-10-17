@@ -22,10 +22,10 @@ final class OptionalSpec<T> extends TypeSpec<T> {
   }
 
   public function coerceType(mixed $value): T {
-    return $this->inner->coerceType($value);
+    return $this->inner->withTrace($this->getTrace())->coerceType($value);
   }
 
   public function assertType(mixed $value): T {
-    return $this->inner->assertType($value);
+    return $this->inner->withTrace($this->getTrace())->assertType($value);
   }
 }

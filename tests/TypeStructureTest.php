@@ -253,6 +253,24 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         shape(),
         vec['shape[someString]'],
       ),
+      'shape with null optional field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(
+          'someString' => 'a',
+          'someNullable' => null,
+          'someOptional' => null,
+        ),
+        vec['shape[someOptional]'],
+      ),
+      'shape with invalid nullable optional field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(
+          'someString' => 'a',
+          'someNullable' => null,
+          'someOptionalNullable' => 123,
+        ),
+        vec['shape[someOptionalNullable]'],
+      ),
       'shape with missing nullable field' => tuple(
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 'foo'),
@@ -260,8 +278,17 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
       'shape with incorrect field' => tuple(
         type_structure(C::class, 'TFlatShape'),
-        shape('someString' => 123),
+        shape('someString' => 123, 'someNullable' => null),
         vec['shape[someString]'],
+      ),
+      'shape with incorrect optional field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape(
+          'someString' => 'a',
+          'someNullable' => null,
+          'someOptional' => 123,
+        ),
+        vec['shape[someOptional]'],
       ),
       'bad value in shape in vec of shapes' => tuple(
         type_structure(C::class, 'TVecOfShapes'),
@@ -377,7 +404,8 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
 
     expect($e->getSpecTrace()->getFrames())->toBeSame(
       $frames,
-      'error trace differs',
+      'error trace differs (%s)',
+      $e->getMessage(),
     );
   }
 

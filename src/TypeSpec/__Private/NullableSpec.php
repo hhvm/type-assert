@@ -44,7 +44,7 @@ final class NullableSpec<T> extends TypeSpec<?T> {
       return $this->inner->assertType($value);
     } catch (IncorrectTypeException $e) {
       throw new IncorrectTypeException(
-        $e->getSpecTrace(),
+        $this->getTrace(),
         '?'.$e->getExpectedType(),
         $e->getActualType(),
       );
