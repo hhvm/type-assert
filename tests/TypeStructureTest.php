@@ -89,7 +89,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
       'shape with missing string ?field' => tuple(
         type_structure(C::class, 'TFlatShape'),
-        shape('someString' => 'foo', 'someOptional' => 'foo'),
+        shape('someString' => 'foo', 'someNullable' => null),
       ),
       'shape with null ?string field' => tuple(
         type_structure(C::class, 'TFlatShape'),
@@ -101,13 +101,18 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
       'shape with extra field' => tuple(
         type_structure(C::class, 'TFlatShape'),
-        shape('someString' => 'foo', 'some junk' => 'bar'),
+        shape(
+          'someString' => 'foo',
+          'someNullable' => null,
+          'some junk' => 'bar',
+        ),
       ),
       'nested shape' => tuple(
         type_structure(C::class, 'TNestedShape'),
         shape(
           'someString' => 'foo',
-          'someOtherShape' => shape('someString' => 'bar'),
+          'someOtherShape' =>
+            shape('someString' => 'bar', 'someNullable' => null),
         ),
       ),
       'shape with empty container' => tuple(
@@ -125,7 +130,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
       'vec of shapes' => tuple(
         type_structure(C::class, 'TVecOfShapes'),
-        vec[shape('someString' => 'foo')],
+        vec[shape('someString' => 'foo', 'someNullable' => null)],
       ),
       'vec<vec<string>>' => tuple(
         type_structure(C::class, 'TIntVecVec'),
@@ -239,6 +244,11 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TFlatShape'),
         shape(),
         vec['shape[someString]'],
+      ),
+      'shape with missing nullable field' => tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape('someString' => 'foo'),
+        vec['shape[someNullable]'],
       ),
       'shape with incorrect field' => tuple(
         type_structure(C::class, 'TFlatShape'),
@@ -450,9 +460,9 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     // This is for:
     // - json_decode(..., FB_JSON_HACK_ARRAYS)
     // - likely future changes to the implementation of shapes
-    $shape = shape('someString' => 'foobar');
-    $dict = dict['someString' => 'foobar'];
-    $array = ['someString' => 'foobar'];
+    $shape = shape('someString' => 'foobar', 'someNullable' => null);
+    $dict = dict['someString' => 'foobar', 'someNullable' => null];
+    $array = ['someString' => 'foobar', 'someNullable' => null];
     $ts = type_structure(C::class, 'TFlatShape');
 
     expect(TypeAssert\matches_type_structure($ts, $dict))->toBeSame($shape);

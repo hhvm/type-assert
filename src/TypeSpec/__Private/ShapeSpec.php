@@ -38,15 +38,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
         continue;
       }
 
-      try {
-        $spec->withTrace($trace)->coerceType(null);
-      } catch (TypeCoercionException $e) {
-        throw new TypeCoercionException(
-          $trace,
-          $e->getTargetType(),
-          'missing shape field',
-        );
-      }
+      throw new TypeCoercionException($trace, 'value', 'missing shape field');
     }
     foreach ($value as $k => $v) {
       if (!C\contains_key($out, $k)) {
@@ -76,15 +68,11 @@ final class ShapeSpec extends TypeSpec<shape()> {
         continue;
       }
 
-      try {
-        $spec->withTrace($trace)->assertType(null);
-      } catch (IncorrectTypeException $e) {
-        throw new IncorrectTypeException(
-          $trace,
-          $e->getExpectedType(),
-          'missing shape field ("'.$key.'")',
-        );
-      }
+      throw new IncorrectTypeException(
+        $trace,
+        'value',
+        'missing shape field ("'.$key.'")',
+      );
     }
     foreach ($value as $k => $v) {
       if (!C\contains_key($out, $k)) {
