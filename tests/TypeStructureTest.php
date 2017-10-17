@@ -107,12 +107,11 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 'foo', 'someNullable' => 'string'),
       ),
-      'shape with extra field' => tuple(
-        type_structure(C::class, 'TFlatShape'),
+      'shape with extra field and implicit subtyping' => tuple(
+        type_structure(C::class, 'TShapeWithOneFieldAndImplicitSubtypes'),
         shape(
           'someString' => 'foo',
-          'someNullable' => null,
-          'some junk' => 'bar',
+          'herp' => 'derp',
         ),
       ),
       'nested shape' => tuple(
@@ -281,6 +280,11 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         shape('someString' => 123, 'someNullable' => null),
         vec['shape[someString]'],
       ),
+      'shape with extra fields' => tuple(
+        type_structure(C::class, 'TShapeWithOneField'),
+        shape('someString' => 'string', 'herp' => 'derp'),
+        vec['shape[herp]'],
+      ),
       'shape with incorrect optional field' => tuple(
         type_structure(C::class, 'TFlatShape'),
         shape(
@@ -445,6 +449,16 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         type_structure(C::class, 'TStringStringDict'),
         ['foo' => 123, 'bar' => 456],
         dict['foo' => '123', 'bar' => '456'],
+      ),
+      'shape with extra fields' => tuple(
+        type_structure(C::class, 'TShapeWithOneField'),
+        shape('someString' => 'foo', 'herp' => 'derp'),
+        shape('someString' => 'foo'),
+      ),
+      'shape with implicit subtyping and extra fields' => tuple(
+        type_structure(C::class, 'TShapeWithOneFieldAndImplicitSubtypes'),
+        shape('someString' => 'foo', 'herp' => 'derp'),
+        shape('someString' => 'foo', 'herp' => 'derp'),
       ),
     ];
     return Dict\map(

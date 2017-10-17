@@ -15,8 +15,13 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict};
 
 final class ShapeSpec extends TypeSpec<shape()> {
+  private bool $allowUnknownFields;
 
-  public function __construct(private dict<string, TypeSpec<mixed>> $inners) {
+  public function __construct(
+    private dict<string, TypeSpec<mixed>> $inners,
+    UnknownFieldsMode $unknown_fields,
+  ) {
+    $this->allowUnknownFields = $unknown_fields === UnknownFieldsMode::ALLOW;
   }
 
   public function coerceType(mixed $value): shape() {
@@ -40,9 +45,12 @@ final class ShapeSpec extends TypeSpec<shape()> {
 
       throw new TypeCoercionException($trace, 'value', 'missing shape field');
     }
-    foreach ($value as $k => $v) {
-      if (!C\contains_key($out, $k)) {
-        $out[$k] = $v;
+
+    if ($this->allowUnknownFields) {
+      foreach ($value as $k => $v) {
+        if (!C\contains_key($out, $k)) {
+          $out[$k] = $v;
+        }
       }
     }
 
@@ -76,7 +84,15 @@ final class ShapeSpec extends TypeSpec<shape()> {
     }
     foreach ($value as $k => $v) {
       if (!C\contains_key($out, $k)) {
-        $out[$k] = $v;
+        if ($this->allowUnknownFields) {
+          $out[$k] = $v;
+        } else {
+          throw IncorrectTypeException::withValue(
+            $this->getTrace()->withFrame('shape['.$k.']'),
+            'no extra shape fields',
+            $v,
+          );
+        }
       }
     }
 

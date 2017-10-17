@@ -39,6 +39,14 @@ class TypeConstants {
     ?'someOptionalNullable' => ?string,
   );
 
+  const type TShapeWithOneField = shape(
+    'someString' => string,
+  );
+  const type TShapeWithOneFieldAndImplicitSubtypes = shape(
+    'someString' => string,
+    ...
+  );
+
   const type TNestedShape =
     shape('someString' => string, 'someOtherShape' => self::TFlatShape);
 
