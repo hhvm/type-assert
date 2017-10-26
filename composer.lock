@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "082640e4232ebfa08abedc2be8dee48c",
+    "content-hash": "6f5a76e80a905028978ba5c3a9dad8ed",
     "packages": [
         {
             "name": "facebook/definition-finder",
@@ -137,31 +137,32 @@
         },
         {
             "name": "hhvm/hsl",
-            "version": "v0.4",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/hsl.git",
-                "reference": "fbfdfc04c2fb1a7f48479949007e4fd875828aa2"
+                "reference": "99ed4bce2170d12e38654f8502482fcac5b80352"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hsl/zipball/fbfdfc04c2fb1a7f48479949007e4fd875828aa2",
-                "reference": "fbfdfc04c2fb1a7f48479949007e4fd875828aa2",
+                "url": "https://api.github.com/repos/hhvm/hsl/zipball/99ed4bce2170d12e38654f8502482fcac5b80352",
+                "reference": "99ed4bce2170d12e38654f8502482fcac5b80352",
                 "shasum": ""
             },
             "require": {
-                "facebook/hhvm-autoload": "^1.4"
+                "hhvm/hhvm-autoload": "^1.4"
             },
             "require-dev": {
                 "91carriage/phpunit-hhi": "^5.7",
                 "facebook/definition-finder": "^1.6.1",
                 "facebook/fbexpect": "^0.2",
+                "hhvm": "^3.21.3",
                 "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "description": "The Hack Standard Library",
-            "time": "2017-09-20T21:59:22+00:00"
+            "time": "2017-10-26T18:38:35+00:00"
         }
     ],
     "packages-dev": [
