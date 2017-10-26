@@ -125,6 +125,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case Vector::class:
         case ImmVector::class:
         case \ConstVector::class:
+          /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new VectorSpec(
             $classname,
             from_type_structure(
@@ -134,6 +135,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case Map::class:
         case ImmMap::class:
         case \ConstMap::class:
+          /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new MapSpec(
             $classname,
             from_type_structure(
@@ -146,6 +148,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case Set::class:
         case ImmSet::class:
         case \ConstSet::class:
+          /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new SetSpec(
             $classname,
             from_type_structure(
@@ -160,6 +163,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
               /* strings = */ true,
             )
           ) {
+            /* HH_IGNORE_ERROR[4110] unsafe generics */
             return new KeyedTraversableSpec(
               $classname,
               from_type_structure(
@@ -171,6 +175,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
             );
           }
           if (is_a($classname, Traversable::class, /* strings = */ true)) {
+            /* HH_IGNORE_ERROR[4110] unsafe generics */
             return new TraversableSpec(
               $classname,
               from_type_structure(
