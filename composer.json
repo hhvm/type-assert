@@ -3,8 +3,8 @@
   "description": "Convert untyped data to typed data",
   "keywords": ["hack", "TypeAssert" ],
   "require": {
-    "hhvm": ">= 3.22.0 <3.23.0",
-    "hhvm/hsl": ">=0.3 <2.0"
+    "hhvm": ">= 3.22.0 < 3.23.0",
+    "hhvm/hsl": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.1",
