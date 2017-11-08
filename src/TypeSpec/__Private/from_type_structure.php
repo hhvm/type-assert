@@ -114,7 +114,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
           ($_k, $field_ts) ==> from_type_structure($field_ts),
           ($k, $_v) ==> $k,
         ),
-        ($ts['allows_unknown_fields'] ?? false)
+        ($ts['allows_unknown_fields'] ?? !ShapeSpec::STRICT_SHAPES)
           ? UnknownFieldsMode::ALLOW
           : UnknownFieldsMode::DENY,
       );

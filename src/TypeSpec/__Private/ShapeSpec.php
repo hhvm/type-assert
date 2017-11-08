@@ -15,7 +15,18 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict};
 
 final class ShapeSpec extends TypeSpec<shape()> {
+  const bool STRICT_SHAPES = HHVM_VERSION_ID >= 32300;
   private bool $allowUnknownFields;
+
+  private static function isOptionalField<Tany>(TypeSpec<Tany> $spec): bool {
+    if ($spec->isOptional()) {
+      return true;
+    }
+    if (self::STRICT_SHAPES) {
+      return false;
+    }
+    return $spec instanceof NullableSpec;
+  }
 
   public function __construct(
     private dict<string, TypeSpec<mixed>> $inners,
@@ -39,7 +50,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
         continue;
       }
 
-      if ($spec->isOptional()) {
+      if (self::isOptionalField($spec)) {
         continue;
       }
 
@@ -72,7 +83,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
         continue;
       }
 
-      if ($spec->isOptional()) {
+      if (self::isOptionalField($spec)) {
         continue;
       }
 

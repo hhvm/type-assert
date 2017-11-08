@@ -198,7 +198,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
 
   public function getExampleInvalidTypes(
   ): array<string, (mixed, mixed, vec<string>)> {
-    return [
+    $examples = [
       '"123" as int' => tuple(type_structure(C::class, 'TInt'), '123', vec[]),
       '1 as bool' => tuple(type_structure(C::class, 'TBool'), 1, vec[]),
       'int as float' => tuple(type_structure(C::class, 'TFloat'), 123, vec[]),
@@ -270,20 +270,10 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         ),
         vec['shape[someOptionalNullable]'],
       ),
-      'shape with missing nullable field' => tuple(
-        type_structure(C::class, 'TFlatShape'),
-        shape('someString' => 'foo'),
-        vec['shape[someNullable]'],
-      ),
       'shape with incorrect field' => tuple(
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 123, 'someNullable' => null),
         vec['shape[someString]'],
-      ),
-      'shape with extra fields' => tuple(
-        type_structure(C::class, 'TShapeWithOneField'),
-        shape('someString' => 'string', 'herp' => 'derp'),
-        vec['shape[herp]'],
       ),
       'shape with incorrect optional field' => tuple(
         type_structure(C::class, 'TFlatShape'),
@@ -387,6 +377,20 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         vec['keyset<T>'],
       ),
     ];
+
+    if (HHVM_VERSION_ID >= 32300) {
+      $examples['shape with missing nullable field'] = tuple(
+        type_structure(C::class, 'TFlatShape'),
+        shape('someString' => 'foo'),
+        vec['shape[someNullable]'],
+      );
+      $examples['shape with extra fields'] = tuple(
+        type_structure(C::class, 'TShapeWithOneField'),
+        shape('someString' => 'string', 'herp' => 'derp'),
+        vec['shape[herp]'],
+      );
+    }
+    return $examples;
   }
 
   /**
@@ -450,17 +454,27 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
         ['foo' => 123, 'bar' => 456],
         dict['foo' => '123', 'bar' => '456'],
       ),
-      'shape with extra fields' => tuple(
-        type_structure(C::class, 'TShapeWithOneField'),
-        shape('someString' => 'foo', 'herp' => 'derp'),
-        shape('someString' => 'foo'),
-      ),
       'shape with implicit subtyping and extra fields' => tuple(
         type_structure(C::class, 'TShapeWithOneFieldAndImplicitSubtypes'),
         shape('someString' => 'foo', 'herp' => 'derp'),
         shape('someString' => 'foo', 'herp' => 'derp'),
       ),
     ];
+
+    if (HHVM_VERSION_ID >= 32300) {
+      $coercions['shape with extra fields'] = tuple(
+        type_structure(C::class, 'TShapeWithOneField'),
+        shape('someString' => 'foo', 'herp' => 'derp'),
+        shape('someString' => 'foo'),
+      );
+    } else {
+      $coercions['shape with extra fields'] = tuple(
+        type_structure(C::class, 'TShapeWithOneField'),
+        shape('someString' => 'foo', 'herp' => 'derp'),
+        shape('someString' => 'foo', 'herp' => 'derp'),
+      );
+    }
+
     return Dict\map(
       $this->getExampleValidTypes(),
       $tuple ==> {
