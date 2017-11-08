@@ -43,6 +43,8 @@ class TypeConstants {
   const type TShapeWithOneField = shape(
     'someString' => string,
   );
+
+  /* HH_IGNORE_ERROR[0003] no unknown shape fields in 3.21 */
   const type TShapeWithOneFieldAndImplicitSubtypes = shape(
     'someString' => string,
     ...
