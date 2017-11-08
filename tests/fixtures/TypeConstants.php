@@ -32,6 +32,7 @@ class TypeConstants {
   const type TStringIntKeyedTraversable = KeyedTraversable<string, int>;
   const type TStringIntKeyedContainer = KeyedContainer<string, int>;
 
+  /* HH_IGNORE_ERROR[3033] no optional shape fields in 3.21 or 3.22 */
   const type TFlatShape = shape(
     'someString' => string,
     'someNullable' => ?string,
