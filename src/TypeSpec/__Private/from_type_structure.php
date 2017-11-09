@@ -17,9 +17,9 @@ use namespace Facebook\TypeSpec;
 use namespace Facebook\TypeAssert;
 
 function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
-  /* HH_IGNORE_ERROR[4108] 3.21 is not aware of optional_shape_field */
+  /* HH_FIXME[4108] 3.21 is not aware of optional_shape_field */
   if ($ts['optional_shape_field'] ?? false) {
-    /* HH_IGNORE_ERROR[4108] 3.21 is not aware of optional_shape_field */
+    /* HH_FIXME[4108] 3.21 is not aware of optional_shape_field */
     $ts['optional_shape_field'] = false;
     return new OptionalSpec(from_type_structure($ts));
   }
@@ -116,7 +116,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
           ($_k, $field_ts) ==> from_type_structure($field_ts),
           ($k, $_v) ==> $k,
         ),
-        /* HH_IGNORE_ERROR[4108] 3.21 is not aware of allows_unknown_fields */
+        /* HH_FIXME[4108] 3.21 is not aware of allows_unknown_fields */
         ($ts['allows_unknown_fields'] ?? !ShapeSpec::STRICT_SHAPES)
           ? UnknownFieldsMode::ALLOW
           : UnknownFieldsMode::DENY,
