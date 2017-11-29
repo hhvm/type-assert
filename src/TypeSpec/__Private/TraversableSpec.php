@@ -13,7 +13,7 @@ namespace Facebook\TypeSpec\__Private;
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   UnsupportedTypeException,
-  TypeCoercionException,
+  TypeCoercionException
 };
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Vec;
