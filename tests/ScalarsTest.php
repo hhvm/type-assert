@@ -52,7 +52,7 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
   }
 
   public function testIsResourcePasses(): void {
-    $this->assertSame(STDERR, TypeAssert\resource(STDERR));
+    $this->assertSame(\STDERR, TypeAssert\resource(\STDERR));
   }
 
   public function testIsResourceThrowsForObject(): void {

@@ -32,6 +32,6 @@ final class StringSpec extends TypeSpec<string> {
       return $value;
     }
     throw
-      new IncorrectTypeException($this->getTrace(), 'string', gettype($value));
+      new IncorrectTypeException($this->getTrace(), 'string', \gettype($value));
   }
 }

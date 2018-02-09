@@ -20,7 +20,7 @@ final class IntSpec extends TypeSpec<int> {
     }
     if ($value instanceof \Stringish) {
       $str = (string)$value;
-      if ($str !== '' && ctype_digit($str)) {
+      if ($str !== '' && \ctype_digit($str)) {
         return (int)$str;
       }
     }

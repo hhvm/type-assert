@@ -15,7 +15,7 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict};
 
 final class ShapeSpec extends TypeSpec<shape()> {
-  const bool STRICT_SHAPES = HHVM_VERSION_ID >= 32300;
+  const bool STRICT_SHAPES = \HHVM_VERSION_ID >= 32300;
   private bool $allowUnknownFields;
 
   private static function isOptionalField<Tany>(TypeSpec<Tany> $spec): bool {

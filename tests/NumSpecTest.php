@@ -56,6 +56,6 @@ final class NumSpecTest extends TypeSpecTest<num> {
       return false;
     }
     
-    return abs($expected - $value) < 0.00001;
+    return \abs($expected - $value) < 0.00001;
   }
 }

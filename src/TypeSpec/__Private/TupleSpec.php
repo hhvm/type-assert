@@ -27,11 +27,11 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     assert($value instanceof Traversable);
     $values = vec($value);
 
-    $count = count($values);
-    if ($count !== count($this->inners)) {
+    $count = \count($values);
+    if ($count !== \count($this->inners)) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
-        count($this->inners).'-tuple',
+        \count($this->inners).'-tuple',
         $value,
       );
     }
@@ -54,11 +54,11 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     }
     $values = $value;
 
-    $count = count($values);
-    if ($count !== count($this->inners)) {
+    $count = \count($values);
+    if ($count !== \count($this->inners)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
-        count($this->inners).'-tuple',
+        \count($this->inners).'-tuple',
         $value,
       );
     }

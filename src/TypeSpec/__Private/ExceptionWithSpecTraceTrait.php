@@ -24,13 +24,13 @@ trait ExceptionWithSpecTraceTrait {
     if (C\is_empty($frames)) {
       return $message;
     }
-    return sprintf(
+    return \sprintf(
       "%s\nType trace:\n%s\n",
       $message,
       $frames
       |> Vec\reverse($$)
       |> Vec\map_with_key($$, ($depth, $frame) ==> '#'.$depth.' '.$frame)
-      |> implode("\n", $$),
+      |> \implode("\n", $$),
     );
   }
 }

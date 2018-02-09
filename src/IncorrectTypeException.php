@@ -21,7 +21,7 @@ final class IncorrectTypeException extends \Exception {
     private string $expected,
     private string $actual,
   ) {
-    $message = sprintf('Expected %s, got %s', $expected, $actual);
+    $message = \sprintf('Expected %s, got %s', $expected, $actual);
     parent::__construct($message);
   }
 
@@ -36,8 +36,8 @@ final class IncorrectTypeException extends \Exception {
   ): IncorrectTypeException {
     return new self(
       $trace,
-      sprintf("type '%s'", $expected_type),
-      sprintf("type '%s'", $actual_type),
+      \sprintf("type '%s'", $expected_type),
+      \sprintf("type '%s'", $actual_type),
     );
   }
 
@@ -46,9 +46,9 @@ final class IncorrectTypeException extends \Exception {
     string $expected_type,
     mixed $value,
   ): IncorrectTypeException {
-    $actual_type = gettype($value);
+    $actual_type = \gettype($value);
     if ($actual_type === 'object') {
-      $actual_type = get_class($value);
+      $actual_type = \get_class($value);
     }
     return self::withType($trace, $expected_type, $actual_type);
   }

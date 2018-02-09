@@ -160,7 +160,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
           );
         default:
           if (
-            is_a(
+            \is_a(
               $classname,
               KeyedTraversable::class,
               /* strings = */ true,
@@ -177,7 +177,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
               ),
             );
           }
-          if (is_a($classname, Traversable::class, /* strings = */ true)) {
+          if (\is_a($classname, Traversable::class, /* strings = */ true)) {
             /* HH_IGNORE_ERROR[4110] unsafe generics */
             return new TraversableSpec(
               $classname,
@@ -198,7 +198,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
       throw new UnsupportedTypeException('OF_UNRESOLVED');
     default:
       $name = TypeStructureKind::getNames()[$ts['kind']] ??
-        var_export($ts['kind'], true);
+        \var_export($ts['kind'], true);
       throw new UnsupportedTypeException($name);
   }
 }

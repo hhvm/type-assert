@@ -53,6 +53,6 @@ final class FloatSpecTest extends TypeSpecTest<float> {
     if (!is_float($value)) {
       return false;
     }
-    return abs($expected - $value) < 0.00001;
+    return \abs($expected - $value) < 0.00001;
   }
 }

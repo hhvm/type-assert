@@ -378,7 +378,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
     ];
 
-    if (HHVM_VERSION_ID >= 32300) {
+    if (\HHVM_VERSION_ID >= 32300) {
       $examples['shape with missing nullable field'] = tuple(
         type_structure(C::class, 'TFlatShape'),
         shape('someString' => 'foo'),
@@ -461,7 +461,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       ),
     ];
 
-    if (HHVM_VERSION_ID >= 32300) {
+    if (\HHVM_VERSION_ID >= 32300) {
       $coercions['shape with extra fields'] = tuple(
         type_structure(C::class, 'TShapeWithOneField'),
         shape('someString' => 'foo', 'herp' => 'derp'),
@@ -483,7 +483,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       },
     )
       |> Dict\merge($$, $coercions)
-      |> array_map($x ==> $x, $$);
+      |> \array_map($x ==> $x, $$);
   }
 
   /**

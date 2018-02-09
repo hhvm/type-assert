@@ -40,7 +40,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
         $valid_outer = $value instanceof Traversable;
         break;
       default:
-        $valid_outer = is_a($value, $this->outer);
+        $valid_outer = \is_a($value, $this->outer);
     }
 
     if (!$valid_outer) {
@@ -51,7 +51,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     invariant(
       $value instanceof Traversable,
       'expected Traversable, got %s',
-      is_object($value) ? get_class($value) : gettype($value),
+      is_object($value) ? \get_class($value) : \gettype($value),
     );
 
     // Non-Container traversables may not be rewindable, e.g. generators, so
@@ -60,7 +60,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     // Iterator::rewind() must exist, but may be a no-op, so we can't trust it.
     if (!$value instanceof Container) {
       throw new UnsupportedTypeException(
-        'non-Container Traversable '.get_class($value),
+        'non-Container Traversable '.\get_class($value),
       );
     }
 

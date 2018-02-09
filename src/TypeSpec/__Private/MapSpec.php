@@ -60,7 +60,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
   }
 
   public function assertType(mixed $value): T {
-    if (!is_a($value, $this->what)) {
+    if (!\is_a($value, $this->what)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         $this->what,

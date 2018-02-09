@@ -39,7 +39,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     $map = $container ==>
       $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
 
-    if (is_a($value, $this->what)) {
+    if (\is_a($value, $this->what)) {
       assert($value instanceof \ConstSet);
       /* HH_IGNORE_ERROR[4110] */
       return $map($value);
@@ -54,7 +54,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
   }
 
   public function assertType(mixed $value): T {
-    if (!is_a($value, $this->what)) {
+    if (!\is_a($value, $this->what)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         $this->what,

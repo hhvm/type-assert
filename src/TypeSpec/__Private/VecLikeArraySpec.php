@@ -25,7 +25,7 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
     }
 
     return Vec\map($value, $inner ==> $this->inner->coerceType($inner))
-      |> array_values($$);
+      |> \array_values($$);
   }
 
   public function assertType(mixed $value): array<T> {
@@ -61,6 +61,6 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
           ->assertType($inner);
       },
     )
-      |> array_values($$);
+      |> \array_values($$);
   }
 }

@@ -23,12 +23,12 @@ abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {
   abstract public function getInvalidCoercions(): array<array<mixed>>;
 
   public function getValidValues(): array<array<T>> {
-    return array_map(
+    return \array_map(
       ($tuple) ==> { list($_, $v) = $tuple; return $v; },
       $this->getValidCoercions(),
     )
-      |> array_unique($$)
-      |> array_map($v ==> [$v], $$);
+      |> \array_unique($$)
+      |> \array_map($v ==> [$v], $$);
   }
 
   public function getInvalidValues(): array<array<mixed>> {
@@ -48,10 +48,10 @@ abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {
   }
 
   protected function getNotEqualsMessage(T $expected, mixed $actual): string {
-    return sprintf(
+    return \sprintf(
       'Expected %s, got %s',
-      var_export($expected, true),
-      var_export($actual, true),
+      \var_export($expected, true),
+      \var_export($actual, true),
     );
   }
 

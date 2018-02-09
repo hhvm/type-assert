@@ -29,10 +29,10 @@ final class FloatSpec extends TypeSpec<float> {
         throw
           TypeCoercionException::withValue($this->getTrace(), 'float', $value);
       }
-      if (ctype_digit($value)) {
+      if (\ctype_digit($value)) {
         return (float)$str;
       }
-      if (preg_match("/^(\\d*\\.)?\\d+([eE]\\d+)?$/", $str) === 1) {
+      if (\preg_match("/^(\\d*\\.)?\\d+([eE]\\d+)?$/", $str) === 1) {
         return (float)$str;
       }
     }

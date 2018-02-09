@@ -35,7 +35,7 @@ extends TypeSpec<T> {
         $valid_outer = $value instanceof KeyedTraversable;
         break;
       default:
-        $valid_outer = is_a($value, $this->outer);
+        $valid_outer = \is_a($value, $this->outer);
     }
 
     if (!$valid_outer) {
@@ -49,7 +49,7 @@ extends TypeSpec<T> {
     invariant(
       $value instanceof KeyedTraversable,
       'expected KeyedTraversable, got %s',
-      is_object($value) ? get_class($value) : gettype($value),
+      is_object($value) ? \get_class($value) : \gettype($value),
     );
 
     // Non-Container traversables may not be rewindable, e.g. generators, so
@@ -58,7 +58,7 @@ extends TypeSpec<T> {
     // Iterator::rewind() must exist, but may be a no-op, so we can't trust it.
     if (!$value instanceof KeyedContainer) {
       throw new UnsupportedTypeException(
-        'non-KeyedContainer KeyedTraversable '.get_class($value),
+        'non-KeyedContainer KeyedTraversable '.\get_class($value),
       );
     }
 

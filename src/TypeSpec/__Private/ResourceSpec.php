@@ -28,7 +28,7 @@ final class ResourceSpec extends TypeSpec<resource> {
     }
 
     $kind = $this->kind;
-    if ($kind !== null && get_resource_type($value) !== $kind) {
+    if ($kind !== null && \get_resource_type($value) !== $kind) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         $this->getPrettyType(),

@@ -12,7 +12,7 @@ namespace Facebook\TypeAssert;
 
 final class UnsupportedTypeException extends \Exception {
   public function __construct(string $type) {
-    $message = sprintf("Not able to handle type '%s'", $type);
+    $message = \sprintf("Not able to handle type '%s'", $type);
     parent::__construct($message);
   }
 }

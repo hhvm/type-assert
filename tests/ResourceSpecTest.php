@@ -22,9 +22,9 @@ final class ResourceSpecTest extends TypeSpecTest<resource> {
 
   <<__Override>>
   public function getValidCoercions(): array<(mixed, resource)> {
-    $curl = curl_init();
+    $curl = \curl_init();
     return [
-      tuple(STDIN, STDIN),
+      tuple(\STDIN, \STDIN),
       tuple($curl, $curl),
     ];
   }
