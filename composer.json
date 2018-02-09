@@ -4,11 +4,11 @@
   "keywords": ["hack", "TypeAssert" ],
   "require": {
     "hhvm": "^3.23.0",
+    "hhvm/hhvm-autoload": "^1.4",
     "hhvm/hsl": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.1",
-    "hhvm/hhvm-autoload": "^1.4",
     "facebook/fbexpect": "^0.2.0 | ^0.3.0 | ^0.4.0",
     "91carriage/phpunit-hhi": "~5.1"
   }
