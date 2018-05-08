@@ -223,4 +223,4 @@ outlined on that page and do not file a public issue.
 License
 -------
 
-Type-Assert is BSD-licensed. We also provide an additional patent grant.
+Type-Assert is MIT-licensed.
