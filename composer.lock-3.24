@@ -94,20 +94,20 @@
         },
         {
             "name": "hhvm/hsl",
-            "version": "v3.26.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/hsl.git",
-                "reference": "e046cdba90c8204d9b329ad25ce134e9845761eb"
+                "reference": "2d40281ec595b25a09bbe51d9216edbf1ad55a42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hsl/zipball/e046cdba90c8204d9b329ad25ce134e9845761eb",
-                "reference": "e046cdba90c8204d9b329ad25ce134e9845761eb",
+                "url": "https://api.github.com/repos/hhvm/hsl/zipball/2d40281ec595b25a09bbe51d9216edbf1ad55a42",
+                "reference": "2d40281ec595b25a09bbe51d9216edbf1ad55a42",
                 "shasum": ""
             },
             "require": {
-                "hhvm": "^3.26.0",
+                "hhvm": "^3.23.2",
                 "hhvm/hhvm-autoload": "^1.4"
             },
             "require-dev": {
@@ -117,24 +117,21 @@
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
             "description": "The Hack Standard Library",
-            "time": "2018-05-08T22:54:05+00:00"
+            "time": "2018-03-09T21:53:48+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "91carriage/phpunit-hhi",
-            "version": "5.7.4",
+            "version": "5.7.3",
             "source": {
                 "type": "git",
                 "url": "https://git.simon.geek.nz/91-carriage/phpunit-hhi.git",
-                "reference": "29e50b1130dc6d72266460f1f303ba1f24937a40"
+                "reference": "e885e708b0658cc55f57a45c7b5720cdc617c4c9"
             },
             "require": {
-                "hhvm": ">=3.24.3"
+                "hhvm": ">=3.23.0"
             },
             "conflict": {
                 "phpunit/phpunit": "<5.7.15"
@@ -172,7 +169,7 @@
                 "phpunit",
                 "testing"
             ],
-            "time": "2018-03-02T23:37:33+00:00"
+            "time": "2018-02-09T19:25:38+00:00"
         },
         {
             "name": "doctrine/instantiator",
