@@ -11,7 +11,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
+use type Facebook\TypeAssert\IncorrectTypeException;
 use type Facebook\TypeSpec\TypeSpec;
 
 final class InstanceOfSpec<T> extends TypeSpec<T> {
@@ -20,6 +20,7 @@ final class InstanceOfSpec<T> extends TypeSpec<T> {
   public function __construct(private classname<T> $what) {
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     if ($value instanceof $this->what) {
       /* HH_IGNORE_ERROR[4110] unsafe for generics */

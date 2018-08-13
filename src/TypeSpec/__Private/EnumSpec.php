@@ -22,6 +22,7 @@ final class
   public function __construct(private classname<T> $what) {
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): T {
     $what = $this->what;
     try {
@@ -32,6 +33,7 @@ final class
     }
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     $what = $this->what;
     try {

@@ -11,7 +11,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
+use type Facebook\TypeAssert\TypeCoercionException;
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Dict;
 
@@ -23,6 +23,7 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
   ) {
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): dict<Tk, Tv> {
     if (!$value instanceof KeyedTraversable) {
       throw TypeCoercionException::withValue(
@@ -42,6 +43,7 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
     );
   }
 
+  <<__Override>>
   public function assertType(mixed $value): dict<Tk, Tv> {
     if (!is_dict($value)) {
       throw TypeCoercionException::withValue(

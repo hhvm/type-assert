@@ -19,6 +19,7 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
   public function __construct(private TypeSpec<T> $inner) {
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): vec<T> {
     if (!$value instanceof Traversable) {
       throw
@@ -32,6 +33,7 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
     );
   }
 
+  <<__Override>>
   public function assertType(mixed $value): vec<T> {
     if (!is_vec($value)) {
       throw

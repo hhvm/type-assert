@@ -11,9 +11,8 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, UnsupportedTypeException, TypeCoercionException};
+use type Facebook\TypeAssert\{IncorrectTypeException, UnsupportedTypeException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\Vec;
 
 final class KeyedTraversableSpec<Tk, Tv, T as KeyedTraversable<Tk, Tv>>
 extends TypeSpec<T> {
@@ -26,6 +25,7 @@ extends TypeSpec<T> {
   ) {
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     // Switch is needed as values such as PHP arrays pass instanceof, but not is_a()
     switch ($this->outer) {

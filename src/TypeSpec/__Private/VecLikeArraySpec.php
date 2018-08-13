@@ -19,6 +19,7 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
   public function __construct(private TypeSpec<T> $inner) {
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): array<T> {
     if (!$value instanceof Traversable) {
       throw
@@ -29,6 +30,7 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
       |> \array_values($$);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): array<T> {
     if (!is_array($value)) {
       throw IncorrectTypeException::withValue(

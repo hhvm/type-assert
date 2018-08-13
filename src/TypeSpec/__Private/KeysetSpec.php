@@ -19,6 +19,7 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
   public function __construct(private TypeSpec<T> $inner) {
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): keyset<T> {
     if (!$value instanceof Traversable) {
       throw TypeCoercionException::withValue(
@@ -36,6 +37,7 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
     );
   }
 
+  <<__Override>>
   public function assertType(mixed $value): keyset<T> {
     if (!is_keyset($value)) {
       throw IncorrectTypeException::withValue(

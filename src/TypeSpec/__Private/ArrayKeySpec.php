@@ -11,7 +11,6 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 
 final class ArrayKeySpec extends UnionSpec<arraykey> {
   public function __construct() {

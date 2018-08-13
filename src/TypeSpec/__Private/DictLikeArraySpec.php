@@ -25,6 +25,7 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
   ) {
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): array<Tk, Tv> {
     if (!$value instanceof KeyedTraversable) {
       throw TypeCoercionException::withValue(
@@ -45,6 +46,7 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
       |> /* HH_IGNORE_ERROR[4007] PHP array cast */ (array)$$;
   }
 
+  <<__Override>>
   public function assertType(mixed $value): array<Tk, Tv> {
     if (!is_array($value)) {
       throw IncorrectTypeException::withValue(

@@ -11,7 +11,6 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeSpec\TypeSpec;
 
 final class NumSpec extends UnionSpec<num> {
   public function __construct() {

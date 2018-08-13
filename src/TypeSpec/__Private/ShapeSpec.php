@@ -13,7 +13,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\{C, Dict};
+use namespace HH\Lib\C;
 
 final class ShapeSpec extends TypeSpec<shape()> {
   const bool STRICT_SHAPES = \HHVM_VERSION_ID >= 32300;
@@ -36,6 +36,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
     $this->allowUnknownFields = $unknown_fields === UnknownFieldsMode::ALLOW;
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): shape() {
     if (!$value instanceof KeyedTraversable) {
       throw
@@ -69,6 +70,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
     return self::dictToShapeUNSAFE($out);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): shape() {
     if (!(is_array($value) || is_dict($value))) {
       throw

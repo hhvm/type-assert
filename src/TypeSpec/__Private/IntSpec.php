@@ -15,6 +15,7 @@ use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class IntSpec extends TypeSpec<int> {
+  <<__Override>>
   public function coerceType(mixed $value): int {
     if (is_int($value)) {
       return $value;
@@ -28,6 +29,7 @@ final class IntSpec extends TypeSpec<int> {
     throw TypeCoercionException::withValue($this->getTrace(), 'int', $value);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): int {
     if (is_int($value)) {
       return $value;

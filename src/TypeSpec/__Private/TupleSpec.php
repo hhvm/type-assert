@@ -20,6 +20,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
   public function __construct(private vec<TypeSpec<mixed>> $inners) {
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): BogusTuple {
     if (!(is_array($value) || is_vec($value))) {
       throw
@@ -46,6 +47,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     return self::vecToTuple($out);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): BogusTuple {
     if (is_array($value)) {
       $value = vec($value);

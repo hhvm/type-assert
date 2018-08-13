@@ -11,7 +11,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
+use type Facebook\TypeAssert\IncorrectTypeException;
 use type Facebook\TypeSpec\TypeSpec;
 
 final class ClassnameSpec<Tinner, T as classname<Tinner>> extends TypeSpec<T> {
@@ -20,6 +20,7 @@ final class ClassnameSpec<Tinner, T as classname<Tinner>> extends TypeSpec<T> {
   public function __construct(private T $what) {
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     if (is_string($value) && \is_a($value, $this->what, /* strings = */ true)) {
       /* HH_IGNORE_ERROR[4110] is_a is not understood by Hack */

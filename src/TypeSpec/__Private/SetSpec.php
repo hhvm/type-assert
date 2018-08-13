@@ -27,6 +27,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     );
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): T {
     if (!$value instanceof Traversable) {
       throw TypeCoercionException::withValue(
@@ -54,6 +55,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     return $map((new ImmSet($value)));
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     if (!\is_a($value, $this->what)) {
       throw IncorrectTypeException::withValue(

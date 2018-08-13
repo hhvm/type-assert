@@ -15,6 +15,7 @@ use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class FloatSpec extends TypeSpec<float> {
+  <<__Override>>
   public function coerceType(mixed $value): float {
     if (is_float($value)) {
       return $value;
@@ -40,6 +41,7 @@ final class FloatSpec extends TypeSpec<float> {
     throw TypeCoercionException::withValue($this->getTrace(), 'float', $value);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): float {
     if (is_float($value)) {
       return $value;

@@ -11,14 +11,14 @@
 
 namespace Facebook\TypeAssert;
 
-use type Facebook\TypeSpec\Trace as SpecTrace;
+use type Facebook\TypeSpec\Trace;
 use type Facebook\TypeSpec\__Private\ExceptionWithSpecTraceTrait;
 
 final class IncorrectTypeException extends \Exception {
   use ExceptionWithSpecTraceTrait;
 
   public function __construct(
-    private SpecTrace $specTrace,
+    private Trace $specTrace,
     private string $expected,
     private string $actual,
   ) {
@@ -26,12 +26,12 @@ final class IncorrectTypeException extends \Exception {
     parent::__construct($message);
   }
 
-  public function getSpecTrace(): SpecTrace {
+  public function getSpecTrace(): Trace {
     return $this->specTrace;
   }
 
   public static function withType(
-    SpecTrace $trace,
+    Trace $trace,
     string $expected_type,
     string $actual_type,
   ): IncorrectTypeException {
@@ -43,7 +43,7 @@ final class IncorrectTypeException extends \Exception {
   }
 
   public static function withValue(
-    SpecTrace $trace,
+    Trace $trace,
     string $expected_type,
     mixed $value,
   ): IncorrectTypeException {

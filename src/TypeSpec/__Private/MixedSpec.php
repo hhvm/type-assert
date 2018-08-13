@@ -11,14 +11,15 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class MixedSpec extends TypeSpec<mixed> {
+  <<__Override>>
   public function coerceType(mixed $value): mixed {
     return $value;
   }
 
+  <<__Override>>
   public function assertType(mixed $value): mixed {
     return $value;
   }

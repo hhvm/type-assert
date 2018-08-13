@@ -11,14 +11,14 @@
 
 namespace Facebook\TypeAssert;
 
-use type Facebook\TypeSpec\Trace as SpecTrace;
+use type Facebook\TypeSpec\Trace;
 use type Facebook\TypeSpec\__Private\ExceptionWithSpecTraceTrait;
 
 final class TypeCoercionException extends \Exception {
   use ExceptionWithSpecTraceTrait;
 
   public function __construct(
-    private SpecTrace $specTrace,
+    private Trace $specTrace,
     private string $target,
     private string $actual,
   ) {
@@ -26,7 +26,7 @@ final class TypeCoercionException extends \Exception {
     parent::__construct($message);
   }
 
-  public function getSpecTrace(): SpecTrace {
+  public function getSpecTrace(): Trace {
     return $this->specTrace;
   }
 
@@ -39,7 +39,7 @@ final class TypeCoercionException extends \Exception {
   }
 
   public static function withValue(
-    SpecTrace $trace,
+    Trace $trace,
     string $expected,
     mixed $value,
   ): this {

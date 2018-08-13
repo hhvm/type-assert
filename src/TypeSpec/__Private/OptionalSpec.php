@@ -11,21 +11,23 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class OptionalSpec<T> extends TypeSpec<T> {
   public function __construct(private TypeSpec<T> $inner) {
   }
 
+  <<__Override>>
   public function isOptional(): bool {
     return true;
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): T {
     return $this->inner->withTrace($this->getTrace())->coerceType($value);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     return $this->inner->withTrace($this->getTrace())->assertType($value);
   }

@@ -15,6 +15,7 @@ use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class BoolSpec extends TypeSpec<bool> {
+  <<__Override>>
   public function coerceType(mixed $value): bool {
     if (is_bool($value)) {
       return $value;
@@ -28,6 +29,7 @@ final class BoolSpec extends TypeSpec<bool> {
     throw TypeCoercionException::withValue($this->getTrace(), 'bool', $value);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): bool {
     if (is_bool($value)) {
       return $value;

@@ -13,7 +13,6 @@ namespace Facebook\TypeAssert;
 
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
-use function Facebook\FBExpect\expect;
 
 final class ArrayKeySpecTest extends TypeSpecTest<arraykey> {
   <<__Override>>

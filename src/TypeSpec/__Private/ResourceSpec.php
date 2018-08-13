@@ -11,7 +11,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
+use type Facebook\TypeAssert\IncorrectTypeException;
 use type Facebook\TypeSpec\TypeSpec;
 
 final class ResourceSpec extends TypeSpec<resource> {
@@ -19,6 +19,7 @@ final class ResourceSpec extends TypeSpec<resource> {
   }
   use NoCoercionSpecTrait<resource>;
 
+  <<__Override>>
   public function assertType(mixed $value): resource {
     if (!is_resource($value)) {
       throw IncorrectTypeException::withValue(

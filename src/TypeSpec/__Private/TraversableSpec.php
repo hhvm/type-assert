@@ -14,10 +14,8 @@ namespace Facebook\TypeSpec\__Private;
 use type Facebook\TypeAssert\{
   IncorrectTypeException,
   UnsupportedTypeException,
-  TypeCoercionException,
 };
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\Vec;
 
 final class TraversableSpec<Tinner, T as Traversable<Tinner>>
   extends TypeSpec<T> {
@@ -29,6 +27,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
   ) {
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     $frame = $this->outer.'<T>';
 

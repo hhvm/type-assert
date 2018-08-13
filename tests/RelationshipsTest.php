@@ -11,8 +11,8 @@
 
 namespace Facebook\TypeAssert;
 
-use Facebook\TypeAssert\TestFixtures\ChildClass;
-use Facebook\TypeAssert\TestFixtures\ParentClass;
+use type Facebook\TypeAssert\TestFixtures\ChildClass;
+use type Facebook\TypeAssert\TestFixtures\ParentClass;
 
 final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
   public function testObjectInstanceOfOwnClass(): void {

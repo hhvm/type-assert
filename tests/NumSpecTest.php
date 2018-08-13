@@ -13,7 +13,6 @@ namespace Facebook\TypeAssert;
 
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
-use function Facebook\FBExpect\expect;
 
 final class NumSpecTest extends TypeSpecTest<num> {
   <<__Override>>
@@ -56,7 +55,7 @@ final class NumSpecTest extends TypeSpecTest<num> {
     if (!is_float($value)) {
       return false;
     }
-    
+
     return \abs($expected - $value) < 0.00001;
   }
 }

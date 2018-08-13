@@ -17,6 +17,7 @@ use type Facebook\TypeSpec\TypeSpec;
 /* HH_IGNORE_ERROR[4045] array without generics */
 final class UntypedArraySpec extends TypeSpec<array> {
 
+  <<__Override>>
   /* HH_IGNORE_ERROR[4045] array without generics */
   public function coerceType(mixed $value): array {
     if (!$value instanceof KeyedTraversable) {
@@ -31,6 +32,7 @@ final class UntypedArraySpec extends TypeSpec<array> {
     return $out;
   }
 
+  <<__Override>>
   /* HH_IGNORE_ERROR[4045] array without generics */
   public function assertType(mixed $value): array {
     if (!is_array($value)) {

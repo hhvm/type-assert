@@ -30,6 +30,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     );
   }
 
+  <<__Override>>
   public function coerceType(mixed $value): T {
     if (!$value instanceof KeyedTraversable) {
       throw TypeCoercionException::withValue(
@@ -60,6 +61,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     return $out->immutable();
   }
 
+  <<__Override>>
   public function assertType(mixed $value): T {
     if (!\is_a($value, $this->what)) {
       throw IncorrectTypeException::withValue(

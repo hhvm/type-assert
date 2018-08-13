@@ -15,6 +15,7 @@ use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class StringSpec extends TypeSpec<string> {
+  <<__Override>>
   public function coerceType(mixed $value): string {
     if (is_string($value)) {
       return $value;
@@ -28,6 +29,7 @@ final class StringSpec extends TypeSpec<string> {
     throw TypeCoercionException::withValue($this->getTrace(), 'string', $value);
   }
 
+  <<__Override>>
   public function assertType(mixed $value): string {
     if (is_string($value)) {
       return $value;

@@ -20,6 +20,7 @@ abstract class UnionSpec<+T> extends TypeSpec<T> {
     $this->inners = vec($inners);
   }
 
+  <<__Override>>
   final public function coerceType(mixed $value): T {
     try {
       return $this->assertType($value);
@@ -37,6 +38,7 @@ abstract class UnionSpec<+T> extends TypeSpec<T> {
       TypeCoercionException::withValue($this->getTrace(), $this->name, $value);
   }
 
+  <<__Override>>
   final public function assertType(mixed $value): T {
     foreach ($this->inners as $spec) {
       try {
