@@ -18,7 +18,7 @@ use type Facebook\TypeAssert\{
 use type Facebook\TypeSpec\TypeSpec;
 use function Facebook\FBExpect\expect;
 
-abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {
+abstract class TypeSpecTest<T> extends \Facebook\HackTest\HackTest {
   abstract public function getTypeSpec(): TypeSpec<T>;
   abstract public function getValidCoercions(): array<(mixed, T)>;
   abstract public function getInvalidCoercions(): array<array<mixed>>;
@@ -56,9 +56,7 @@ abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {
     );
   }
 
-  /**
-   * @dataProvider getValidCoercions
-   */
+  <<DataProvider('getValidCoercions')>>
   final public function testValidCoercion(mixed $value, T $expected): void {
     $actual = $this->getTypeSpec()->coerceType($value);
     expect($this->equals($expected, $actual))->toBeTrue(
@@ -66,18 +64,14 @@ abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {
     );
   }
 
-  /**
-   * @dataProvider getInvalidCoercions
-   */
+  <<DataProvider('getInvalidCoercions')>>
   final public function testInvalidCoercion(mixed $value): void {
     expect(
       () ==> $this->getTypeSpec()->coerceType($value),
     )->toThrow(TypeCoercionException::class);
   }
 
-  /**
-   * @dataProvider getValidValues
-   */
+  <<DataProvider('getValidValues')>>
   final public function testValidAssertion(T $value): void {
     $out = $this->getTypeSpec()->assertType($value);
     expect($this->equals($out, $value))->toBeTrue(
@@ -85,9 +79,7 @@ abstract class TypeSpecTest<T> extends \PHPUnit\Framework\TestCase {
     );
   }
 
-  /**
-   * @dataProvider getInvalidValues
-   */
+  <<DataProvider('getInvalidValues')>>
   final public function testInvalidAssertion(T $value): void {
     expect(
       () ==> $this->getTypeSpec()->assertType($value),

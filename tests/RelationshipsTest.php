@@ -12,27 +12,30 @@
 namespace Facebook\TypeAssert;
 
 use type Facebook\TypeAssert\TestFixtures\ChildClass;
+use function Facebook\FBExpect\expect;
 use type Facebook\TypeAssert\TestFixtures\ParentClass;
 
-final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
+final class RelationshipsTest extends \Facebook\HackTest\HackTest {
   public function testObjectInstanceOfOwnClass(): void {
     $x = new ParentClass();
-    $this->assertSame($x, namespace\instance_of(ParentClass::class, $x));
+    expect(namespace\instance_of(ParentClass::class, $x))->toBeSame($x);
   }
 
   public function testObjectInstanceOfParentClass(): void {
     $x = new ChildClass();
-    $this->assertSame($x, namespace\instance_of(ParentClass::class, $x));
+    expect(namespace\instance_of(ParentClass::class, $x))->toBeSame($x);
   }
 
   public function testObjectInstanceOfChildClassThrows(): void {
-    $this->expectException(IncorrectTypeException::class);
-    namespace\instance_of(ChildClass::class, new ParentClass());
+    expect(() ==> {
+      namespace\instance_of(ChildClass::class, new ParentClass());
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testObjectInstanceOfUnrelatedClassThrows(): void {
-    $this->expectException(IncorrectTypeException::class);
-    namespace\instance_of(\stdClass::class, new ParentClass());
+    expect(() ==> {
+      namespace\instance_of(\stdClass::class, new ParentClass());
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testObjectInstanceOfTypechecks(): void {
@@ -49,22 +52,21 @@ final class RelationshipsTest extends \PHPUnit\Framework\TestCase {
   }
 
   public function testClassnameIsClassnameOfSelf(): void {
-    $this->assertSame(
-      ParentClass::class,
-      namespace\classname_of(ParentClass::class, ParentClass::class),
-    );
+    expect(      namespace\classname_of(ParentClass::class, ParentClass::class),
+)->toBeSame(
+      ParentClass::class    );
   }
 
   public function testClassnameIsClassnameOfParent(): void {
-    $this->assertSame(
-      ChildClass::class,
-      namespace\classname_of(ParentClass::class, ChildClass::class),
-    );
+    expect(      namespace\classname_of(ParentClass::class, ChildClass::class),
+)->toBeSame(
+      ChildClass::class    );
   }
 
   public function testClassnameIsNotClassnameOfChild(): void {
-    $this->expectException(IncorrectTypeException::class);
-    namespace\classname_of(ChildClass::class, ParentClass::class);
+    expect(() ==> {
+      namespace\classname_of(ChildClass::class, ParentClass::class);
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testClassnameOfTypechecks(): void {

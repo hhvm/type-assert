@@ -14,81 +14,90 @@ namespace Facebook\TypeAssert;
 use namespace Facebook\{TypeAssert, TypeCoerce};
 use function Facebook\FBExpect\expect;
 
-final class ScalarsTest extends \PHPUnit\Framework\TestCase {
+final class ScalarsTest extends \Facebook\HackTest\HackTest {
   public function testIsStringPasses(): void {
-    $this->assertSame('foo', TypeAssert\string('foo'));
+    expect(TypeAssert\string('foo'))->toBeSame('foo');
   }
 
   public function testIsStringThrowsForInt(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\string(123);
+    expect(() ==> {
+      TypeAssert\string(123);
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsIntPasses(): void {
-    $this->assertSame(123, TypeAssert\int(123));
+    expect(TypeAssert\int(123))->toBeSame(123);
   }
 
   public function testIsIntThrowsForString(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\int('123');
+    expect(() ==> {
+      TypeAssert\int('123');
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsIntThrowsForFloat(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\int(123.0);
+    expect(() ==> {
+      TypeAssert\int(123.0);
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsFloatPasses(): void {
-    $this->assertSame(1.23, TypeAssert\float(1.23));
+    expect(TypeAssert\float(1.23))->toBeSame(1.23);
   }
 
   public function testIsFloatThrowsForString(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\float('123');
+    expect(() ==> {
+      TypeAssert\float('123');
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsFloatThrowsForInt(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\float(123);
+    expect(() ==> {
+      TypeAssert\float(123);
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsResourcePasses(): void {
-    $this->assertSame(\STDERR, TypeAssert\resource(\STDERR));
+    expect(TypeAssert\resource(\STDERR))->toBeSame(\STDERR);
   }
 
   public function testIsResourceThrowsForObject(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\resource(new \stdClass());
+    expect(() ==> {
+      TypeAssert\resource(new \stdClass());
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsNumPasses(): void {
-    $this->assertSame(123, TypeAssert\num(123));
-    $this->assertSame(1.23, TypeAssert\num(1.23));
+    expect(TypeAssert\num(123))->toBeSame(123);
+    expect(TypeAssert\num(1.23))->toBeSame(1.23);
   }
 
   public function testIsNumThrowsForString(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\num('123');
+    expect(() ==> {
+      TypeAssert\num('123');
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsArrayKeyPasses(): void {
-    $this->assertSame(123, TypeAssert\arraykey(123));
-    $this->assertSame('123', TypeAssert\arraykey('123'));
+    expect(TypeAssert\arraykey(123))->toBeSame(123);
+    expect(TypeAssert\arraykey('123'))->toBeSame('123');
   }
 
   public function testIsArrayKeyThrowsForFloat(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\arraykey(1.23);
+    expect(() ==> {
+      TypeAssert\arraykey(1.23);
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsNotNullPasses(): void {
-    $this->assertSame(123, TypeAssert\not_null(123));
-    $this->assertSame('foo bar', TypeAssert\not_null('foo bar'));
+    expect(TypeAssert\not_null(123))->toBeSame(123);
+    expect(TypeAssert\not_null('foo bar'))->toBeSame('foo bar');
   }
 
   public function testIsNotNullThrows(): void {
-    $this->expectException(IncorrectTypeException::class);
-    TypeAssert\not_null(null);
+    expect(() ==> {
+      TypeAssert\not_null(null);
+    })->toThrow(IncorrectTypeException::class);
   }
 
   public function testIsNotNullTypechecks(): void {
@@ -146,9 +155,7 @@ final class ScalarsTest extends \PHPUnit\Framework\TestCase {
     ];
   }
 
-  /**
-   * @dataProvider getExampleValidCoercions
-   */
+  <<DataProvider('getExampleValidCoercions')>>
   public function testValidCoercion<Tin, Tout>(
     (function(Tin): Tout) $coercion,
     Tin $input,

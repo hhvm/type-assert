@@ -19,7 +19,7 @@ use namespace HH\Lib\Dict;
 
 use function Facebook\FBExpect\expect;
 
-final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
+final class TypeStructureTest extends \Facebook\HackTest\HackTest {
   public function getExampleValidTypes(): array<string, (mixed, mixed)> {
     return [
       'int' => tuple(type_structure(TypeConstants::class, 'TInt'), 123),
@@ -210,9 +210,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     ];
   }
 
-  /**
-   * @dataProvider getExampleValidTypes
-   */
+  <<DataProvider('getExampleValidTypes')>>
   public function testValidType<T>(TypeStructure<T> $ts, T $input): void {
     expect(TypeAssert\matches_type_structure($ts, $input))
       ->toBeSame($input);
@@ -433,9 +431,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     return $examples;
   }
 
-  /**
-   * @dataProvider getExampleInvalidTypes
-   */
+  <<DataProvider('getExampleInvalidTypes')>>
   public function testInvalidTypes<T>(
     TypeStructure<T> $ts,
     mixed $input,
@@ -529,9 +525,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
       |> \array_map($x ==> $x, $$);
   }
 
-  /**
-   * @dataProvider getExampleValidCoercions
-   */
+  <<DataProvider('getExampleValidCoercions')>>
   public function testValidCoercion<T>(
     TypeStructure<T> $ts,
     mixed $value,
@@ -548,9 +542,7 @@ final class TypeStructureTest extends \PHPUnit\Framework\TestCase {
     ];
   }
 
-  /**
-   * @dataProvider getExampleInvalidCoercions
-   */
+  <<DataProvider('getExampleInvalidCoercions')>>
   public function testInvalidCoercion<T>(
     TypeStructure<T> $ts,
     mixed $value,
