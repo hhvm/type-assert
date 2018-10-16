@@ -216,6 +216,17 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ->toBeSame($input);
   }
 
+  public function testAssertedShapeAsShape(): void {
+    // most of the runtime is fine with actual PHP arrays, but we need a real
+    // darray for the `as` operator
+    $x = shape('someString' => 'foo');
+    $y = TypeAssert\matches_type_structure(
+      type_structure(TypeConstants::class, 'TShapeWithOneField'),
+      $x,
+    );
+    $z = $y as TypeConstants::TShapeWithOneField;
+  }
+
   public function getExampleInvalidTypes(
   ): array<string, (mixed, mixed, vec<string>)> {
     $examples = [

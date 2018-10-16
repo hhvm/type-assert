@@ -120,7 +120,8 @@ final class ShapeSpec extends TypeSpec<shape()> {
       /* HH_IGNORE_ERROR[4110] */
       return $shape;
     }
-    /* HH_IGNORE_ERROR[4007] */
-    return (array)$shape;
+    /* HH_FIXME[2049] */
+    /* HH_FIXME[4107] */
+    return \darray($shape);
   }
 }
