@@ -45,7 +45,7 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
 
   <<__Override>>
   public function assertType(mixed $value): dict<Tk, Tv> {
-    if (!is_dict($value)) {
+    if (!($value is dict<_, _>)) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
         'dict<Tk, Tv>',

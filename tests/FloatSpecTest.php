@@ -50,7 +50,7 @@ final class FloatSpecTest extends TypeSpecTest<float> {
 
   <<__Override>>
   protected function equals(float $expected, mixed $value): bool {
-    if (!is_float($value)) {
+    if (!($value is float)) {
       return false;
     }
     return \abs($expected - $value) < 0.00001;

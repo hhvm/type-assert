@@ -17,7 +17,7 @@ use type Facebook\TypeSpec\TypeSpec;
 final class IntSpec extends TypeSpec<int> {
   <<__Override>>
   public function coerceType(mixed $value): int {
-    if (is_int($value)) {
+    if ($value is int) {
       return $value;
     }
     if ($value instanceof \Stringish) {
@@ -31,7 +31,7 @@ final class IntSpec extends TypeSpec<int> {
 
   <<__Override>>
   public function assertType(mixed $value): int {
-    if (is_int($value)) {
+    if ($value is int) {
       return $value;
     }
     throw IncorrectTypeException::withValue($this->getTrace(), 'int', $value);

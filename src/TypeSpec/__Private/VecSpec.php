@@ -35,7 +35,7 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
 
   <<__Override>>
   public function assertType(mixed $value): vec<T> {
-    if (!is_vec($value)) {
+    if (!($value is vec<_>)) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'vec<T>', $value);
     }

@@ -39,7 +39,7 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
 
   <<__Override>>
   public function assertType(mixed $value): keyset<T> {
-    if (!is_keyset($value)) {
+    if (!($value is keyset<_>)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'keyset<T>',

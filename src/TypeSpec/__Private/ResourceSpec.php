@@ -21,7 +21,7 @@ final class ResourceSpec extends TypeSpec<resource> {
 
   <<__Override>>
   public function assertType(mixed $value): resource {
-    if (!is_resource($value)) {
+    if (!($value is resource)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         $this->getPrettyType(),

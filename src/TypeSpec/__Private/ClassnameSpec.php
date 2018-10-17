@@ -22,7 +22,7 @@ final class ClassnameSpec<Tinner, T as classname<Tinner>> extends TypeSpec<T> {
 
   <<__Override>>
   public function assertType(mixed $value): T {
-    if (is_string($value) && \is_a($value, $this->what, /* strings = */ true)) {
+    if (($value is string) && \is_a($value, $this->what, /* strings = */ true)) {
       /* HH_IGNORE_ERROR[4110] is_a is not understood by Hack */
       return $value;
     }

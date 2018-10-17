@@ -17,11 +17,11 @@ use type Facebook\TypeSpec\TypeSpec;
 final class FloatSpec extends TypeSpec<float> {
   <<__Override>>
   public function coerceType(mixed $value): float {
-    if (is_float($value)) {
+    if ($value is float) {
       return $value;
     }
 
-    if (is_int($value)) {
+    if ($value is int) {
       return (float)$value;
     }
 
@@ -43,7 +43,7 @@ final class FloatSpec extends TypeSpec<float> {
 
   <<__Override>>
   public function assertType(mixed $value): float {
-    if (is_float($value)) {
+    if ($value is float) {
       return $value;
     }
     throw IncorrectTypeException::withValue($this->getTrace(), 'float', $value);

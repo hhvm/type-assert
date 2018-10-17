@@ -48,11 +48,11 @@ final class NumSpecTest extends TypeSpecTest<num> {
 
   <<__Override>>
   protected function equals(num $expected, mixed $value): bool {
-    if (is_int($expected)) {
+    if ($expected is int) {
       return $expected === $value;
     }
 
-    if (!is_float($value)) {
+    if (!($value is float)) {
       return false;
     }
 

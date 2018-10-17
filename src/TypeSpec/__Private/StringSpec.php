@@ -17,13 +17,13 @@ use type Facebook\TypeSpec\TypeSpec;
 final class StringSpec extends TypeSpec<string> {
   <<__Override>>
   public function coerceType(mixed $value): string {
-    if (is_string($value)) {
+    if ($value is string) {
       return $value;
     }
     if ($value instanceof \Stringish) {
       return (string)$value;
     }
-    if (is_int($value)) {
+    if ($value is int) {
       return (string)$value;
     }
     throw TypeCoercionException::withValue($this->getTrace(), 'string', $value);
@@ -31,7 +31,7 @@ final class StringSpec extends TypeSpec<string> {
 
   <<__Override>>
   public function assertType(mixed $value): string {
-    if (is_string($value)) {
+    if ($value is string) {
       return $value;
     }
     throw

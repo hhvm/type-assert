@@ -72,7 +72,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
 
   <<__Override>>
   public function assertType(mixed $value): shape() {
-    if (!(is_array($value) || is_dict($value))) {
+    if (!(is_array($value) || ($value is dict<_, _>))) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'shape', $value);
     }
@@ -116,7 +116,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
   private static function dictToShapeUNSAFE(
     dict<string, mixed> $shape,
   ): shape() {
-    if (is_dict(shape())) {
+    if (shape() is dict<_, _>) {
       /* HH_IGNORE_ERROR[4110] */
       return $shape;
     }
