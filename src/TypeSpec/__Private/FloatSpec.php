@@ -26,6 +26,7 @@ final class FloatSpec extends TypeSpec<float> {
     }
 
     if ($value instanceof \Stringish) {
+      /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
       if ($str === '') {
         throw

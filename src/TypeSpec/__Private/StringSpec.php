@@ -21,6 +21,7 @@ final class StringSpec extends TypeSpec<string> {
       return $value;
     }
     if ($value instanceof \Stringish) {
+      /* HH_FIXME[4281] Stringish is going */
       return (string)$value;
     }
     if ($value is int) {

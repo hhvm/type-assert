@@ -21,6 +21,7 @@ final class IntSpec extends TypeSpec<int> {
       return $value;
     }
     if ($value instanceof \Stringish) {
+      /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
       if ($str !== '' && \ctype_digit($str)) {
         return (int)$str;
