@@ -4,3 +4,5 @@ ignored_paths = [ "vendor/.+/tests/.+" ]
 safe_array = true
 safe_vector_array = true
 disallow_destruct = true
+disallow_stringish_magic = true
+user_attributes=

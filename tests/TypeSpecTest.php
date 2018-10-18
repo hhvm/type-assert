@@ -16,6 +16,7 @@ use type Facebook\TypeAssert\{
     TypeCoercionException
 };
 use type Facebook\TypeSpec\TypeSpec;
+use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
 abstract class TypeSpecTest<T> extends \Facebook\HackTest\HackTest {

@@ -12,6 +12,7 @@
 namespace Facebook\TypeAssert;
 
 use namespace Facebook\{TypeAssert, TypeCoerce};
+use type Facebook\HackTest\DataProvider;
 use function Facebook\FBExpect\expect;
 
 final class ScalarsTest extends \Facebook\HackTest\HackTest {

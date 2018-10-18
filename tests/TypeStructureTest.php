@@ -13,6 +13,7 @@ namespace Facebook\TypeAssert;
 
 use type Facebook\TypeAssert\TestFixtures\ExampleEnum;
 use type Facebook\TypeAssert\TestFixtures\TypeConstants;
+use type Facebook\HackTest\DataProvider;
 
 use namespace Facebook\{TypeAssert, TypeCoerce};
 use namespace HH\Lib\Dict;
