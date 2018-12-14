@@ -469,6 +469,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     $ts = type_structure(TypeConstants::class, 'TStringArray');
     $ts['kind'] = TypeStructureKind::OF_GENERIC;
 
+    /* HH_IGNORE_ERROR[4110] */
     expect(() ==> TypeAssert\matches_type_structure($ts, null))->toThrow(
       UnsupportedTypeException::class,
     );
