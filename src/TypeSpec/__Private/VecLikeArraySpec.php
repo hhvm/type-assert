@@ -52,8 +52,8 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
     return Vec\map_with_key(
       $value,
       ($k, $inner) ==> {
-        $i = $counter->current();
         $counter->next();
+        $i = $counter->current();
         if ($k !== $i) {
           throw
             IncorrectTypeException::withValue($this->getTrace(), 'key '.$i, $k);
