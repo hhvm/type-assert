@@ -30,7 +30,7 @@ either return it unmodified (but with type data) or throw an exception; for exam
 ```Hack
 <?hh // strict
 use namespace Facebook\TypeAssert;
-function need_string(string $bar): void {
+function needs_string(string $bar): void {
 }
 
 function main(): void {
