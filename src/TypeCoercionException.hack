@@ -45,7 +45,7 @@ final class TypeCoercionException extends \Exception {
     return new self(
       $trace,
       $expected,
-      is_object($value) ? \get_class($value) : \gettype($value),
+      \is_object($value) ? \get_class($value) : \gettype($value),
     );
   }
 }

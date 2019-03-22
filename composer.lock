@@ -80,26 +80,26 @@
         },
         {
             "name": "facebook/fbexpect",
-            "version": "v2.5.2",
+            "version": "v2.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/fbexpect.git",
-                "reference": "01d6ec1259d9488cf2998505e2e4746262d471d2"
+                "reference": "56c0b9a3473933af2056c795e4c2378f5af95529"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/fbexpect/zipball/01d6ec1259d9488cf2998505e2e4746262d471d2",
-                "reference": "01d6ec1259d9488cf2998505e2e4746262d471d2",
+                "url": "https://api.github.com/repos/hhvm/fbexpect/zipball/56c0b9a3473933af2056c795e4c2378f5af95529",
+                "reference": "56c0b9a3473933af2056c795e4c2378f5af95529",
                 "shasum": ""
             },
             "require": {
                 "facebook/difflib": "^1.0.0",
-                "hhvm": "^3.28|^4.0",
+                "hhvm": "^4.0",
                 "hhvm/hacktest": "^1.0",
-                "hhvm/hsl": "^3.26|^4.0"
+                "hhvm/hsl": "^4.0"
             },
             "require-dev": {
-                "hhvm/hhast": "^4.0",
+                "hhvm/hhast": "^4.1",
                 "hhvm/hhvm-autoload": "^2.0"
             },
             "type": "library",
@@ -108,7 +108,7 @@
                 "MIT"
             ],
             "description": "Unit test helpers for Facebook projects",
-            "time": "2019-02-27T20:52:35+00:00"
+            "time": "2019-03-22T20:12:49+00:00"
         },
         {
             "name": "facebook/hh-clilib",
@@ -189,22 +189,22 @@
         },
         {
             "name": "hhvm/hhast",
-            "version": "v4.0.5",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/hhast.git",
-                "reference": "a5e7f731dcc73846b500062f52abfb58d575be13"
+                "reference": "b3933992f65e948dd600ed9a4fbef508388ce7ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hhast/zipball/a5e7f731dcc73846b500062f52abfb58d575be13",
-                "reference": "a5e7f731dcc73846b500062f52abfb58d575be13",
+                "url": "https://api.github.com/repos/hhvm/hhast/zipball/b3933992f65e948dd600ed9a4fbef508388ce7ed",
+                "reference": "b3933992f65e948dd600ed9a4fbef508388ce7ed",
                 "shasum": ""
             },
             "require": {
                 "facebook/difflib": "^1.0.0",
                 "facebook/hh-clilib": "^2.0.0",
-                "hhvm": "^4.0",
+                "hhvm": "^4.1",
                 "hhvm/hhvm-autoload": "^2.0.4",
                 "hhvm/hsl": "^4.0",
                 "hhvm/type-assert": "^3.1"
@@ -216,8 +216,11 @@
             },
             "bin": [
                 "bin/hhast-lint",
+                "bin/hhast-lint.hack",
                 "bin/hhast-inspect",
-                "bin/hhast-migrate"
+                "bin/hhast-inspect.hack",
+                "bin/hhast-migrate",
+                "bin/hhast-migrate.hack"
             ],
             "type": "library",
             "extra": {
@@ -229,7 +232,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2019-03-06T18:49:34+00:00"
+            "time": "2019-03-11T21:30:03+00:00"
         },
         {
             "name": "hhvm/hhvm-autoload",

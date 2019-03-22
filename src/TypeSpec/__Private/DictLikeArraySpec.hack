@@ -47,7 +47,7 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
 
   <<__Override>>
   public function assertType(mixed $value): array<Tk, Tv> {
-    if (!is_array($value)) {
+    if (!\is_array($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'array<Tk, Tv>',

@@ -49,7 +49,7 @@ extends TypeSpec<T> {
     invariant(
       $value instanceof KeyedTraversable,
       'expected KeyedTraversable, got %s',
-      is_object($value) ? \get_class($value) : \gettype($value),
+      \is_object($value) ? \get_class($value) : \gettype($value),
     );
 
     // Non-Container traversables may not be rewindable, e.g. generators, so

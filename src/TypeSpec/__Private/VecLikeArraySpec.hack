@@ -31,7 +31,7 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
 
   <<__Override>>
   public function assertType(mixed $value): array<T> {
-    if (!is_array($value)) {
+    if (!\is_array($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'array<T>',

@@ -21,7 +21,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
 
   <<__Override>>
   public function coerceType(mixed $value): BogusTuple {
-    if (!(is_array($value) || ($value is vec<_>))) {
+    if (!(\is_array($value) || ($value is vec<_>))) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'tuple', $value);
     }
@@ -48,7 +48,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
 
   <<__Override>>
   public function assertType(mixed $value): BogusTuple {
-    if (is_array($value)) {
+    if (\is_array($value)) {
       $value = vec($value);
     } else if (!($value is vec<_>)) {
       throw

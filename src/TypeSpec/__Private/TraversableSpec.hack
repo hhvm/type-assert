@@ -50,7 +50,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     invariant(
       $value instanceof Traversable,
       'expected Traversable, got %s',
-      is_object($value) ? \get_class($value) : \gettype($value),
+      \is_object($value) ? \get_class($value) : \gettype($value),
     );
 
     // Non-Container traversables may not be rewindable, e.g. generators, so
