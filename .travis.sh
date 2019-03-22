@@ -15,5 +15,5 @@ fi
 composer install
 
 hh_client
-hhvm vendor/bin/hacktest tests/
-hhvm vendor/bin/hhast-lint
+vendor/bin/hacktest tests/
+vendor/bin/hhast-lint
