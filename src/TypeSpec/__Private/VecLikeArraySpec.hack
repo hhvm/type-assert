@@ -41,9 +41,8 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
 
     $counter = (
       function(): \Generator<int, int, void> {
-        $i = 0;
-        while (true) {
-          yield $i++;
+        for ($i = 0; true; $i++) {
+          yield $i;
         }
       }
     )();
