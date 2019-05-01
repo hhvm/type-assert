@@ -37,7 +37,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     }
 
     $trace = $this->getTrace()->withFrame($this->what.'<T>');
-    $map = $container ==>
+    $map = (\ConstSet<arraykey> $container) ==>
       $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
 
     if (\is_a($value, $this->what)) {

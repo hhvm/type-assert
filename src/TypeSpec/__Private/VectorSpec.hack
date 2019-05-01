@@ -37,7 +37,7 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     }
 
     $trace = $this->getTrace()->withFrame($this->what.'<T>');
-    $map = $container ==>
+    $map = (\ConstVector<mixed> $container) ==>
       $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
 
     if (\is_a($value, $this->what)) {
