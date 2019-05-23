@@ -13,4 +13,6 @@ composer install
 
 hh_client
 vendor/bin/hacktest tests/
-vendor/bin/hhast-lint
+if !(hhvm --version | grep -q -- -dev); then
+  vendor/bin/hhast-lint
+fi
