@@ -129,6 +129,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case \ConstVector::class:
           /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new VectorSpec(
+            /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
             $classname,
             from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -139,6 +140,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case \ConstMap::class:
           /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new MapSpec(
+            /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
             $classname,
             from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -152,6 +154,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case \ConstSet::class:
           /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new SetSpec(
+            /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
             $classname,
             from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -167,6 +170,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
           ) {
             /* HH_IGNORE_ERROR[4110] unsafe generics */
             return new KeyedTraversableSpec(
+              /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
               $classname,
               from_type_structure(
                 TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -179,6 +183,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
           if (\is_a($classname, Traversable::class, /* strings = */ true)) {
             /* HH_IGNORE_ERROR[4110] unsafe generics */
             return new TraversableSpec(
+              /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
               $classname,
               from_type_structure(
                 TypeAssert\not_null($ts['generic_types'] ?? null)[0],
