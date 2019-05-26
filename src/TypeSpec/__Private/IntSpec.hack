@@ -22,8 +22,9 @@ final class IntSpec extends TypeSpec<int> {
     if ($value instanceof \Stringish) {
       /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
-      if ($str !== '' && \ctype_digit($str)) {
-        return (int)$str;
+      $int = (int)$str;
+      if ($str === (string)$int) {
+        return $int;
       }
     }
     throw TypeCoercionException::withValue($this->getTrace(), 'int', $value);
