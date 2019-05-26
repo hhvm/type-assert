@@ -49,6 +49,7 @@ final class IntSpecTest extends TypeSpecTest<int> {
       ['007'],
       ['-007'],
       [new TestStringable('-007')],
+      ['9223372036854775808'],
     ];
   }
 }
