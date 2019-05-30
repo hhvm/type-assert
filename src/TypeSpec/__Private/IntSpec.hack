@@ -12,6 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\Str;
 
 final class IntSpec extends TypeSpec<int> {
   <<__Override>>
@@ -23,6 +24,10 @@ final class IntSpec extends TypeSpec<int> {
       /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
       $int = (int)$str;
+      if ($str === (string)$int) {
+        return $int;
+      }
+      $str = Str\trim_left($str, '0');
       if ($str === (string)$int) {
         return $int;
       }
