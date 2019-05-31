@@ -28,8 +28,11 @@ final class FloatSpec extends TypeSpec<float> {
       /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
       if ($str === '') {
-        throw
-          TypeCoercionException::withValue($this->getTrace(), 'float', $value);
+        throw TypeCoercionException::withValue(
+          $this->getTrace(),
+          'float',
+          $value,
+        );
       }
       if (\ctype_digit($value)) {
         return (float)$str;
