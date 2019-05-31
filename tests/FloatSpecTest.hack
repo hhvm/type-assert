@@ -41,6 +41,9 @@ final class FloatSpecTest extends TypeSpecTest<float> {
       tuple('-7', -7.0),
       tuple('-007', -7.0),
       tuple('-0.1', -0.1),
+      tuple('-.5', -.5),
+      tuple('-.9e2', -.9e2),
+      tuple('-0.7e2', -0.7e2),
     ];
   }
 
