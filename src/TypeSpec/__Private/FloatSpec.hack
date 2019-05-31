@@ -45,11 +45,11 @@ final class FloatSpec extends TypeSpec<float> {
       /*REGEX
         At the beginning of a string, find an optional minus. ^-?
         Find at least one digit
-        with an optional period between them or preceeding them. (\d*\.)?\d+
-        Optionally: Find and e or E followed at least one digit. ([eE]\d+)?
+        with an optional period between them or preceeding them. (?:\d*\.)?\d+
+        Optionally: Find and e or E followed at least one digit. (?:[eE]\d+)?
         The end of the string. $
       */
-      if (Regex\matches($str, re"/^-?(\\d*\\.)?\\d+([eE]\\d+)?$/")) {
+      if (Regex\matches($str, re"/^-?(?:\\d*\\.)?\\d+(?:[eE]\\d+)?$/")) {
         return (float)$str;
       }
     }
