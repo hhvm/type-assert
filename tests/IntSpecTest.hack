@@ -12,6 +12,7 @@ namespace Facebook\TypeAssert;
 
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\Math;
 
 final class IntSpecTest extends TypeSpecTest<int> {
   <<__Override>>
@@ -27,7 +28,9 @@ final class IntSpecTest extends TypeSpecTest<int> {
       tuple('0', 0),
       tuple('123', 123),
       tuple(new TestStringable('123'), 123),
+      tuple((string)Math\INT64_MAX, Math\INT64_MAX),
       tuple('-321', -321),
+      tuple((string)Math\INT64_MIN, Math\INT64_MIN),
       tuple(new TestStringable('-321'), -321),
       tuple('007', 7),
       tuple('000', 0),
@@ -50,7 +53,8 @@ final class IntSpecTest extends TypeSpecTest<int> {
       [new TestStringable('1.23')],
       ['-007'],
       [new TestStringable('-007')],
-      ['9223372036854775808'],
+      ['9223372036854775808'], //Math\INT64_MAX+1
+      ['-9223372036854775809'], //Math\INT64_MIN-1
     ];
   }
 }
