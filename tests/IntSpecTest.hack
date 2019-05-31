@@ -54,7 +54,8 @@ final class IntSpecTest extends TypeSpecTest<int> {
       ['-007'],
       [new TestStringable('-007')],
       ['9223372036854775808'], //Math\INT64_MAX+1
-      ['-9223372036854775809'], //Math\INT64_MIN-1
+      ['-9223372036854775809'], //Math\INT64_MIN-1,
+      ['0xFF'],
     ];
   }
 }
