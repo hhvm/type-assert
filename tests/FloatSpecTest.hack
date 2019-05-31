@@ -56,6 +56,7 @@ final class FloatSpecTest extends TypeSpecTest<float> {
       ['1a'],
       ['e1'],
       ['1e'],
+      ['ee7'],
       ['1e2e1'],
       ['1ee1'],
       ['1,2'], //Europeans use the comma instead of a full-stop
