@@ -30,6 +30,7 @@ final class IntSpecTest extends TypeSpecTest<int> {
       tuple('-321', -321),
       tuple(new TestStringable('-321'), -321),
       tuple('007', 7),
+      tuple('000', 0),
     ];
   }
 
