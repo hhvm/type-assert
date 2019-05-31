@@ -12,7 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\{Str, Regex};
+use namespace HH\Lib\Regex;
 
 final class FloatSpec extends TypeSpec<float> {
 
