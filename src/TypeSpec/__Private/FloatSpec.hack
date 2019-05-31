@@ -12,9 +12,10 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\Str;
+use namespace HH\Lib\{Str, Regex};
 
 final class FloatSpec extends TypeSpec<float> {
+
   <<__Override>>
   public function coerceType(mixed $value): float {
     if ($value is float) {
@@ -62,6 +63,6 @@ final class FloatSpec extends TypeSpec<float> {
   }
 
   private static function passesFloatRegex(string $str): bool {
-    return \preg_match("/^(\\d*\\.)?\\d+([eE]\\d+)?$/", $str) === 1;
+    return Regex\matches($str, re"/^(\\d*\\.)?\\d+([eE]\\d+)?$/");
   }
 }
