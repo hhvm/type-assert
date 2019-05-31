@@ -24,12 +24,24 @@ final class IntSpec extends TypeSpec<int> {
       /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
       $int = (int)$str;
+
+      // "1234"   -(int)->   1234   -(string)->   "1234"
+      // "-1234"  -(int)->   -1234  -(string)->   "-1234"
+      //   ^^           are the same                ^^
       if ($str === (string)$int) {
         return $int;
       }
+
+      // "0001234" -(trim)-> "1234" -(int)-> 1234 -(string)-> "1234"
+      //                       ^^        are the same           ^^
       $str = Str\trim_left($str, '0');
       if ($str === (string)$int) {
         return $int;
+      }
+
+      // Exceptional case "000" -(trim)-> "", but we want to return 0
+      if ($str === '' && $value !== '') {
+        return 0;
       }
     }
     throw TypeCoercionException::withValue($this->getTrace(), 'int', $value);
