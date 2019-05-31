@@ -45,11 +45,6 @@ final class FloatSpec extends TypeSpec<float> {
       if (self::passesFloatRegex($str)) {
         return (float)$str;
       }
-      if ($str[0] === '-') {
-        if (self::passesFloatRegex(Str\slice($str, 1))) {
-          return (float)$str;
-        }
-      }
     }
     throw TypeCoercionException::withValue($this->getTrace(), 'float', $value);
   }
@@ -63,6 +58,6 @@ final class FloatSpec extends TypeSpec<float> {
   }
 
   private static function passesFloatRegex(string $str): bool {
-    return Regex\matches($str, re"/^(\\d*\\.)?\\d+([eE]\\d+)?$/");
+    return Regex\matches($str, re"/^-?(\\d*\\.)?\\d+([eE]\\d+)?$/");
   }
 }
