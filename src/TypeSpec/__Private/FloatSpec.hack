@@ -37,7 +37,7 @@ final class FloatSpec extends TypeSpec<float> {
       if (\ctype_digit($value)) {
         return (float)$str;
       }
-      if (\preg_match("/^(\\d*\\.)?\\d+([eE]\\d+)?$/", $str) === 1) {
+      if (self::passesFloatRegex($str)) {
         return (float)$str;
       }
     }
@@ -50,5 +50,9 @@ final class FloatSpec extends TypeSpec<float> {
       return $value;
     }
     throw IncorrectTypeException::withValue($this->getTrace(), 'float', $value);
+  }
+
+  private static function passesFloatRegex(string $str): bool {
+    return \preg_match("/^(\\d*\\.)?\\d+([eE]\\d+)?$/", $str) === 1;
   }
 }
