@@ -12,6 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\Str;
 
 final class FloatSpec extends TypeSpec<float> {
   <<__Override>>
@@ -34,11 +35,19 @@ final class FloatSpec extends TypeSpec<float> {
           $value,
         );
       }
+
+      //I presume this is here because it is cheaper than the regex.
+      //Removing this call does not affect the output of tests.
       if (\ctype_digit($value)) {
         return (float)$str;
       }
       if (self::passesFloatRegex($str)) {
         return (float)$str;
+      }
+      if ($str[0] === '-') {
+        if (self::passesFloatRegex(Str\slice($str, 1))) {
+          return (float)$str;
+        }
       }
     }
     throw TypeCoercionException::withValue($this->getTrace(), 'float', $value);
