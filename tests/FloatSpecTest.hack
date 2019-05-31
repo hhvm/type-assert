@@ -38,6 +38,9 @@ final class FloatSpecTest extends TypeSpecTest<float> {
       tuple((string)Math\INT64_MAX, (float)Math\INT64_MAX),
       tuple("9223372036854775808", 9223372036854775808.0), //INT64_MAX+1
       tuple('007', 7.0),
+      tuple('-7', 7.0),
+      tuple('-007', 7.0),
+      tuple('-0.1', -0.1),
     ];
   }
 
@@ -56,6 +59,7 @@ final class FloatSpecTest extends TypeSpecTest<float> {
       ['1e2e1'],
       ['1ee1'],
       ['1,2'], //Europeans use the comma instead of a full-stop
+      ['+1'],
     ];
   }
 
