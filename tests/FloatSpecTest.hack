@@ -12,6 +12,7 @@ namespace Facebook\TypeAssert;
 
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\Math;
 
 final class FloatSpecTest extends TypeSpecTest<float> {
   <<__Override>>
@@ -33,6 +34,16 @@ final class FloatSpecTest extends TypeSpecTest<float> {
       tuple('1.23e45', 1.23e45),
       tuple('.12e34', .12e34),
       tuple(new TestStringable('1.23'), 1.23),
+      tuple(Math\INT64_MAX, (float)Math\INT64_MAX),
+      tuple((string)Math\INT64_MAX, (float)Math\INT64_MAX),
+      tuple("9223372036854775808", 9223372036854775808.0), //INT64_MAX+1
+      tuple('007', 7.0),
+      tuple('-7', -7.0),
+      tuple('-007', -7.0),
+      tuple('-0.1', -0.1),
+      tuple('-.5', -.5),
+      tuple('-.9e2', -.9e2),
+      tuple('-0.7e2', -0.7e2),
     ];
   }
 
@@ -44,6 +55,16 @@ final class FloatSpecTest extends TypeSpecTest<float> {
       [false],
       [new \stdClass()],
       [new TestStringable('foo')],
+      ['0xFF'],
+      ['1a'],
+      ['e1'],
+      ['1e'],
+      ['ee7'],
+      ['1e2e1'],
+      ['1ee1'],
+      ['1,2'], //Europeans use the comma instead of a full-stop
+      ['+1'],
+      ['3.'], //This is currently not allowed
     ];
   }
 

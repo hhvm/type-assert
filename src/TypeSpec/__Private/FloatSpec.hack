@@ -12,8 +12,10 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\Regex;
 
 final class FloatSpec extends TypeSpec<float> {
+
   <<__Override>>
   public function coerceType(mixed $value): float {
     if ($value is float) {
@@ -28,13 +30,26 @@ final class FloatSpec extends TypeSpec<float> {
       /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
       if ($str === '') {
-        throw
-          TypeCoercionException::withValue($this->getTrace(), 'float', $value);
+        throw TypeCoercionException::withValue(
+          $this->getTrace(),
+          'float',
+          $value,
+        );
       }
+
+      //I presume this is here because it is cheaper than the regex.
+      //Removing this call does not affect the output of tests.
       if (\ctype_digit($value)) {
         return (float)$str;
       }
-      if (\preg_match("/^(\\d*\\.)?\\d+([eE]\\d+)?$/", $str) === 1) {
+      /*REGEX
+        At the beginning of a string, find an optional minus. ^-?
+        Find at least one digit
+        with an optional period between them or preceeding them. (?:\d*\.)?\d+
+        Optionally: Find and e or E followed at least one digit. (?:[eE]\d+)?
+        The end of the string. $
+      */
+      if (Regex\matches($str, re"/^-?(?:\\d*\\.)?\\d+(?:[eE]\\d+)?$/")) {
         return (float)$str;
       }
     }
