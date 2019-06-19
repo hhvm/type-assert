@@ -72,7 +72,7 @@ function dict_like_array<Tk as arraykey, Tv>(
   return new __Private\DictLikeArraySpec($tsk, $tsv);
 }
 
-function enum<Tinner, T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>>(
+function enum<Tinner as arraykey, T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>>(
   classname<T> $what,
 ): TypeSpec<T> {
   return new __Private\EnumSpec($what);
