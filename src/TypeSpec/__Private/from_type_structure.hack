@@ -13,8 +13,7 @@ namespace Facebook\TypeSpec\__Private;
 use type Facebook\TypeAssert\UnsupportedTypeException;
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict, Vec};
-use namespace Facebook\TypeSpec;
-use namespace Facebook\TypeAssert;
+use namespace Facebook\{TypeAssert, TypeSpec};
 
 function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
   if ($ts['optional_shape_field'] ?? false) {

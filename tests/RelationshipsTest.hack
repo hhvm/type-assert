@@ -10,9 +10,8 @@
 
 namespace Facebook\TypeAssert;
 
-use type Facebook\TypeAssert\TestFixtures\ChildClass;
+use type Facebook\TypeAssert\TestFixtures\{ChildClass, ParentClass};
 use function Facebook\FBExpect\expect;
-use type Facebook\TypeAssert\TestFixtures\ParentClass;
 
 final class RelationshipsTest extends \Facebook\HackTest\HackTest {
   public function testObjectInstanceOfOwnClass(): void {
