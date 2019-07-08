@@ -113,7 +113,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
   }
 
   private static function dictToShapeUNSAFE(
-    dict<string, mixed> $shape,
+    dict<arraykey, mixed> $shape,
   ): shape() {
     if (shape() is dict<_, _>) {
       /* HH_IGNORE_ERROR[4110] */
