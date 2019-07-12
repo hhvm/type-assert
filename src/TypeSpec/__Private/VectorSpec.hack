@@ -28,7 +28,7 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
 
   <<__Override>>
   public function coerceType(mixed $value): T {
-    if (!$value instanceof Traversable) {
+    if (!$value is Traversable<_>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
         $this->what,
@@ -41,7 +41,7 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
       $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
 
     if (\is_a($value, $this->what)) {
-      assert($value instanceof \ConstVector);
+      assert($value is \ConstVector<_>);
       /* HH_IGNORE_ERROR[4110] */
       return $map($value);
     }
@@ -63,7 +63,7 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
         $value,
       );
     }
-    assert($value instanceof \ConstVector);
+    assert($value is \ConstVector<_>);
 
     // TupleSpec and ShapeSpec may change their values, and can be nested here
     $changed = false;

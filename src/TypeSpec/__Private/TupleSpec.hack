@@ -25,7 +25,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'tuple', $value);
     }
-    assert($value instanceof Traversable);
+    assert($value is Traversable<_>);
     $values = vec($value);
 
     $count = \count($values);

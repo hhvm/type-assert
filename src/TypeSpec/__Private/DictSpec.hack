@@ -24,7 +24,7 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
 
   <<__Override>>
   public function coerceType(mixed $value): dict<Tk, Tv> {
-    if (!$value instanceof KeyedTraversable) {
+    if (!$value is KeyedTraversable<_, _>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
         'dict<Tk, Tv>',

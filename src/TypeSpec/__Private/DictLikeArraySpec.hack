@@ -26,7 +26,7 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
 
   <<__Override>>
   public function coerceType(mixed $value): array<Tk, Tv> {
-    if (!$value instanceof KeyedTraversable) {
+    if (!$value is KeyedTraversable<_, _>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
         'array<Tk, Tv>',

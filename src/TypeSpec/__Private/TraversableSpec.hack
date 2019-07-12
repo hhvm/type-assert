@@ -33,10 +33,10 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     // Switch is needed as values such as PHP arrays pass instanceof, but not is_a()
     switch ($this->outer) {
       case Container::class:
-        $valid_outer = $value instanceof Container;
+        $valid_outer = $value is Container<_>;
         break;
       case Traversable::class:
-        $valid_outer = $value instanceof Traversable;
+        $valid_outer = $value is Traversable<_>;
         break;
       default:
         $valid_outer = \is_a($value, $this->outer);
@@ -48,7 +48,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     }
 
     invariant(
-      $value instanceof Traversable,
+      $value is Traversable<_>,
       'expected Traversable, got %s',
       \is_object($value) ? \get_class($value) : \gettype($value),
     );
@@ -57,7 +57,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     // we can't check the values.
     //
     // Iterator::rewind() must exist, but may be a no-op, so we can't trust it.
-    if (!$value instanceof Container) {
+    if (!$value is Container<_>) {
       throw new UnsupportedTypeException(
         'non-Container Traversable '.\get_class($value),
       );

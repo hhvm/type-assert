@@ -20,7 +20,7 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
 
   <<__Override>>
   public function coerceType(mixed $value): keyset<T> {
-    if (!$value instanceof Traversable) {
+    if (!$value is Traversable<_>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
         'keyset<T>',

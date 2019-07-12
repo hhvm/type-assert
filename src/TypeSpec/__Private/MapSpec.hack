@@ -31,7 +31,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
 
   <<__Override>>
   public function coerceType(mixed $value): T {
-    if (!$value instanceof KeyedTraversable) {
+    if (!$value is KeyedTraversable<_, _>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
         $this->what,
@@ -69,7 +69,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
         $value,
       );
     }
-    assert($value instanceof \ConstMap);
+    assert($value is \ConstMap<_, _>);
 
     $tsk = $this->tsk;
     $tsv = $this->tsv;

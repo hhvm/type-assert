@@ -29,10 +29,10 @@ extends TypeSpec<T> {
     // Switch is needed as values such as PHP arrays pass instanceof, but not is_a()
     switch ($this->outer) {
       case KeyedContainer::class:
-        $valid_outer = $value instanceof KeyedContainer;
+        $valid_outer = $value is KeyedContainer<_, _>;
         break;
       case KeyedTraversable::class:
-        $valid_outer = $value instanceof KeyedTraversable;
+        $valid_outer = $value is KeyedTraversable<_, _>;
         break;
       default:
         $valid_outer = \is_a($value, $this->outer);
@@ -47,7 +47,7 @@ extends TypeSpec<T> {
     }
 
     invariant(
-      $value instanceof KeyedTraversable,
+      $value is KeyedTraversable<_, _>,
       'expected KeyedTraversable, got %s',
       \is_object($value) ? \get_class($value) : \gettype($value),
     );
@@ -56,7 +56,7 @@ extends TypeSpec<T> {
     // we can't check the values.
     //
     // Iterator::rewind() must exist, but may be a no-op, so we can't trust it.
-    if (!$value instanceof KeyedContainer) {
+    if (!$value is KeyedContainer<_, _>) {
       throw new UnsupportedTypeException(
         'non-KeyedContainer KeyedTraversable '.\get_class($value),
       );

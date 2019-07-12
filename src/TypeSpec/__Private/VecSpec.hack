@@ -20,7 +20,7 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
 
   <<__Override>>
   public function coerceType(mixed $value): vec<T> {
-    if (!$value instanceof Traversable) {
+    if (!$value is Traversable<_>) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'vec<T>', $value);
     }

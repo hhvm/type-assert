@@ -28,7 +28,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
 
   <<__Override>>
   public function coerceType(mixed $value): T {
-    if (!$value instanceof Traversable) {
+    if (!$value is Traversable<_>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
         $this->what,
@@ -41,7 +41,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
       $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
 
     if (\is_a($value, $this->what)) {
-      assert($value instanceof \ConstSet);
+      assert($value is \ConstSet<_>);
       /* HH_IGNORE_ERROR[4110] */
       return $map($value);
     }
@@ -64,7 +64,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
       );
     }
 
-    assert($value instanceof \ConstSet);
+    assert($value is \ConstSet<_>);
 
     $trace = $this->getTrace()->withFrame($this->what.'<T>');
     $value->filter($x ==> {

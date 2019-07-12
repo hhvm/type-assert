@@ -20,7 +20,7 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
 
   <<__Override>>
   public function coerceType(mixed $value): array<T> {
-    if (!$value instanceof Traversable) {
+    if (!$value is Traversable<_>) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'array<T>', $value);
     }

@@ -16,7 +16,7 @@ use type Facebook\TypeSpec\TypeSpec;
 final class NullableSpec<T> extends TypeSpec<?T> {
   public function __construct(private TypeSpec<T> $inner) {
     invariant(
-      !$inner instanceof OptionalSpec,
+      !$inner is OptionalSpec<_>,
       'OptionalSpec should be the outermost spec',
     );
   }

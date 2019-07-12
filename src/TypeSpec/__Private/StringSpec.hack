@@ -19,7 +19,7 @@ final class StringSpec extends TypeSpec<string> {
     if ($value is string) {
       return $value;
     }
-    if ($value instanceof \Stringish) {
+    if ($value is \Stringish) {
       /* HH_FIXME[4281] Stringish is going */
       return (string)$value;
     }

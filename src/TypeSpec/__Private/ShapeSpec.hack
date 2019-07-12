@@ -25,7 +25,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
     if (self::STRICT_SHAPES) {
       return false;
     }
-    return $spec instanceof NullableSpec;
+    return $spec is NullableSpec<_>;
   }
 
   public function __construct(
@@ -37,12 +37,12 @@ final class ShapeSpec extends TypeSpec<shape()> {
 
   <<__Override>>
   public function coerceType(mixed $value): shape() {
-    if (!$value instanceof KeyedTraversable) {
+    if (!$value is KeyedTraversable<_, _>) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'shape', $value);
     }
 
-    $value = dict($value);
+    $value = dict(/* HH_FIXME[4110] */$value);
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
@@ -75,7 +75,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'shape', $value);
     }
-    assert($value instanceof KeyedContainer);
+    assert($value is KeyedContainer<_, _>);
 
     $out = dict[];
     foreach ($this->inners as $key => $spec) {

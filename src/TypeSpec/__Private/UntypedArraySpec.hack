@@ -19,7 +19,7 @@ final class UntypedArraySpec extends TypeSpec<array> {
   <<__Override>>
   /* HH_IGNORE_ERROR[4045] array without generics */
   public function coerceType(mixed $value): array {
-    if (!$value instanceof KeyedTraversable) {
+    if (!$value is KeyedTraversable<_, _>) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'array', $value);
     }

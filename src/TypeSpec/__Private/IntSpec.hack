@@ -20,7 +20,7 @@ final class IntSpec extends TypeSpec<int> {
     if ($value is int) {
       return $value;
     }
-    if ($value instanceof \Stringish) {
+    if ($value is \Stringish) {
       /* HH_FIXME[4281] Stringish is going */
       $str = (string)$value;
       $int = (int)$str;
