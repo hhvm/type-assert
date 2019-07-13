@@ -6,3 +6,6 @@ safe_vector_array = true
 disallow_destruct = true
 disallow_stringish_magic = true
 user_attributes=
+disallow_ambiguous_lambda=true
+disable_unsafe_expr=true
+disable_unsafe_block=true
