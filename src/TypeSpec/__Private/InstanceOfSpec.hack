@@ -21,7 +21,7 @@ final class InstanceOfSpec<T> extends TypeSpec<T> {
 
   <<__Override>>
   public function assertType(mixed $value): T {
-    if ($value instanceof $this->what) {
+    if (\is_a($value, $this->what)) {
       /* HH_IGNORE_ERROR[4110] unsafe for generics */
       return $value;
     }
