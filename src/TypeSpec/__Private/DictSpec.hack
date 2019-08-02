@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\TypeCoercionException;
+use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Dict;
 
@@ -45,7 +45,7 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
   <<__Override>>
   public function assertType(mixed $value): dict<Tk, Tv> {
     if (!($value is dict<_, _>)) {
-      throw TypeCoercionException::withValue(
+      throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'dict<Tk, Tv>',
         $value,

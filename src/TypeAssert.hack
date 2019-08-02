@@ -42,11 +42,7 @@ function arraykey(mixed $x): arraykey {
 
 function not_null<T>(?T $x): T {
   if ($x === null) {
-    throw new IncorrectTypeException(
-      new TypeSpec\Trace(),
-      'not-null',
-      'null',
-    );
+    throw new IncorrectTypeException(new TypeSpec\Trace(), 'not-null', 'null');
   }
   return $x;
 }
@@ -61,4 +57,11 @@ function classname_of<T>(classname<T> $expected, string $what): classname<T> {
 
 function matches_type_structure<T>(TypeStructure<T> $ts, mixed $value): T {
   return TypeSpec\__Private\from_type_structure($ts)->assertType($value);
+}
+
+function matches<reify T>(mixed $value): T {
+  return matches_type_structure(
+    \HH\ReifiedGenerics\getTypeStructure<T>(),
+    $value,
+  );
 }
