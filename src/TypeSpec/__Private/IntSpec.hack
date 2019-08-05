@@ -53,4 +53,9 @@ final class IntSpec extends TypeSpec<int> {
     }
     throw IncorrectTypeException::withValue($this->getTrace(), 'int', $value);
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'int';
+  }
 }

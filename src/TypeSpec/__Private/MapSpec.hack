@@ -12,7 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\{C, Dict};
+use namespace HH\Lib\{C, Dict, Str};
 
 final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
   extends TypeSpec<T> {
@@ -99,5 +99,14 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     }
     /* HH_IGNORE_ERROR[4110] */
     return $value->immutable();
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Str\format(
+      'Map<%s, %s>',
+      $this->tsk->toString(),
+      $this->tsv->toString(),
+    );
   }
 }

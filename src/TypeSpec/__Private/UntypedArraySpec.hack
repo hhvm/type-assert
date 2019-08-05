@@ -41,4 +41,9 @@ final class UntypedArraySpec extends TypeSpec<array> {
 
     return $value;
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'array';
+  }
 }

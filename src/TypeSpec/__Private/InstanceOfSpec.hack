@@ -28,4 +28,9 @@ final class InstanceOfSpec<T> extends TypeSpec<T> {
     throw
       IncorrectTypeException::withValue($this->getTrace(), $this->what, $value);
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return $this->what;
+  }
 }

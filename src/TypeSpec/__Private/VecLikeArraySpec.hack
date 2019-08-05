@@ -64,4 +64,9 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
     )
       |> \array_values($$);
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'array<'.$this->inner->toString().'>';
+  }
 }

@@ -12,7 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\C;
+use namespace HH\Lib\{C, Dict, Str, Vec};
 
 final class ShapeSpec extends TypeSpec<shape()> {
   private bool $allowUnknownFields;
@@ -31,8 +31,11 @@ final class ShapeSpec extends TypeSpec<shape()> {
   <<__Override>>
   public function coerceType(mixed $value): shape() {
     if (!$value is KeyedTraversable<_, _>) {
-      throw
-        TypeCoercionException::withValue($this->getTrace(), 'shape', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        'shape',
+        $value,
+      );
     }
 
     /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
@@ -66,8 +69,11 @@ final class ShapeSpec extends TypeSpec<shape()> {
   <<__Override>>
   public function assertType(mixed $value): shape() {
     if (!(\is_array($value) || ($value is dict<_, _>))) {
-      throw
-        IncorrectTypeException::withValue($this->getTrace(), 'shape', $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        'shape',
+        $value,
+      );
     }
     assert($value is KeyedContainer<_, _>);
 
@@ -114,5 +120,22 @@ final class ShapeSpec extends TypeSpec<shape()> {
       return $shape;
     }
     return /* HH_IGNORE_ERROR[4110] */ darray($shape);
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return $this->inners
+      |> Dict\map_with_key(
+        $$,
+        ($name, $spec) ==> Str\format(
+          '  %s => %s%s',
+          $spec->toString(),
+          $spec->isOptional() ? '?' : '',
+          $name,
+        ),
+      )
+      |> $this->allowUnknownFields ? Vec\concat($$, vec['...']) : $$
+      |> Str\join($$, ",\n")
+      |> "shape(\n".$$."\n)";
   }
 }

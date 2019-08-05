@@ -88,4 +88,9 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     /* HH_IGNORE_ERROR[4110] */
     return $value->immutable();
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'Vector<'.$this->inner->toString().'>';
+  }
 }

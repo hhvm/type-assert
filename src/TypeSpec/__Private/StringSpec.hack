@@ -39,4 +39,9 @@ final class StringSpec extends TypeSpec<string> {
       \gettype($value),
     );
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'string';
+  }
 }

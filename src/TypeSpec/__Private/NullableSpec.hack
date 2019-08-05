@@ -52,4 +52,9 @@ final class NullableSpec<T> extends TypeSpec<?T> {
       );
     }
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return '?'.$this->inner->toString();
+  }
 }

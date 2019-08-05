@@ -69,4 +69,9 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     }
     return /* HH_IGNORE_ERROR[4110] */ $value;
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'Traversable<'.$this->inner->toString().'>';
+  }
 }

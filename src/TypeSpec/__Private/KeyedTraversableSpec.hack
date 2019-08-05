@@ -12,6 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, UnsupportedTypeException};
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\Str;
 
 final class KeyedTraversableSpec<Tk, Tv, T as KeyedTraversable<Tk, Tv>>
 extends TypeSpec<T> {
@@ -71,5 +72,14 @@ extends TypeSpec<T> {
       $tsv->assertType($v);
     }
     return /* HH_IGNORE_ERROR[4110] */ $value;
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Str\format(
+      'KeyedTraversable<%s, %s>',
+      $this->tsk->toString(),
+      $this->tsv->toString(),
+    );
   }
 }

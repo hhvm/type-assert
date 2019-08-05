@@ -35,4 +35,9 @@ final class BoolSpec extends TypeSpec<bool> {
     }
     throw IncorrectTypeException::withValue($this->getTrace(), 'bool', $value);
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'bool';
+  }
 }

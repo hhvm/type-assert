@@ -74,4 +74,9 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     /* HH_IGNORE_ERROR[4110] */
     return $value;
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'Set<'.$this->inner->toString().'>';
+  }
 }

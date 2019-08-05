@@ -30,4 +30,9 @@ final class OptionalSpec<T> extends TypeSpec<T> {
   public function assertType(mixed $value): T {
     return $this->inner->withTrace($this->getTrace())->assertType($value);
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return $this->inner->toString();
+  }
 }

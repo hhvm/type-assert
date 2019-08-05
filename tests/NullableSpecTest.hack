@@ -13,9 +13,9 @@ namespace Facebook\TypeAssert;
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
 
-final class NullableSpecTest extends TypeSpecTest<?int> {
+final class NullableSpecTest extends TypeSpecTest<mixed> {
   <<__Override>>
-  public function getTypeSpec(): TypeSpec<?int> {
+  public function getTypeSpec(): TypeSpec<mixed> {
     return TypeSpec\nullable(TypeSpec\int());
   }
 
@@ -43,6 +43,14 @@ final class NullableSpecTest extends TypeSpecTest<?int> {
       tuple(vec[123]),
       tuple(false),
       tuple(true),
+    ];
+  }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<mixed>, string)> {
+    return vec[
+      tuple(TypeSpec\nullable(TypeSpec\int()), '?int'),
+      tuple(TypeSpec\nullable(TypeSpec\string()), '?string'),
     ];
   }
 }

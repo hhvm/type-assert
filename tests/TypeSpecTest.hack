@@ -23,6 +23,7 @@ abstract class TypeSpecTest<T> extends \Facebook\HackTest\HackTest {
   abstract public function getTypeSpec(): TypeSpec<T>;
   abstract public function getValidCoercions(): vec<(mixed, T)>;
   abstract public function getInvalidCoercions(): vec<(mixed)>;
+  abstract public function getToStringExamples(): vec<(TypeSpec<T>, string)>;
 
   public function getValidValues(): vec<(T)> {
     return \array_map(
@@ -85,5 +86,10 @@ abstract class TypeSpecTest<T> extends \Facebook\HackTest\HackTest {
     expect(
       () ==> $this->getTypeSpec()->assertType($value),
     )->toThrow(IncorrectTypeException::class);
+  }
+
+  <<DataProvider('getToStringExamples')>>
+  final public function testToString(TypeSpec<mixed> $ts, string $expected): void {
+    expect($ts->toString())->toBeSame($expected);
   }
 }

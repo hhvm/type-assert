@@ -39,4 +39,9 @@ final class BoolSpecTest extends TypeSpecTest<bool> {
       tuple('false'),
     ];
   }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<bool>, string)> {
+    return vec[tuple(TypeSpec\bool(), 'bool')];
+  }
 }

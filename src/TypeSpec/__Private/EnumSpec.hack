@@ -42,4 +42,9 @@ final class
       throw IncorrectTypeException::withValue($this->getTrace(), $what, $value);
     }
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return $this->what;
+  }
 }

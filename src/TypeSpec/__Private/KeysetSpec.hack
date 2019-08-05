@@ -53,4 +53,9 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
       $inner ==> $this->inner->withTrace($trace)->assertType($inner),
     );
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'keyset<'.$this->inner->toString().'>';
+  }
 }

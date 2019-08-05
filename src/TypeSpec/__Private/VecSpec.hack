@@ -45,4 +45,9 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
       $inner ==> $this->inner->withTrace($trace)->assertType($inner),
     );
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'vec<'.$this->inner->toString().'>';
+  }
 }

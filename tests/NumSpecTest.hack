@@ -57,4 +57,9 @@ final class NumSpecTest extends TypeSpecTest<num> {
 
     return \abs($expected - $value) < 0.00001;
   }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<num>, string)> {
+    return vec[tuple(TypeSpec\num(), 'num')];
+  }
 }

@@ -12,7 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\Dict;
+use namespace HH\Lib\{Dict, Str};
 
 final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
 
@@ -59,6 +59,15 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
       $value,
       ($_k, $v) ==> $this->tsv->withTrace($vt)->assertType($v),
       ($k, $_v) ==> $this->tsk->withTrace($kt)->assertType($k),
+    );
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Str\format(
+      'dict<%s, %s>',
+      $this->tsk->toString(),
+      $this->tsv->toString(),
     );
   }
 }
