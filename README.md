@@ -3,7 +3,7 @@ TypeAssert [![Build Status](https://travis-ci.org/hhvm/type-assert.svg?branch=ma
 
 Hack library for converting untyped data to typed data.
 
-Warning for `TypeAssert::matches_type_structure()`
+Warning for `TypeAssert\matches_type_structure()`
 --------------------------------------------------
 
 `TypeStructure<T>`, `type_structure()`, and `ReflectionTypeAlias::getTypeStructures()`
@@ -11,8 +11,8 @@ are experimental features of HHVM, and not supported by Facebook or the HHVM tea
 This means that `matches_type_structure()` may need to be removed in a future release
 without warning.
 
-`matches_type_structure()` is based on these APIs as there is not
-currently a viable alternative.
+We strongly recommend moving to `TypeAssert\matches<T>()` and
+`TypeCoerce\match<T>()` instead.
 
 Installation
 ------------
@@ -50,6 +50,7 @@ These include:
  - `not_null<T>(?T): T`
  - `instance_of<T>(classname<T>, mixed): T`
  - `classname_of<T>(classname<T>, mixed): classname<T>`
+ - `matches<T>(mixed): T`
  - `matches_type_structure<T>(TypeStructure<T>, mixed): T`
 
 Coercion
@@ -65,6 +66,7 @@ similar set of functions:
  - `resource(mixed): resource`
  - `num(mixed): num`
  - `arraykey(mixed): arraykey`
+ - `match<T>(mixed): T`
  - `match_type_structure<T>(TypeStructure<T>, mixed): T`
 
 These will do 'safe' transformations, such as int-ish strings to int, ints to

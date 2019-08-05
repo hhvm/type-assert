@@ -46,7 +46,7 @@ function match_type_structure<T>(TypeStructure<T> $ts, mixed $value): T {
 
 function match<reify T>(mixed $value): T {
   return match_type_structure(
-    \HH\ReifiedGenerics\getTypeStructure<T>(),
+    \HH\ReifiedGenerics\get_type_structure<T>(),
     $value,
   );
 }
