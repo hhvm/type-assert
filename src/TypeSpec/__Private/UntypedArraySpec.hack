@@ -26,7 +26,7 @@ final class UntypedArraySpec extends TypeSpec<array> {
 
     $out = [];
     foreach ($value as $k => $v) {
-      $out[$k] = $v;
+      $out[$k as arraykey] = $v;
     }
     return $out;
   }
