@@ -42,6 +42,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
         TypeCoercionException::withValue($this->getTrace(), 'shape', $value);
     }
 
+    /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
     $value = dict(/* HH_FIXME[4110] */$value);
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
