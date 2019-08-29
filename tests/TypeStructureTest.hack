@@ -223,7 +223,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       type_structure(TypeConstants::class, 'TShapeWithOneField'),
       $x,
     );
-    $z = $y as TypeConstants::TShapeWithOneField;
+    $y as TypeConstants::TShapeWithOneField;
   }
 
   public function getExampleInvalidTypes(
