@@ -38,8 +38,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
       );
     }
 
-    /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
-    $value = dict(/* HH_FIXME[4110] */$value);
+    $value = dict(/* HH_IGNORE_ERROR[4323] */$value);
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');

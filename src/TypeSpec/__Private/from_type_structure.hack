@@ -125,10 +125,8 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case Vector::class:
         case ImmVector::class:
         case \ConstVector::class:
-          /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new VectorSpec(
-            /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
-            /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
+            /* HH_IGNORE_ERROR[4323] unsafe generics */
             $classname,
             from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -137,10 +135,8 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case Map::class:
         case ImmMap::class:
         case \ConstMap::class:
-          /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new MapSpec(
-            /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
-            /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
+            /* HH_IGNORE_ERROR[4323] unsafe generics */
             $classname,
             from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -152,10 +148,8 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
         case Set::class:
         case ImmSet::class:
         case \ConstSet::class:
-          /* HH_IGNORE_ERROR[4110] unsafe generics */
           return new SetSpec(
-            /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
-            /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
+            /* HH_IGNORE_ERROR[4323] unsafe generics */
             $classname,
             from_type_structure(
               TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -169,10 +163,8 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
               /* strings = */ true,
             )
           ) {
-            /* HH_IGNORE_ERROR[4110] unsafe generics */
             return new KeyedTraversableSpec(
-              /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
-              /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
+              /* HH_IGNORE_ERROR[4323] unsafe generics */
               $classname,
               from_type_structure(
                 TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -183,10 +175,8 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
             );
           }
           if (\is_a($classname, Traversable::class, /* strings = */ true)) {
-            /* HH_IGNORE_ERROR[4110] unsafe generics */
             return new TraversableSpec(
-              /* HH_IGNORE_ERROR[4110] unsafe generics (4.7+) */
-              /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
+              /* HH_IGNORE_ERROR[4323] unsafe generics */
               $classname,
               from_type_structure(
                 TypeAssert\not_null($ts['generic_types'] ?? null)[0],
@@ -199,8 +189,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
       throw new UnsupportedTypeException('OF_TRAIT');
     case TypeStructureKind::OF_ENUM:
       $enum = TypeAssert\not_null($ts['classname']);
-      /* HH_IGNORE_ERROR[4110] */
-      /* HH_IGNORE_ERROR[4323] unsafe generics (4.20+) */
+      /* HH_IGNORE_ERROR[4323] */
       return new EnumSpec($enum);
     case TypeStructureKind::OF_UNRESOLVED:
       throw new UnsupportedTypeException('OF_UNRESOLVED');
