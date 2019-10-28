@@ -24,7 +24,7 @@ final class UntypedArraySpec extends TypeSpec<array> {
         TypeCoercionException::withValue($this->getTrace(), 'array', $value);
     }
 
-    $out = [];
+    $out = darray[];
     foreach ($value as $k => $v) {
       $out[$k as arraykey] = $v;
     }
@@ -39,7 +39,7 @@ final class UntypedArraySpec extends TypeSpec<array> {
         IncorrectTypeException::withValue($this->getTrace(), 'array', $value);
     }
 
-    $out = [];
+    $out = darray[];
     foreach ($value as $k => $v) {
       $out[$k] = $v;
     }
