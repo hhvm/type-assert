@@ -13,17 +13,20 @@ namespace Facebook\TypeSpec\__Private;
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
-/* HH_IGNORE_ERROR[4045] array without generics */
-final class UntypedArraySpec extends TypeSpec<array> {
+/* HH_IGNORE_ERROR[2071] varray_or_darray without generics */
+final class UntypedArraySpec extends TypeSpec<varray_or_darray> {
 
   <<__Override>>
-  /* HH_IGNORE_ERROR[4045] array without generics */
-  public function coerceType(mixed $value): array {
+  /* HH_IGNORE_ERROR[2071] varray_or_darray without generics */
+  public function coerceType(mixed $value): varray_or_darray {
     if (!$value is KeyedTraversable<_, _>) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'array', $value);
     }
 
+    /*HH_IGNORE_ERROR[2083]
+      we are intentionally making a varray_or_darray,
+      so we need the PHP syntax*/
     $out = [];
     foreach ($value as $k => $v) {
       $out[$k as arraykey] = $v;
@@ -32,13 +35,16 @@ final class UntypedArraySpec extends TypeSpec<array> {
   }
 
   <<__Override>>
-  /* HH_IGNORE_ERROR[4045] array without generics */
-  public function assertType(mixed $value): array {
+  /* HH_IGNORE_ERROR[2071] varray_or_darray without generics */
+  public function assertType(mixed $value): varray_or_darray {
     if (!\is_array($value)) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'array', $value);
     }
 
+    /*HH_IGNORE_ERROR[2083]
+      we are intentionally making a varray_or_darray,
+      so we need the PHP syntax*/
     $out = [];
     foreach ($value as $k => $v) {
       $out[$k] = $v;
