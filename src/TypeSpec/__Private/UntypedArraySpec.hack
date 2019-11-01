@@ -39,10 +39,6 @@ final class UntypedArraySpec extends TypeSpec<array> {
         IncorrectTypeException::withValue($this->getTrace(), 'array', $value);
     }
 
-    $out = darray[];
-    foreach ($value as $k => $v) {
-      $out[$k] = $v;
-    }
-    return $out;
+    return $value;
   }
 }
