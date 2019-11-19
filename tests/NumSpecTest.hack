@@ -20,8 +20,8 @@ final class NumSpecTest extends TypeSpecTest<num> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, num)> {
-    return [
+  public function getValidCoercions(): vec<(mixed, num)> {
+    return vec[
       tuple(123, 123),
       tuple(1.23, 1.23),
       tuple(0, 0),
@@ -35,13 +35,13 @@ final class NumSpecTest extends TypeSpecTest<num> {
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [
-      [vec[]],
-      [vec[123]],
-      [null],
-      [false],
-      ['foo'],
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple(vec[]),
+      tuple(vec[123]),
+      tuple(null),
+      tuple(false),
+      tuple('foo'),
     ];
   }
 

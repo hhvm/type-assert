@@ -20,8 +20,8 @@ final class BoolSpecTest extends TypeSpecTest<bool> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, bool)> {
-    return [
+  public function getValidCoercions(): vec<(mixed, bool)> {
+    return vec[
       tuple(false, false),
       tuple(true, true),
       tuple(0, false),
@@ -30,13 +30,13 @@ final class BoolSpecTest extends TypeSpecTest<bool> {
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [
-      [null],
-      [23],
-      [-1],
-      ['true'],
-      ['false'],
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple(null),
+      tuple(23),
+      tuple(-1),
+      tuple('true'),
+      tuple('false'),
     ];
   }
 }

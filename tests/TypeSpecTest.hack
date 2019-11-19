@@ -10,6 +10,7 @@
 
 namespace Facebook\TypeAssert;
 
+use namespace HH\Lib\Vec;
 use type Facebook\TypeAssert\{
     IncorrectTypeException,
     TypeCoercionException
@@ -20,26 +21,26 @@ use function Facebook\FBExpect\expect;
 
 abstract class TypeSpecTest<T> extends \Facebook\HackTest\HackTest {
   abstract public function getTypeSpec(): TypeSpec<T>;
-  abstract public function getValidCoercions(): array<(mixed, T)>;
-  abstract public function getInvalidCoercions(): array<array<mixed>>;
+  abstract public function getValidCoercions(): vec<(mixed, T)>;
+  abstract public function getInvalidCoercions(): vec<(mixed)>;
 
-  public function getValidValues(): array<array<T>> {
+  public function getValidValues(): vec<(T)> {
     return \array_map(
       ($tuple) ==> { list($_, $v) = $tuple; return $v; },
       $this->getValidCoercions(),
     )
       |> \array_unique($$)
-      |> \array_map($v ==> [$v], $$);
+      |> Vec\map($$, $v ==> tuple($v));
   }
 
-  public function getInvalidValues(): array<array<mixed>> {
+  public function getInvalidValues(): vec<(mixed)> {
     $rows = $this->getInvalidCoercions();
     foreach ($this->getValidCoercions() as $arr) {
       list($value, $v) = $arr;
       if ($value === $v) {
         continue;
       }
-      $rows[] = [$value];
+      $rows[] = tuple($value);
     }
     return $rows;
   }

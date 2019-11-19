@@ -19,8 +19,8 @@ use namespace HH\Lib\Dict;
 use function Facebook\FBExpect\expect;
 
 final class TypeStructureTest extends \Facebook\HackTest\HackTest {
-  public function getExampleValidTypes(): array<string, (mixed, mixed)> {
-    return [
+  public function getExampleValidTypes(): dict<string, (mixed, mixed)> {
+    return dict[
       'int' => tuple(type_structure(TypeConstants::class, 'TInt'), 123),
       'bool' => tuple(type_structure(TypeConstants::class, 'TBool'), true),
       'float' => tuple(type_structure(TypeConstants::class, 'TFloat'), 1.23),
@@ -36,16 +36,24 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TTuple'),
         tuple('foo', 123),
       ),
-      'empty array<string>' =>
-        tuple(type_structure(TypeConstants::class, 'TStringArray'), []),
+      'empty array<string>' => tuple(
+        type_structure(TypeConstants::class, 'TStringArray'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
+        [],
+      ),
       'array<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringArray'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['123', '456'],
       ),
-      'empty array<string, string>' =>
-        tuple(type_structure(TypeConstants::class, 'TStringStringArray'), []),
+      'empty array<string, string>' => tuple(
+        type_structure(TypeConstants::class, 'TStringStringArray'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
+        [],
+      ),
       'array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo' => 'bar', 'herp' => 'derp'],
       ),
       'string as ?string' => tuple(
@@ -70,6 +78,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'array as Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         [123, 456],
       ),
       'Container<int>' => tuple(
@@ -86,6 +95,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'PHP array as KeyedContainer<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo' => 123],
       ),
       'empty Map<string, string>' =>
@@ -146,10 +156,12 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'shape with empty container' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         array('container' => Vector {}),
       ),
       'shape with non-empty container' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         array('container' => Vector { 'foo' }),
       ),
       'enum' =>
@@ -184,27 +196,40 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'empty array as array<>' => tuple(
         type_structure(TypeConstants::class, 'TArrayWithoutGenerics'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         [],
       ),
       'vec-like array as array<>' => tuple(
         type_structure(TypeConstants::class, 'TArrayWithoutGenerics'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo', 'bar'],
       ),
       'dict-like array as array<>' => tuple(
         type_structure(TypeConstants::class, 'TArrayWithoutGenerics'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo' => 'bar'],
       ),
       'empty array in array<> shape field' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithArrayWithoutGenerics'),
-        shape('one' => true, 'two' => []),
+        shape(
+          'one' => true,
+          'two' => /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ [],
+        ),
       ),
       'vec-like array in array<> shape field' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithArrayWithoutGenerics'),
-        shape('one' => true, 'two' => ['foo', 'bar']),
+        shape(
+          'one' => true,
+          'two' => /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ ['foo', 'bar'],
+        ),
       ),
       'dict-like array in array<> shape field' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithArrayWithoutGenerics'),
-        shape('one' => true, 'two' => ['foo' => 'bar']),
+        shape(
+          'one' => true,
+          'two' =>
+            /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ ['foo' => 'bar'],
+        ),
       ),
     ];
   }
@@ -227,8 +252,8 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
   }
 
   public function getExampleInvalidTypes(
-  ): array<string, (mixed, mixed, vec<string>)> {
-    $examples = [
+  ): dict<string, (mixed, mixed, vec<string>)> {
+    $examples = dict[
       '"123" as int' =>
         tuple(type_structure(TypeConstants::class, 'TInt'), '123', vec[]),
       '1 as bool' =>
@@ -253,16 +278,19 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'int in array<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringArray'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         [123],
         vec['array[0]'],
       ),
       'int keys in array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         [123 => 'bar', 123 => 'derp'],
         vec['array<Tk, _>'],
       ),
       'int values in array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo' => 123, 'bar' => 456],
         vec['array<_, Tv>'],
       ),
@@ -391,11 +419,13 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'shape with missing container field' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         array(),
         vec['shape[container]'],
       ),
       'shape with container of wrong kind' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         array('container' => Vector { 123 }),
         vec['shape[container]', 'HH\\Vector<T>'],
       ),
@@ -474,8 +504,8 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
   }
 
   public function getExampleValidCoercions(
-  ): array<string, (mixed, mixed, mixed)> {
-    $coercions = [
+  ): dict<string, (mixed, mixed, mixed)> {
+    $coercions = dict[
       'vec<intish string> to vec<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntVec'),
         vec['123'],
@@ -488,6 +518,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'array<intish string> to vec<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntVec'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['123'],
         vec[123],
       ),
@@ -498,6 +529,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'array<string, int> to dict<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringDict'),
+        /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo' => 123, 'bar' => 456],
         dict['foo' => '123', 'bar' => '456'],
       ),
@@ -533,7 +565,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       },
     )
       |> Dict\merge($$, $coercions)
-      |> \array_map($x ==> $x, $$);
+      |> Dict\map($$, $x ==> $x);
   }
 
   <<DataProvider('getExampleValidCoercions')>>
@@ -546,8 +578,8 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     expect($actual)->toBePHPEqual($expected);
   }
 
-  public function getExampleInvalidCoercions(): array<string, (mixed, mixed)> {
-    return [
+  public function getExampleInvalidCoercions(): dict<string, (mixed, mixed)> {
+    return dict[
       'vec<non-intish string> to vec<int>' =>
         tuple(type_structure(TypeConstants::class, 'TIntVec'), vec['1.23']),
     ];
@@ -569,6 +601,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     // - likely future changes to the implementation of shapes
     $shape = shape('someString' => 'foobar', 'someNullable' => null);
     $dict = dict['someString' => 'foobar', 'someNullable' => null];
+    /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
     $array = ['someString' => 'foobar', 'someNullable' => null];
     $ts = type_structure(TypeConstants::class, 'TFlatShape');
 
@@ -582,6 +615,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     // - likely future changes to the implementation of tuples
     $tuple = tuple('foo', 123);
     $vec = vec['foo', 123];
+    /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
     $array = ['foo', 123];
     $ts = type_structure(TypeConstants::class, 'TTuple');
 

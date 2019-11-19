@@ -20,8 +20,8 @@ final class StringSpecTest extends TypeSpecTest<string> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, string)> {
-    return [
+  public function getValidCoercions(): vec<(mixed, string)> {
+    return vec[
       tuple('foo', 'foo'),
       tuple(123, '123'),
       tuple(new TestStringable('herp derp'), 'herp derp'),
@@ -29,14 +29,14 @@ final class StringSpecTest extends TypeSpecTest<string> {
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [
-      [1.23],
-      [['foo']],
-      [vec[]],
-      [vec[123]],
-      [null],
-      [false],
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple(1.23),
+      tuple(vec['foo']),
+      tuple(vec[]),
+      tuple(vec[123]),
+      tuple(null),
+      tuple(false),
     ];
   }
 }

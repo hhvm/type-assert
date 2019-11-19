@@ -20,21 +20,21 @@ final class ResourceSpecTest extends TypeSpecTest<resource> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, resource)> {
+  public function getValidCoercions(): vec<(mixed, resource)> {
     $curl = \curl_init();
-    return [
+    return vec[
       tuple(\STDIN, \STDIN),
       tuple($curl, $curl),
     ];
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [
-      [null],
-      [23],
-      ['/dev/stdin'],
-      [false],
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple(null),
+      tuple(23),
+      tuple('/dev/stdin'),
+      tuple(false),
     ];
   }
 }

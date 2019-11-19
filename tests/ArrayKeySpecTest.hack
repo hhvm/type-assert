@@ -20,8 +20,8 @@ final class ArrayKeySpecTest extends TypeSpecTest<arraykey> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, arraykey)> {
-    return [
+  public function getValidCoercions(): vec<(mixed, arraykey)> {
+    return vec[
       tuple(123, 123),
       tuple(0, 0),
       tuple('0', '0'),
@@ -32,15 +32,14 @@ final class ArrayKeySpecTest extends TypeSpecTest<arraykey> {
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [
-      [1.0],
-      [1.23],
-      [[123]],
-      [vec[]],
-      [vec[123]],
-      [null],
-      [false],
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple(1.0),
+      tuple(1.23),
+      tuple(vec[]),
+      tuple(vec[123]),
+      tuple(null),
+      tuple(false),
     ];
   }
 }

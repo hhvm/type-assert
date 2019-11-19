@@ -115,8 +115,8 @@ final class ScalarsTest extends \Facebook\HackTest\HackTest {
   }
 
   public function getExampleValidCoercions(
-  ): array<string, ((function(mixed):mixed), mixed, mixed)> {
-    return [
+  ): dict<string, ((function(mixed):mixed), mixed, mixed)> {
+    return dict[
       'int to string' => tuple(
         $x ==> TypeCoerce\string($x),
         123,

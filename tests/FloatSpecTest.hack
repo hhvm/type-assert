@@ -21,8 +21,8 @@ final class FloatSpecTest extends TypeSpecTest<float> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, float)> {
-    return [
+  public function getValidCoercions(): vec<(mixed, float)> {
+    return vec[
       tuple(123, 123.0),
       tuple(1.23, 1.23),
       tuple(0, 0.0),
@@ -48,23 +48,23 @@ final class FloatSpecTest extends TypeSpecTest<float> {
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [
-      ['foo'],
-      [null],
-      [false],
-      [new \stdClass()],
-      [new TestStringable('foo')],
-      ['0xFF'],
-      ['1a'],
-      ['e1'],
-      ['1e'],
-      ['ee7'],
-      ['1e2e1'],
-      ['1ee1'],
-      ['1,2'], //Europeans use the comma instead of a full-stop
-      ['+1'],
-      ['3.'], //This is currently not allowed
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple('foo'),
+      tuple(null),
+      tuple(false),
+      tuple(new \stdClass()),
+      tuple(new TestStringable('foo')),
+      tuple('0xFF'),
+      tuple('1a'),
+      tuple('e1'),
+      tuple('1e'),
+      tuple('ee7'),
+      tuple('1e2e1'),
+      tuple('1ee1'),
+      tuple('1,2'), //Europeans use the comma instead of a full-stop
+      tuple('+1'),
+      tuple('3.'), //This is currently not allowed
     ];
   }
 

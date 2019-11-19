@@ -20,8 +20,8 @@ final class NullableSpecTest extends TypeSpecTest<?int> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, ?int)> {
-    return [
+  public function getValidCoercions(): vec<(mixed, ?int)> {
+    return vec[
       tuple(123, 123),
       tuple(null, null),
       tuple(0, 0),
@@ -32,18 +32,17 @@ final class NullableSpecTest extends TypeSpecTest<?int> {
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [
-      ['1.23'],
-      ['1e123'],
-      [''],
-      [1.0],
-      [1.23],
-      [[123]],
-      [vec[]],
-      [vec[123]],
-      [false],
-      [true],
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple('1.23'),
+      tuple('1e123'),
+      tuple(''),
+      tuple(1.0),
+      tuple(1.23),
+      tuple(vec[]),
+      tuple(vec[123]),
+      tuple(false),
+      tuple(true),
     ];
   }
 }
