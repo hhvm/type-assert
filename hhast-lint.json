@@ -4,7 +4,7 @@
   "overrides": [
     {
       "patterns": [
-        "*"
+        "tests/**"
       ],
       "disabledLinters": [
         "Facebook\\HHAST\\NoPHPArrayLiteralsLinter"
