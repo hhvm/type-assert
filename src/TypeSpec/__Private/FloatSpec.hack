@@ -27,8 +27,7 @@ final class FloatSpec extends TypeSpec<float> {
     }
 
     if ($value is \Stringish) {
-      /* HH_FIXME[4281] Stringish is going */
-      $str = (string)$value;
+      $str = stringish_cast($value, __CLASS__.__METHOD__);
       if ($str === '') {
         throw TypeCoercionException::withValue(
           $this->getTrace(),
