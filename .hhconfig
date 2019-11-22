@@ -7,3 +7,4 @@ disallow_destruct = true
 disallow_invalid_arraykey = true
 disallow_stringish_magic = true
 user_attributes=
+error_php_lambdas = true

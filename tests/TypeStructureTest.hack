@@ -626,7 +626,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
   public function testThrowsUnsupportedTypeForGenerators(): void {
     $ts = type_structure(TypeConstants::class, 'TIntTraversable');
     $generator = (
-      function() {
+      (): \Generator<int, int, void> ==> {
         yield 123;
       }
     )();
@@ -637,7 +637,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
 
     $ts = type_structure(TypeConstants::class, 'TStringIntKeyedTraversable');
     $generator = (
-      function() {
+      (): \Generator<string, int, void> ==> {
         yield 'foo' => 123;
       }
     )();
