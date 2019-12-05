@@ -456,18 +456,16 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
     ];
 
-    if (\HHVM_VERSION_ID >= 32300) {
-      $examples['shape with missing nullable field'] = tuple(
-        type_structure(TypeConstants::class, 'TFlatShape'),
-        shape('someString' => 'foo'),
-        vec['shape[someNullable]'],
-      );
-      $examples['shape with extra fields'] = tuple(
-        type_structure(TypeConstants::class, 'TShapeWithOneField'),
-        shape('someString' => 'string', 'herp' => 'derp'),
-        vec['shape[herp]'],
-      );
-    }
+    $examples['shape with missing nullable field'] = tuple(
+      type_structure(TypeConstants::class, 'TFlatShape'),
+      shape('someString' => 'foo'),
+      vec['shape[someNullable]'],
+    );
+    $examples['shape with extra fields'] = tuple(
+      type_structure(TypeConstants::class, 'TShapeWithOneField'),
+      shape('someString' => 'string', 'herp' => 'derp'),
+      vec['shape[herp]'],
+    );
     return $examples;
   }
 
@@ -543,19 +541,11 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
     ];
 
-    if (\HHVM_VERSION_ID >= 32300) {
-      $coercions['shape with extra fields'] = tuple(
-        type_structure(TypeConstants::class, 'TShapeWithOneField'),
-        shape('someString' => 'foo', 'herp' => 'derp'),
-        shape('someString' => 'foo'),
-      );
-    } else {
-      $coercions['shape with extra fields'] = tuple(
-        type_structure(TypeConstants::class, 'TShapeWithOneField'),
-        shape('someString' => 'foo', 'herp' => 'derp'),
-        shape('someString' => 'foo', 'herp' => 'derp'),
-      );
-    }
+    $coercions['shape with extra fields'] = tuple(
+      type_structure(TypeConstants::class, 'TShapeWithOneField'),
+      shape('someString' => 'foo', 'herp' => 'derp'),
+      shape('someString' => 'foo'),
+    );
 
     return Dict\map(
       $this->getExampleValidTypes(),

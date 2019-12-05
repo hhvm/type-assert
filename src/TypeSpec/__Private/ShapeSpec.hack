@@ -15,17 +15,10 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\C;
 
 final class ShapeSpec extends TypeSpec<shape()> {
-  const bool STRICT_SHAPES = \HHVM_VERSION_ID >= 32300;
   private bool $allowUnknownFields;
 
   private static function isOptionalField<Tany>(TypeSpec<Tany> $spec): bool {
-    if ($spec->isOptional()) {
-      return true;
-    }
-    if (self::STRICT_SHAPES) {
-      return false;
-    }
-    return $spec is NullableSpec<_>;
+    return $spec->isOptional();
   }
 
   public function __construct(
