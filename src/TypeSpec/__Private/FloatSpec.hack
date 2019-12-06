@@ -27,7 +27,7 @@ final class FloatSpec extends TypeSpec<float> {
     }
 
     if ($value is \Stringish) {
-      $str = stringish_cast($value, __CLASS__.__METHOD__);
+      $str = stringish_cast($value, __CLASS__.'::'.__METHOD__);
       if ($str === '') {
         throw TypeCoercionException::withValue(
           $this->getTrace(),

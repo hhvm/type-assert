@@ -21,7 +21,7 @@ final class IntSpec extends TypeSpec<int> {
       return $value;
     }
     if ($value is \Stringish) {
-      $str = stringish_cast($value, __CLASS__.__METHOD__);
+      $str = stringish_cast($value, __CLASS__.'::'.__METHOD__);
       $int = (int)$str;
 
       // "1234"   -(int)->   1234   -(string)->   "1234"

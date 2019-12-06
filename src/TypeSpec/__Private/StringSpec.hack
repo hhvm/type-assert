@@ -20,7 +20,7 @@ final class StringSpec extends TypeSpec<string> {
       return $value;
     }
     if ($value is \Stringish) {
-      return stringish_cast($value, __CLASS__.__METHOD__);
+      return stringish_cast($value, __CLASS__.'::'.__METHOD__);
     }
     if ($value is int) {
       return (string)$value;
