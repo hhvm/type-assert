@@ -20,13 +20,19 @@ final class ClassnameSpecTest extends TypeSpecTest<classname<mixed>> {
   }
 
   <<__Override>>
-  public function getValidCoercions(): array<(mixed, classname<mixed>)> {
-    return [tuple(self::class, self::class)];
+  public function getValidCoercions(): vec<(mixed, classname<mixed>)> {
+    return vec[tuple(self::class, self::class)];
   }
 
   <<__Override>>
-  public function getInvalidCoercions(): array<array<mixed>> {
-    return [[23], [TypeSpecTest::class], [-1], ['true'], ['false']];
+  public function getInvalidCoercions(): vec<(mixed)> {
+    return vec[
+      tuple(23),
+      tuple(TypeSpecTest::class),
+      tuple(-1),
+      tuple('true'),
+      tuple('false'),
+    ];
   }
 
   <<__Override>>

@@ -115,43 +115,17 @@ final class ScalarsTest extends \Facebook\HackTest\HackTest {
   }
 
   public function getExampleValidCoercions(
-  ): dict<string, ((function(mixed):mixed), mixed, mixed)> {
+  ): dict<string, ((function(mixed): mixed), mixed, mixed)> {
     return dict[
-      'int to string' => tuple(
-        $x ==> TypeCoerce\string($x),
-        123,
-        '123',
-      ),
-      'intish string to int' => tuple(
-        $x ==> TypeCoerce\int($x),
-        '123',
-        123,
-      ),
-      'intish string to num' => tuple(
-        $x ==> TypeCoerce\num($x),
-        '123',
-        123
-      ),
-      'decimal string to num' => tuple(
-        $x ==> TypeCoerce\num($x),
-        '1.23',
-        1.23
-      ),
-      'int to arraykey' => tuple(
-        $x ==> TypeCoerce\arraykey($x),
-        123,
-        123,
-      ),
-      'string to arraykey' => tuple(
-        $x ==> TypeCoerce\arraykey($x),
-        '123',
-        '123',
-      ),
-      'stringable to arraykey' => tuple(
-        $x ==> TypeCoerce\arraykey($x),
-        new TestStringable('123'),
-        '123',
-      ),
+      'int to string' => tuple($x ==> TypeCoerce\string($x), 123, '123'),
+      'intish string to int' => tuple($x ==> TypeCoerce\int($x), '123', 123),
+      'intish string to num' => tuple($x ==> TypeCoerce\num($x), '123', 123),
+      'decimal string to num' => tuple($x ==> TypeCoerce\num($x), '1.23', 1.23),
+      'int to arraykey' => tuple($x ==> TypeCoerce\arraykey($x), 123, 123),
+      'string to arraykey' =>
+        tuple($x ==> TypeCoerce\arraykey($x), '123', '123'),
+      'stringable to arraykey' =>
+        tuple($x ==> TypeCoerce\arraykey($x), new TestStringable('123'), '123'),
     ];
   }
 
