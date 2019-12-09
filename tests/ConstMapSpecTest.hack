@@ -39,16 +39,27 @@ final class ConstMapSpecTest extends TypeSpecTest<\ConstMap<arraykey, mixed>> {
     return vec[
       tuple(false),
       tuple(123),
+      tuple(Map {'foo' => 'bar'}),
     ];
   }
 
   <<__Override>>
   public function getToStringExamples(
   ): vec<(TypeSpec<\ConstMap<arraykey, mixed>>, string)> {
-    return vec[tuple(
-      TypeSpec\constmap(TypeSpec\string(), TypeSpec\int()),
-      \ConstMap::class.'<string, int>',
-    )];
+    return vec[
+      tuple(
+        TypeSpec\constmap(TypeSpec\string(), TypeSpec\int()),
+        \ConstMap::class.'<string, int>',
+      ),
+      tuple(
+        TypeSpec\map(TypeSpec\int(), TypeSpec\string()),
+        Map::class.'<int, string>',
+      ),
+      tuple(
+        TypeSpec\immmap(TypeSpec\arraykey(), TypeSpec\string()),
+        ImmMap::class.'<arraykey, string>',
+      ),
+    ];
   }
 
   <<__Override>>
