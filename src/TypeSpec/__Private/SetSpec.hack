@@ -37,21 +37,26 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     }
 
     $trace = $this->getTrace()->withFrame($this->what.'<T>');
-    $map = (\ConstSet<arraykey> $container) ==>
-      $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
+    $ts = $this->inner->withTrace($trace);
+    $changed = false;
+    $out = Set {};
+    foreach ($value as $v) {
+      $vv = $ts->coerceType($v);
+      $changed = $changed || ($vv !== $v);
+      $out[] = $vv;
+    }
 
-    if (\is_a($value, $this->what)) {
-      assert($value is \ConstSet<_>);
+    if ($changed === false && \is_a($value, $this->what)) {
       /* HH_IGNORE_ERROR[4110] */
-      return $map($value);
+      return $value;
     }
 
     if ($this->what === Set::class) {
       /* HH_IGNORE_ERROR[4110] */
-      return $map(new Set($value));
+      return $out;
     }
     /* HH_IGNORE_ERROR[4110] */
-    return $map((new ImmSet($value)));
+    return $out->immutable();
   }
 
   <<__Override>>
@@ -77,6 +82,6 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
 
   <<__Override>>
   public function toString(): string {
-    return 'Set<'.$this->inner->toString().'>';
+    return $this->what.'<'.$this->inner->toString().'>';
   }
 }
