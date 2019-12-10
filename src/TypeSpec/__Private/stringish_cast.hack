@@ -3,6 +3,8 @@ namespace Facebook\TypeSpec\__Private;
 function stringish_cast(\Stringish $stringish, string $caller): string {
   if ($stringish is string) {
     return $stringish;
+  } else if (\HH\is_fun($stringish)) {
+    return \HH\fun_get_function($stringish);
   } else {
     \trigger_error(
       'Stringish is being deprecated. '.
