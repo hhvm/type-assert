@@ -50,11 +50,11 @@ final class DictSpecTest extends TypeSpecTest<dict<arraykey, mixed>> {
     return vec[
       tuple(
         TypeSpec\dict(TypeSpec\string(), TypeSpec\int()),
-        'dict<string, int>',
+        dict::class.'<string, int>',
       ),
       tuple(
         TypeSpec\dict(TypeSpec\int(), TypeSpec\string()),
-        'dict<int, string>',
+        dict::class.'<int, string>',
       ),
     ];
   }

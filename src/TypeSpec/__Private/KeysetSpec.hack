@@ -56,6 +56,6 @@ final class KeysetSpec<T as arraykey> extends TypeSpec<keyset<T>> {
 
   <<__Override>>
   public function toString(): string {
-    return 'keyset<'.$this->inner->toString().'>';
+    return keyset::class.'<'.$this->inner->toString().'>';
   }
 }

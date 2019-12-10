@@ -46,8 +46,8 @@ final class VecSpecTest extends TypeSpecTest<vec<mixed>> {
   <<__Override>>
   public function getToStringExamples(): vec<(TypeSpec<vec<mixed>>, string)> {
     return vec[
-      tuple(TypeSpec\vec(TypeSpec\string()), 'vec<string>'),
-      tuple(TypeSpec\vec(TypeSpec\int()), 'vec<int>'),
+      tuple(TypeSpec\vec(TypeSpec\string()), vec::class.'<string>'),
+      tuple(TypeSpec\vec(TypeSpec\int()), vec::class.'<int>'),
     ];
   }
 }

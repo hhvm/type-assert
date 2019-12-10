@@ -46,8 +46,8 @@ final class KeysetSpecTest extends TypeSpecTest<keyset<arraykey>> {
   public function getToStringExamples(
   ): vec<(TypeSpec<keyset<arraykey>>, string)> {
     return vec[
-      tuple(TypeSpec\keyset(TypeSpec\string()), 'keyset<string>'),
-      tuple(TypeSpec\keyset(TypeSpec\int()), 'keyset<int>'),
+      tuple(TypeSpec\keyset(TypeSpec\string()), keyset::class.'<string>'),
+      tuple(TypeSpec\keyset(TypeSpec\int()), keyset::class.'<int>'),
     ];
   }
 }

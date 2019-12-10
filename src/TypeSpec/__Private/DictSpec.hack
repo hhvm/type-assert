@@ -65,7 +65,8 @@ final class DictSpec<Tk as arraykey, Tv> extends TypeSpec<dict<Tk, Tv>> {
   <<__Override>>
   public function toString(): string {
     return Str\format(
-      'dict<%s, %s>',
+      '%s<%s, %s>',
+      dict::class,
       $this->tsk->toString(),
       $this->tsv->toString(),
     );
