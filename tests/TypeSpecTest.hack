@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeAssert;
 
-use namespace HH\Lib\Vec;
+use namespace HH\Lib\{C, Vec};
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use type Facebook\HackTest\DataProvider;
@@ -23,15 +23,22 @@ abstract class TypeSpecTest<T> extends \Facebook\HackTest\HackTest {
   abstract public function getToStringExamples(): vec<(TypeSpec<T>, string)>;
 
   public function getValidValues(): vec<(T)> {
-    return \array_map(
-      ($tuple) ==> {
-        list($_, $v) = $tuple;
-        return $v;
-      },
-      $this->getValidCoercions(),
-    )
-      |> \array_unique($$)
-      |> Vec\map($$, $v ==> tuple($v));
+    $non_unique = $this->getValidCoercions()
+      |> Vec\map(
+        $$,
+        ($tuple) ==> {
+          list($_, $v) = $tuple;
+          return tuple($v);
+        },
+      );
+
+    $out = vec[];
+    foreach ($non_unique as $v) {
+      if (!C\contains($out, $v)) {
+        $out[] = $v;
+      }
+    }
+    return $out;
   }
 
   public function getInvalidValues(): vec<(mixed)> {
