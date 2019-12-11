@@ -20,8 +20,7 @@ final class StringSpec extends TypeSpec<string> {
       return $value;
     }
     if ($value is \Stringish) {
-      /* HH_FIXME[4281] Stringish is going */
-      return (string)$value;
+      return stringish_cast($value, __CLASS__.'::'.__METHOD__);
     }
     if ($value is int) {
       return (string)$value;
@@ -34,7 +33,10 @@ final class StringSpec extends TypeSpec<string> {
     if ($value is string) {
       return $value;
     }
-    throw
-      new IncorrectTypeException($this->getTrace(), 'string', \gettype($value));
+    throw new IncorrectTypeException(
+      $this->getTrace(),
+      'string',
+      \gettype($value),
+    );
   }
 }
