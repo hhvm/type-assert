@@ -127,14 +127,14 @@ final class ShapeSpec extends TypeSpec<shape()> {
       |> Dict\map_with_key(
         $$,
         ($name, $spec) ==> Str\format(
-          '  %s => %s%s',
-          $spec->toString(),
+          "  %s'%s' => %s,",
           $spec->isOptional() ? '?' : '',
           $name,
+          $spec->toString(),
         ),
       )
       |> $this->allowUnknownFields ? Vec\concat($$, vec['...']) : $$
-      |> Str\join($$, ",\n")
+      |> Str\join($$, "\n")
       |> "shape(\n".$$."\n)";
   }
 }

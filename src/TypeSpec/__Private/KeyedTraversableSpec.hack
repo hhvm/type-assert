@@ -15,7 +15,7 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Str;
 
 final class KeyedTraversableSpec<Tk, Tv, T as KeyedTraversable<Tk, Tv>>
-extends TypeSpec<T> {
+  extends TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
   public function __construct(
@@ -64,7 +64,7 @@ extends TypeSpec<T> {
     }
 
     $key_trace = $this->getTrace()->withFrame($this->outer.'<Tk, _>');
-    $value_trace= $this->getTrace()->withFrame($this->outer.'<_, Tv>');
+    $value_trace = $this->getTrace()->withFrame($this->outer.'<_, Tv>');
     $tsk = $this->tsk->withTrace($key_trace);
     $tsv = $this->tsv->withTrace($value_trace);
     foreach ($value as $k => $v) {
@@ -77,7 +77,8 @@ extends TypeSpec<T> {
   <<__Override>>
   public function toString(): string {
     return Str\format(
-      'KeyedTraversable<%s, %s>',
+      '%s<%s, %s>',
+      KeyedTraversable::class,
       $this->tsk->toString(),
       $this->tsv->toString(),
     );
