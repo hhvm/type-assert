@@ -15,6 +15,7 @@ abstract class TypeSpec<+T> {
 
   abstract public function coerceType(mixed $value): T;
   abstract public function assertType(mixed $value): T;
+  abstract public function toString(): string;
 
   public function isOptional(): bool {
     return false;

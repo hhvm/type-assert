@@ -37,4 +37,12 @@ final class ResourceSpecTest extends TypeSpecTest<resource> {
       tuple(false),
     ];
   }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<resource>, string)> {
+    return vec[
+      tuple(TypeSpec\resource(), 'resource'),
+      tuple(TypeSpec\resource('curl'), 'resource'),
+    ];
+  }
 }

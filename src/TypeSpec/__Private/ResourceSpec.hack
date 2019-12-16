@@ -47,4 +47,9 @@ final class ResourceSpec extends TypeSpec<resource> {
     }
     return 'resource<'.$kind.'>';
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'resource';
+  }
 }

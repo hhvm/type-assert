@@ -57,4 +57,9 @@ final class IntSpecTest extends TypeSpecTest<int> {
       tuple('0xFF'),
     ];
   }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<int>, string)> {
+    return vec[tuple(TypeSpec\int(), 'int')];
+  }
 }

@@ -15,4 +15,9 @@ final class NumSpec extends UnionSpec<num> {
   public function __construct() {
     parent::__construct('num', new IntSpec(), new FloatSpec());
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'num';
+  }
 }

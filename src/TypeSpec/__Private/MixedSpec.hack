@@ -22,4 +22,9 @@ final class MixedSpec extends TypeSpec<mixed> {
   public function assertType(mixed $value): mixed {
     return $value;
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'mixed';
+  }
 }

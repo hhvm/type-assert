@@ -12,9 +12,10 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, UnsupportedTypeException};
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\Str;
 
 final class KeyedTraversableSpec<Tk, Tv, T as KeyedTraversable<Tk, Tv>>
-extends TypeSpec<T> {
+  extends TypeSpec<T> {
   use NoCoercionSpecTrait<T>;
 
   public function __construct(
@@ -63,7 +64,7 @@ extends TypeSpec<T> {
     }
 
     $key_trace = $this->getTrace()->withFrame($this->outer.'<Tk, _>');
-    $value_trace= $this->getTrace()->withFrame($this->outer.'<_, Tv>');
+    $value_trace = $this->getTrace()->withFrame($this->outer.'<_, Tv>');
     $tsk = $this->tsk->withTrace($key_trace);
     $tsv = $this->tsv->withTrace($value_trace);
     foreach ($value as $k => $v) {
@@ -71,5 +72,15 @@ extends TypeSpec<T> {
       $tsv->assertType($v);
     }
     return /* HH_IGNORE_ERROR[4110] */ $value;
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Str\format(
+      '%s<%s, %s>',
+      KeyedTraversable::class,
+      $this->tsk->toString(),
+      $this->tsv->toString(),
+    );
   }
 }

@@ -10,10 +10,7 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-use type Facebook\TypeAssert\{
-  IncorrectTypeException,
-  UnsupportedTypeException,
-};
+use type Facebook\TypeAssert\{IncorrectTypeException, UnsupportedTypeException};
 use type Facebook\TypeSpec\TypeSpec;
 
 final class TraversableSpec<Tinner, T as Traversable<Tinner>>
@@ -43,8 +40,11 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     }
 
     if (!$valid_outer) {
-      throw
-        IncorrectTypeException::withValue($this->getTrace(), $frame, $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        $frame,
+        $value,
+      );
     }
 
     invariant(
@@ -68,5 +68,10 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
       $this->inner->withTrace($trace)->assertType($v);
     }
     return /* HH_IGNORE_ERROR[4110] */ $value;
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Traversable::class.'<'.$this->inner->toString().'>';
   }
 }

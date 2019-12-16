@@ -28,4 +28,9 @@ final class ClassnameSpec<Tinner, T as classname<Tinner>> extends TypeSpec<T> {
     throw
       IncorrectTypeException::withValue($this->getTrace(), $this->what, $value);
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'classname<\\'.$this->what.'>';
+  }
 }

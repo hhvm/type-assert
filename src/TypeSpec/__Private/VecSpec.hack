@@ -21,8 +21,11 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
   <<__Override>>
   public function coerceType(mixed $value): vec<T> {
     if (!$value is Traversable<_>) {
-      throw
-        TypeCoercionException::withValue($this->getTrace(), 'vec<T>', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        'vec<T>',
+        $value,
+      );
     }
 
     $trace = $this->getTrace()->withFrame('vec<T>');
@@ -35,8 +38,11 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
   <<__Override>>
   public function assertType(mixed $value): vec<T> {
     if (!($value is vec<_>)) {
-      throw
-        IncorrectTypeException::withValue($this->getTrace(), 'vec<T>', $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        'vec<T>',
+        $value,
+      );
     }
 
     $trace = $this->getTrace()->withFrame('vec<T>');
@@ -44,5 +50,10 @@ final class VecSpec<T> extends TypeSpec<vec<T>> {
       $value,
       $inner ==> $this->inner->withTrace($trace)->assertType($inner),
     );
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return vec::class.'<'.$this->inner->toString().'>';
   }
 }

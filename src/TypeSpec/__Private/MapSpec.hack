@@ -12,7 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\{C, Dict};
+use namespace HH\Lib\{C, Dict, Str};
 
 final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
   extends TypeSpec<T> {
@@ -39,16 +39,28 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
       );
     }
 
-    $tsk = $this->tsk;
-    $tsv = $this->tsv;
-
     $kt = $this->getTrace()->withFrame($this->what.'<Tk, _>');
     $vt = $this->getTrace()->withFrame($this->what.'<_, Tv>');
 
+    $tsk = $this->tsk->withTrace($kt);
+    $tsv = $this->tsv->withTrace($vt);
+
+
     $out = Map {};
+    $changed = false;
     foreach ($value as $k => $v) {
-      $out[$tsk->withTrace($kt)->coerceType($k)] =
-        $tsv->withTrace($vt)->coerceType($v);
+      $kk = $tsk->coerceType($k);
+      $vv = $tsv->coerceType($v);
+      $out[$kk] = $vv;
+      $changed = $changed || ($kk !== $k) || ($vv !== $v);
+    }
+
+    if (
+      $changed === false &&
+      \is_a($value, $this->what, /* allow_string = */ true)
+    ) {
+      /* HH_IGNORE_ERROR[4110] */
+      return $value;
     }
 
     if ($this->what === Map::class) {
@@ -99,5 +111,15 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     }
     /* HH_IGNORE_ERROR[4110] */
     return $value->immutable();
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Str\format(
+      '%s<%s, %s>',
+      $this->what,
+      $this->tsk->toString(),
+      $this->tsv->toString(),
+    );
   }
 }

@@ -13,27 +13,22 @@ namespace Facebook\TypeAssert;
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
 
-final class BoolSpecTest extends TypeSpecTest<bool> {
+final class ClassnameSpecTest extends TypeSpecTest<classname<mixed>> {
   <<__Override>>
-  public function getTypeSpec(): TypeSpec<bool> {
-    return TypeSpec\bool();
+  public function getTypeSpec(): TypeSpec<classname<mixed>> {
+    return TypeSpec\classname(self::class);
   }
 
   <<__Override>>
-  public function getValidCoercions(): vec<(mixed, bool)> {
-    return vec[
-      tuple(false, false),
-      tuple(true, true),
-      tuple(0, false),
-      tuple(1, true),
-    ];
+  public function getValidCoercions(): vec<(mixed, classname<mixed>)> {
+    return vec[tuple(self::class, self::class)];
   }
 
   <<__Override>>
   public function getInvalidCoercions(): vec<(mixed)> {
     return vec[
-      tuple(null),
       tuple(23),
+      tuple(TypeSpecTest::class),
       tuple(-1),
       tuple('true'),
       tuple('false'),
@@ -41,7 +36,11 @@ final class BoolSpecTest extends TypeSpecTest<bool> {
   }
 
   <<__Override>>
-  public function getToStringExamples(): vec<(TypeSpec<bool>, string)> {
-    return vec[tuple(TypeSpec\bool(), 'bool')];
+  public function getToStringExamples(
+  ): vec<(TypeSpec<classname<mixed>>, string)> {
+    return vec[tuple(
+      TypeSpec\classname(self::class),
+      'classname<\\Facebook\\TypeAssert\\ClassnameSpecTest>',
+    )];
   }
 }

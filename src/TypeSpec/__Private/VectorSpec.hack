@@ -37,21 +37,25 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     }
 
     $trace = $this->getTrace()->withFrame($this->what.'<T>');
-    $map = (\ConstVector<mixed> $container) ==>
-      $container->map($v ==> $this->inner->withTrace($trace)->coerceType($v));
+    $ts = $this->inner->withTrace($trace);
 
-    if (\is_a($value, $this->what)) {
-      assert($value is \ConstVector<_>);
-      /* HH_IGNORE_ERROR[4110] */
-      return $map($value);
+    $out = Vector {};
+    $changed = false;
+    foreach ($value as $v) {
+      $vv = $ts->coerceType($v);
+      $changed = $changed || ($v !== $vv);
+      $out[] = $vv;
+    }
+
+    if ($changed === false && \is_a($value, $this->what)) {
+      return /* HH_IGNORE_ERROR[4110] */ $value;
     }
 
     if ($this->what === Vector::class) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $map(new Vector($value));
+      return /* HH_IGNORE_ERROR[4110] */ $out;
     }
-    /* HH_IGNORE_ERROR[4110] */
-    return $map((new ImmVector($value)));
+
+    return /* HH_IGNORE_ERROR[4110] */ $out->immutable();
   }
 
   <<__Override>>
@@ -87,5 +91,10 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     }
     /* HH_IGNORE_ERROR[4110] */
     return $value->immutable();
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return $this->what.'<'.$this->inner->toString().'>';
   }
 }

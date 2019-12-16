@@ -75,4 +75,9 @@ final class FloatSpecTest extends TypeSpecTest<float> {
     }
     return \abs($expected - $value) < 0.00001;
   }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<float>, string)> {
+    return vec[tuple(TypeSpec\float(), 'float')];
+  }
 }

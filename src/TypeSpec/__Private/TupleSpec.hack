@@ -12,6 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
+use namespace HH\Lib\{Str, Vec};
 
 newtype BogusTuple = (mixed, mixed);
 
@@ -81,5 +82,12 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     }
     /* HH_IGNORE_ERROR[4007] */
     return (array)$tuple;
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Vec\map($this->inners, $it ==> $it->toString())
+      |> Str\join($$, ', ')
+      |> '('.$$.')';
   }
 }

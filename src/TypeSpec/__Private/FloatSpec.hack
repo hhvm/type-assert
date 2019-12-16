@@ -62,4 +62,9 @@ final class FloatSpec extends TypeSpec<float> {
     }
     throw IncorrectTypeException::withValue($this->getTrace(), 'float', $value);
   }
+
+  <<__Override>>
+  public function toString(): string {
+    return 'float';
+  }
 }

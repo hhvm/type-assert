@@ -4,7 +4,7 @@
   "license": "MIT",
   "keywords": ["hack", "TypeAssert" ],
   "require": {
-    "hhvm": "^4.20",
+    "hhvm": "^4.30",
     "hhvm/hsl": "^4.0"
   },
   "extra": {

@@ -13,7 +13,7 @@ namespace Facebook\TypeSpec\__Private;
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
-use namespace HH\Lib\Dict;
+use namespace HH\Lib\{Dict, Str};
 
 final class DictLikeArraySpec<Tk as arraykey, Tv>
   extends TypeSpec<array<Tk, Tv>> {
@@ -64,5 +64,14 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
       ($k, $_v) ==> $this->tsk->withTrace($kt)->assertType($k),
     )
       |> /* HH_IGNORE_ERROR[4007] PHP array cast */ (array)$$;
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return Str\format(
+      'array<%s, %s>',
+      $this->tsk->toString(),
+      $this->tsv->toString(),
+    );
   }
 }

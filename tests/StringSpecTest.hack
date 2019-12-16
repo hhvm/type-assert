@@ -39,4 +39,9 @@ final class StringSpecTest extends TypeSpecTest<string> {
       tuple(false),
     ];
   }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<string>, string)> {
+    return vec[tuple(TypeSpec\string(), 'string')];
+  }
 }

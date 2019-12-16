@@ -42,4 +42,9 @@ final class ArrayKeySpecTest extends TypeSpecTest<arraykey> {
       tuple(false),
     ];
   }
+
+  <<__Override>>
+  public function getToStringExamples(): vec<(TypeSpec<arraykey>, string)> {
+    return vec[tuple(TypeSpec\arraykey(), 'arraykey')];
+  }
 }
