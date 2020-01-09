@@ -46,6 +46,10 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['123', '456'],
       ),
+      'varray<string>' => tuple(
+        type_structure(TypeConstants::class, 'TStringVArray'),
+        varray['123', '456'],
+      ),
       'empty array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
@@ -55,6 +59,10 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo' => 'bar', 'herp' => 'derp'],
+      ),
+      'darray<string, string>' => tuple(
+        type_structure(TypeConstants::class, 'TStringStringDArray'),
+        darray['foo' => 'bar', 'herp' => 'derp'],
       ),
       'string as ?string' => tuple(
         type_structure(TypeConstants::class, 'TNullableString'),
@@ -70,11 +78,11 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         tuple(type_structure(TypeConstants::class, 'TStringVector'), Vector {}),
       'Vector<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringVector'),
-        Vector { 'foo', 'bar' },
+        Vector {'foo', 'bar'},
       ),
       'Traversable<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntTraversable'),
-        Vector { 123, 456 },
+        Vector {123, 456},
       ),
       'array as Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
@@ -83,15 +91,15 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
-        Vector { 123, 456 },
+        Vector {123, 456},
       ),
       'KeyedTraversable<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedTraversable'),
-        Map { 'foo' => 123 },
+        Map {'foo' => 123},
       ),
       'KeyedContainer<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
-        Map { 'foo' => 123 },
+        Map {'foo' => 123},
       ),
       'PHP array as KeyedContainer<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
@@ -102,11 +110,11 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         tuple(type_structure(TypeConstants::class, 'TStringStringMap'), Map {}),
       'Map<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringMap'),
-        Map { 'foo' => 'bar', 'herp' => 'derp' },
+        Map {'foo' => 'bar', 'herp' => 'derp'},
       ),
       'Vector<Vector<string>>' => tuple(
         type_structure(TypeConstants::class, 'TStringVectorVector'),
-        Vector { Vector { 'foo' } },
+        Vector {Vector {'foo'}},
       ),
       'Vector<Vector<string>> with no outer elems' => tuple(
         type_structure(TypeConstants::class, 'TStringVectorVector'),
@@ -114,7 +122,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'Vector<Vector<string>> with no inner elems' => tuple(
         type_structure(TypeConstants::class, 'TStringVectorVector'),
-        Vector { Vector {} },
+        Vector {Vector {}},
       ),
       'shape with missing string ?field' => tuple(
         type_structure(TypeConstants::class, 'TFlatShape'),
@@ -162,7 +170,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'shape with non-empty container' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        array('container' => Vector { 'foo' }),
+        array('container' => Vector {'foo'}),
       ),
       'enum' =>
         tuple(type_structure(TypeConstants::class, 'TEnum'), ExampleEnum::DERP),
@@ -208,6 +216,14 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TArrayWithoutGenerics'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         ['foo' => 'bar'],
+      ),
+      'varray<int> as varray_or_darray<int>' => tuple(
+        type_structure(TypeConstants::class, 'TVArrayOrDArray'),
+        varray[123],
+      ),
+      'darray<int> as varray_or_darray<int>' => tuple(
+        type_structure(TypeConstants::class, 'TVArrayOrDArray'),
+        darray['foo' => 123],
       ),
       'empty array in array<> shape field' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithArrayWithoutGenerics'),
@@ -306,17 +322,17 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'ints in Vector<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringVector'),
-        Vector { 'foo', 123 },
+        Vector {'foo', 123},
         vec['HH\\Vector<T>'],
       ),
       'int keys in Map<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringMap'),
-        Map { 123 => 'foo' },
+        Map {123 => 'foo'},
         vec['HH\\Map<Tk, _>'],
       ),
       'int values in Map<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringMap'),
-        Map { 'foo' => 'bar', 'herp' => 123 },
+        Map {'foo' => 'bar', 'herp' => 123},
         vec['HH\\Map<_, Tv>'],
       ),
       'shape with missing field' => tuple(
@@ -363,42 +379,42 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'string in Traversable<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntTraversable'),
-        Vector { 123, '456' },
+        Vector {123, '456'},
         vec['HH\\Traversable<T>'],
       ),
       'string in Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
-        Vector { 123, '456' },
+        Vector {123, '456'},
         vec['HH\\Container<T>'],
       ),
       'string value in KeyedTraversable<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedTraversable'),
-        Map { 'foo' => 'bar' },
+        Map {'foo' => 'bar'},
         vec['HH\\KeyedTraversable<_, Tv>'],
       ),
       'int key in KeyedTraversable<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedTraversable'),
-        Map { 123 => 456 },
+        Map {123 => 456},
         vec['HH\\KeyedTraversable<Tk, _>'],
       ),
       'string value in KeyedContainer<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
-        Map { 'foo' => 'bar' },
+        Map {'foo' => 'bar'},
         vec['HH\\KeyedContainer<_, Tv>'],
       ),
       'int key in KeyedContainer<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
-        Map { 123 => 456 },
+        Map {123 => 456},
         vec['HH\\KeyedContainer<Tk, _>'],
       ),
       'Vector<Vector<string>> with non-container child' => tuple(
         type_structure(TypeConstants::class, 'TStringVectorVector'),
-        Vector { 'foo' },
+        Vector {'foo'},
         vec['HH\\Vector<T>'],
       ),
       'Vector<Vector<string>> with incorrect container child' => tuple(
         type_structure(TypeConstants::class, 'TStringVectorVector'),
-        Vector { ImmVector { 'foo' } },
+        Vector {ImmVector {'foo'}},
         vec['HH\\Vector<T>'],
       ),
       'nested shape with missing field' => tuple(
@@ -426,7 +442,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'shape with container of wrong kind' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        array('container' => Vector { 123 }),
+        array('container' => Vector {123}),
         vec['shape[container]', 'HH\\Vector<T>'],
       ),
       'enum' => tuple(

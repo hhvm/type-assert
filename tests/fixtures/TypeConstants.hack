@@ -19,7 +19,9 @@ class TypeConstants {
   const type TArrayKey = arraykey;
   const type TTuple = (string, int);
   const type TStringArray = array<string>;
+  const type TStringVArray = varray<string>;
   const type TStringStringArray = array<string, string>;
+  const type TStringStringDArray = darray<string, string>;
 
   const type TNullableString = ?string;
 
@@ -71,4 +73,5 @@ class TypeConstants {
     /* HH_IGNORE_ERROR[4045] array without generics */
     'two' => array,
   );
+  const type TVArrayOrDArray = varray_or_darray<int>;
 }
