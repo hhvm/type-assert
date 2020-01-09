@@ -15,9 +15,4 @@ final class ArrayKeySpec extends UnionSpec<arraykey> {
   public function __construct() {
     parent::__construct('arraykey', new StringSpec(), new IntSpec());
   }
-
-  <<__Override>>
-  public function toString(): string {
-    return 'arraykey';
-  }
 }

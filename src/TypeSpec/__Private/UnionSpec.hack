@@ -33,8 +33,11 @@ abstract class UnionSpec<+T> extends TypeSpec<T> {
         // try next
       }
     }
-    throw
-      TypeCoercionException::withValue($this->getTrace(), $this->name, $value);
+    throw TypeCoercionException::withValue(
+      $this->getTrace(),
+      $this->name,
+      $value,
+    );
   }
 
   <<__Override>>
@@ -46,7 +49,15 @@ abstract class UnionSpec<+T> extends TypeSpec<T> {
         // try next
       }
     }
-    throw
-      IncorrectTypeException::withValue($this->getTrace(), $this->name, $value);
+    throw IncorrectTypeException::withValue(
+      $this->getTrace(),
+      $this->name,
+      $value,
+    );
+  }
+
+  <<__Override>>
+  public function toString(): string {
+    return $this->name;
   }
 }

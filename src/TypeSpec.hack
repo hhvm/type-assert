@@ -170,3 +170,9 @@ function vec_like_array<Tv>(TypeSpec<Tv> $tsv): TypeSpec<array<Tv>> {
 function vector<Tv>(TypeSpec<Tv> $inner): TypeSpec<Vector<Tv>> {
   return new __Private\VectorSpec(Vector::class, $inner);
 }
+
+function varray_or_darray<Tv>(
+  TypeSpec<Tv> $inner,
+): TypeSpec<varray_or_darray<Tv>> {
+  return new __Private\VArrayOrDArraySpec($inner);
+}
