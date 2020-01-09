@@ -19,6 +19,7 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
   extends TypeSpec<array<Tk, Tv>> {
 
   public function __construct(
+    private string $name,
     private TypeSpec<Tk> $tsk,
     private TypeSpec<Tv> $tsv,
   ) {
@@ -29,13 +30,13 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
     if (!$value is KeyedTraversable<_, _>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
-        'array<Tk, Tv>',
+        $this->name.'<Tk, Tv>',
         $value,
       );
     }
 
-    $kt = $this->getTrace()->withFrame('array<Tk, _>');
-    $vt = $this->getTrace()->withFrame('array<_, Tv>');
+    $kt = $this->getTrace()->withFrame($this->name.'<Tk, _>');
+    $vt = $this->getTrace()->withFrame($this->name.'<_, Tv>');
 
     return Dict\pull_with_key(
       $value,
@@ -50,13 +51,13 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
     if (!\is_array($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
-        'array<Tk, Tv>',
+        $this->name.'<Tk, Tv>',
         $value,
       );
     }
 
-    $kt = $this->getTrace()->withFrame('array<Tk, _>');
-    $vt = $this->getTrace()->withFrame('array<_, Tv>');
+    $kt = $this->getTrace()->withFrame($this->name.'<Tk, _>');
+    $vt = $this->getTrace()->withFrame($this->name.'<_, Tv>');
 
     return Dict\pull_with_key(
       $value,
@@ -69,7 +70,8 @@ final class DictLikeArraySpec<Tk as arraykey, Tv>
   <<__Override>>
   public function toString(): string {
     return Str\format(
-      'array<%s, %s>',
+      '%s<%s, %s>',
+      $this->name,
       $this->tsk->toString(),
       $this->tsv->toString(),
     );

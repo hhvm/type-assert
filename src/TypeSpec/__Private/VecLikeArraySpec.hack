@@ -15,14 +15,20 @@ use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\Vec;
 
 final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
-  public function __construct(private TypeSpec<T> $inner) {
+  public function __construct(
+    private string $name,
+    private TypeSpec<T> $inner,
+  ) {
   }
 
   <<__Override>>
   public function coerceType(mixed $value): array<T> {
     if (!$value is Traversable<_>) {
-      throw
-        TypeCoercionException::withValue($this->getTrace(), 'array<T>', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        $this->name.'<T>',
+        $value,
+      );
     }
 
     return Vec\map($value, $inner ==> $this->inner->coerceType($inner))
@@ -34,7 +40,7 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
     if (!\is_array($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
-        'array<T>',
+        $this->name.'<T>',
         $value,
       );
     }
@@ -53,12 +59,15 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
         $counter->next();
         $i = $counter->current();
         if ($k !== $i) {
-          throw
-            IncorrectTypeException::withValue($this->getTrace(), 'key '.$i, $k);
+          throw IncorrectTypeException::withValue(
+            $this->getTrace(),
+            'key '.$i,
+            $k,
+          );
         }
         return $this
           ->inner
-          ->withTrace($this->getTrace()->withFrame('array['.$i.']'))
+          ->withTrace($this->getTrace()->withFrame($this->name.'['.$i.']'))
           ->assertType($inner);
       },
     )
@@ -67,6 +76,6 @@ final class VecLikeArraySpec<T> extends TypeSpec<array<T>> {
 
   <<__Override>>
   public function toString(): string {
-    return 'array<'.$this->inner->toString().'>';
+    return $this->name.'<'.$this->inner->toString().'>';
   }
 }

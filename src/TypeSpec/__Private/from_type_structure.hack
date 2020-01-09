@@ -75,10 +75,11 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
           return new UntypedArraySpec();
         case 1:
           /* HH_IGNORE_ERROR[4110] */
-          return new VecLikeArraySpec(from_type_structure($generics[0]));
+          return new VecLikeArraySpec('array', from_type_structure($generics[0]));
         case 2:
           /* HH_IGNORE_ERROR[4110] */
           return new DictLikeArraySpec(
+            'array',
             from_type_structure($generics[0]),
             from_type_structure($generics[1]),
           );
