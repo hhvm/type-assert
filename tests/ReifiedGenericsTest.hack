@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeAssert;
 
-use namespace Facebook\TypeCoerce;
+use namespace Facebook\{TypeCoerce, TypeSpec};
 
 use function Facebook\FBExpect\expect;
 
@@ -47,5 +47,24 @@ final class ReifiedGenericsTest extends \Facebook\HackTest\HackTest {
       ->toBeSame($valid);
     expect(() ==> TypeCoerce\match<this::TShapeOfVecAndDicts>('hello'))
       ->toThrow(TypeCoercionException::class);
+  }
+
+  public function testInlineTypes(): void {
+    $valid = shape('foo' => 123);
+    $coercable = shape('foo' => '123');
+    expect(matches<shape('foo' => int)>($valid))->toEqual($valid);
+    expect(matches<shape('foo' => int, ...)>($valid))->toEqual($valid);
+    expect(TypeCoerce\match<shape('foo' => int, ...)>($valid))->toEqual($valid);
+    expect(TypeCoerce\match<shape('foo' => int, ...)>($coercable))->toEqual(
+      $valid,
+    );
+  }
+
+  public function testToString(): void {
+    expect(TypeSpec\of<shape('foo' => vec<string>)>()->toString())->toEqual(
+      "shape(\n  'foo' => HH\\vec<string>,\n)",
+    );
+    expect(TypeSpec\of<shape('foo' => vec<string>, ...)>()->toString())
+      ->toEqual("shape(\n  'foo' => HH\\vec<string>,\n  ...\n)");
   }
 }

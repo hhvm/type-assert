@@ -133,7 +133,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
           $spec->toString(),
         ),
       )
-      |> $this->allowUnknownFields ? Vec\concat($$, vec['...']) : $$
+      |> $this->allowUnknownFields ? Vec\concat($$, vec['  ...']) : $$
       |> Str\join($$, "\n")
       |> "shape(\n".$$."\n)";
   }
