@@ -177,10 +177,8 @@ function varray_or_darray<Tv>(
   return new __Private\VArrayOrDArraySpec($inner);
 }
 
-function of_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
-  return __Private\from_type_structure($ts);
-}
-
 function of<reify T>(): TypeSpec<T> {
-  return of_type_structure(\HH\ReifiedGenerics\get_type_structure<T>());
+  return __Private\from_type_structure(
+    \HH\ReifiedGenerics\get_type_structure<T>(),
+  );
 }

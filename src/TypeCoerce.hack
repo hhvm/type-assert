@@ -41,7 +41,7 @@ function arraykey(mixed $x): arraykey {
 }
 
 function match_type_structure<T>(TypeStructure<T> $ts, mixed $value): T {
-  return TypeSpec\of_type_structure($ts)->coerceType($value);
+  return TypeSpec\__Private\from_type_structure($ts)->coerceType($value);
 }
 
 function match<reify T>(mixed $value): T {
