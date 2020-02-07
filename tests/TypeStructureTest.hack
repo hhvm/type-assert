@@ -39,12 +39,12 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'empty array<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        [],
+        array(),
       ),
       'array<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['123', '456'],
+        array('123', '456'),
       ),
       'varray<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringVArray'),
@@ -53,12 +53,12 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'empty array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        [],
+        array(),
       ),
       'array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['foo' => 'bar', 'herp' => 'derp'],
+        array('foo' => 'bar', 'herp' => 'derp'),
       ),
       'darray<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringDArray'),
@@ -87,7 +87,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'array as Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        [123, 456],
+        array(123, 456),
       ),
       'Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
@@ -104,7 +104,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'PHP array as KeyedContainer<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['foo' => 123],
+        array('foo' => 123),
       ),
       'empty Map<string, string>' =>
         tuple(type_structure(TypeConstants::class, 'TStringStringMap'), Map {}),
@@ -205,17 +205,17 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'empty array as array<>' => tuple(
         type_structure(TypeConstants::class, 'TArrayWithoutGenerics'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        [],
+        array(),
       ),
       'vec-like array as array<>' => tuple(
         type_structure(TypeConstants::class, 'TArrayWithoutGenerics'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['foo', 'bar'],
+        array('foo', 'bar'),
       ),
       'dict-like array as array<>' => tuple(
         type_structure(TypeConstants::class, 'TArrayWithoutGenerics'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['foo' => 'bar'],
+        array('foo' => 'bar'),
       ),
       'varray<int> as varray_or_darray<int>' => tuple(
         type_structure(TypeConstants::class, 'TVArrayOrDArray'),
@@ -229,14 +229,15 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TShapeWithArrayWithoutGenerics'),
         shape(
           'one' => true,
-          'two' => /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ [],
+          'two' => /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ array(),
         ),
       ),
       'vec-like array in array<> shape field' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithArrayWithoutGenerics'),
         shape(
           'one' => true,
-          'two' => /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ ['foo', 'bar'],
+          'two' =>
+            /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ array('foo', 'bar'),
         ),
       ),
       'dict-like array in array<> shape field' => tuple(
@@ -244,7 +245,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         shape(
           'one' => true,
           'two' =>
-            /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ ['foo' => 'bar'],
+            /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */ array('foo' => 'bar'),
         ),
       ),
     ];
@@ -295,19 +296,19 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'int in array<string>' => tuple(
         type_structure(TypeConstants::class, 'TStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        [123],
+        array(123),
         vec['array[0]'],
       ),
       'int keys in array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        [123 => 'bar', 123 => 'derp'],
+        array(123 => 'bar', 123 => 'derp'),
         vec['array<Tk, _>'],
       ),
       'int values in array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['foo' => 123, 'bar' => 456],
+        array('foo' => 123, 'bar' => 456),
         vec['array<_, Tv>'],
       ),
       '0 as ?string' => tuple(
@@ -533,7 +534,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'array<intish string> to vec<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntVec'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['123'],
+        array('123'),
         vec[123],
       ),
       'array<intish string> to keyset<string>' => tuple(
@@ -544,7 +545,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       'array<string, int> to dict<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringDict'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-        ['foo' => 123, 'bar' => 456],
+        array('foo' => 123, 'bar' => 456),
         dict['foo' => '123', 'bar' => '456'],
       ),
       'shape with implicit subtyping and extra fields' => tuple(
@@ -608,7 +609,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     $shape = shape('someString' => 'foobar', 'someNullable' => null);
     $dict = dict['someString' => 'foobar', 'someNullable' => null];
     /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-    $array = ['someString' => 'foobar', 'someNullable' => null];
+    $array = array('someString' => 'foobar', 'someNullable' => null);
     $ts = type_structure(TypeConstants::class, 'TFlatShape');
 
     expect(TypeAssert\matches_type_structure($ts, $dict))->toBeSame($shape);
@@ -622,7 +623,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     $tuple = tuple('foo', 123);
     $vec = vec['foo', 123];
     /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
-    $array = ['foo', 123];
+    $array = array('foo', 123);
     $ts = type_structure(TypeConstants::class, 'TTuple');
 
     expect(TypeAssert\matches_type_structure($ts, $vec))->toBeSame($tuple);
