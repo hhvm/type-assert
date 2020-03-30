@@ -74,7 +74,7 @@ abstract class TypeSpecTest<T> extends \Facebook\HackTest\HackTest {
 
     expect($this->getTypeSpec()->coerceType($actual))->toEqual(
       $actual,
-      "Expected coerce(coerce(x)) to be the same value as coerce(x)",
+      'Expected coerce(coerce(x)) to be the same value as coerce(x)',
     );
   }
 

@@ -31,7 +31,7 @@ final class DictSpecTest extends TypeSpecTest<dict<arraykey, mixed>> {
       tuple(keyset['123'], dict['123' => 123]),
       tuple(keyset[123], dict[123 => 123]),
       tuple(varray[123], dict[0 => 123]),
-      tuple(darray["123" => 123], dict['123' => 123]),
+      tuple(darray['123' => 123], dict['123' => 123]),
     ];
   }
 

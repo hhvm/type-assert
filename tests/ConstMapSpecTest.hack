@@ -30,7 +30,7 @@ final class ConstMapSpecTest extends TypeSpecTest<\ConstMap<arraykey, mixed>> {
       tuple(vec['123'], ImmMap {0 => 123}),
       tuple(keyset['123'], ImmMap {'123' => 123}),
       tuple(varray[123], ImmMap {0 => 123}),
-      tuple(darray["123" => 123], ImmMap {'123' => 123}),
+      tuple(darray['123' => 123], ImmMap {'123' => 123}),
     ];
   }
 

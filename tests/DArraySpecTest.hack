@@ -32,7 +32,7 @@ final class DArraySpecTest extends TypeSpecTest<darray<arraykey, mixed>> {
       tuple(keyset['123'], darray['123' => 123]),
       tuple(keyset[123], darray[123 => 123]),
       tuple(varray[123], darray[0 => 123]),
-      tuple(darray["123" => 123], darray['123' => 123]),
+      tuple(darray['123' => 123], darray['123' => 123]),
     ];
   }
 
