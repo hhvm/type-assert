@@ -70,5 +70,9 @@ final class ReifiedGenericsTest extends \Facebook\HackTest\HackTest {
 
   public function testNullType(): void {
     expect(TypeSpec\of<null>()->toString())->toEqual('null');
+    expect(
+      TypeSpec\of<dict<string, ?dict<string, ?dict<string, null>>>>()
+        ->toString(),
+    )->toEqual('HH\dict<string, ?HH\dict<string, ?HH\dict<string, null>>>');
   }
 }
