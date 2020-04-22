@@ -21,15 +21,11 @@ final class NullSpec extends TypeSpec<null> {
     if ($value is nonnull) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
-        $this->getPrettyType(),
+        $this->toString(),
         $value,
       );
     }
     return null;
-  }
-
-  private function getPrettyType(): string {
-    return 'null';
   }
 
   <<__Override>>
