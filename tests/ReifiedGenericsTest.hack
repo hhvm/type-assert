@@ -67,4 +67,8 @@ final class ReifiedGenericsTest extends \Facebook\HackTest\HackTest {
     expect(TypeSpec\of<shape('foo' => vec<string>, ...)>()->toString())
       ->toEqual("shape(\n  'foo' => HH\\vec<string>,\n  ...\n)");
   }
+
+  public function testNullType(): void {
+    expect(TypeSpec\of<null>()->toString())->toEqual('null');
+  }
 }
