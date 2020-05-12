@@ -129,6 +129,10 @@ function mixed(): TypeSpec<mixed> {
   return new __Private\MixedSpec();
 }
 
+function nonnull(): TypeSpec<nonnull> {
+  return new __Private\NonNullSpec();
+}
+
 function null(): TypeSpec<null> {
   return new __Private\NullSpec();
 }

@@ -13,35 +13,35 @@ namespace Facebook\TypeAssert;
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
 
-final class NullSpecTest extends TypeSpecTest<null> {
+final class NonNullSpecTest extends TypeSpecTest<nonnull> {
   <<__Override>>
-  public function getTypeSpec(): TypeSpec<null> {
-    return TypeSpec\null();
+  public function getTypeSpec(): TypeSpec<nonnull> {
+    return TypeSpec\nonnull();
   }
 
   <<__Override>>
-  public function getValidCoercions(): vec<(mixed, null)> {
+  public function getValidCoercions(): vec<(mixed, nonnull)> {
     return vec[
-      tuple(null, null),
+      tuple(0, 0),
+      tuple('', ''),
+      tuple("\0", "\0"),
+      tuple(\STDIN, \STDIN),
+      tuple(false, false),
+      tuple(vec[], vec[]),
     ];
   }
 
   <<__Override>>
   public function getInvalidCoercions(): vec<(mixed)> {
     return vec[
-      tuple(0),
-      tuple(''),
-      tuple("\0"),
-      tuple(\STDIN),
-      tuple(false),
-      tuple(vec[]),
+      tuple(null),
     ];
   }
 
   <<__Override>>
-  public function getToStringExamples(): vec<(TypeSpec<null>, string)> {
+  public function getToStringExamples(): vec<(TypeSpec<nonnull>, string)> {
     return vec[
-      tuple(TypeSpec\null(), 'null'),
+      tuple(TypeSpec\nonnull(), 'nonnull'),
     ];
   }
 }
