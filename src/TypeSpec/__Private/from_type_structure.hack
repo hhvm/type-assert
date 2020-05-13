@@ -214,6 +214,12 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
       $enum = TypeAssert\not_null($ts['classname']);
       /* HH_IGNORE_ERROR[4323] */
       return new EnumSpec($enum);
+    case TypeStructureKind::OF_NULL:
+      /* HH_IGNORE_ERROR[4110] unsafe generics */
+      return new NullSpec();
+    case TypeStructureKind::OF_NONNULL:
+      /* HH_IGNORE_ERROR[4110] unsafe generics */
+      return new NonNullSpec();
     case TypeStructureKind::OF_UNRESOLVED:
       throw new UnsupportedTypeException('OF_UNRESOLVED');
     default:
