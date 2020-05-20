@@ -55,8 +55,14 @@ function classname_of<T>(classname<T> $expected, string $what): classname<T> {
   return TypeSpec\classname($expected)->assertType($what);
 }
 
-function matches_type_structure<T>(TypeStructure<T> $ts, mixed $value): T {
-  return TypeSpec\__Private\from_type_structure($ts)->assertType($value);
+function matches_type_structure<T>(
+  TypeStructure<T> $ts,
+  mixed $value,
+  ?TypeSpec\TResolver $resolver = null,
+): T {
+  return TypeSpec\__Private\from_type_structure($ts, $resolver)->assertType(
+    $value,
+  );
 }
 
 function matches<reify T>(mixed $value): T {

@@ -10,6 +10,10 @@
 
 namespace Facebook\TypeSpec;
 
+use type Facebook\TypeAssert\UnsupportedTypeException;
+
+type TResolver = (function(TypeStructure<mixed>): TypeSpec<mixed>);
+
 abstract class TypeSpec<+T> {
   private ?Trace $trace = null;
 
@@ -64,6 +68,12 @@ function darray<Tk as arraykey, Tv>(
   TypeSpec<Tv> $tsv,
 ): TypeSpec<darray<Tk, Tv>> {
   return new __Private\DictLikeArraySpec('darray', $tsk, $tsv);
+}
+
+function throwing_resolver(): TResolver {
+  return (TypeStructure<mixed> $ts) ==> {
+    throw new UnsupportedTypeException(Shapes::at($ts, 'alias') as string);
+  };
 }
 
 function dict<Tk as arraykey, Tv>(
@@ -185,8 +195,9 @@ function varray_or_darray<Tv>(
   return new __Private\VArrayOrDArraySpec($inner);
 }
 
-function of<reify T>(): TypeSpec<T> {
+function of<reify T>(?TResolver $resolver = null): TypeSpec<T> {
   return __Private\from_type_structure(
     \HH\ReifiedGenerics\get_type_structure<T>(),
+    $resolver,
   );
 }

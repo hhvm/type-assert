@@ -39,6 +39,7 @@ final class ShapeSpecTest extends TypeSpecTest<shape(...)> {
   public function getTypeSpec(): TypeSpec<shape(...)> {
     return TypeSpec\__Private\from_type_structure(
       type_structure(self::class, 'TShapeA'),
+      null,
     );
   }
 
