@@ -63,7 +63,7 @@ function darray<Tk as arraykey, Tv>(
   TypeSpec<Tk> $tsk,
   TypeSpec<Tv> $tsv,
 ): TypeSpec<darray<Tk, Tv>> {
-  return new __Private\DictLikeArraySpec('darray', $tsk, $tsv);
+  return new __Private\DarraySpec($tsk, $tsv);
 }
 
 function dict<Tk as arraykey, Tv>(
@@ -71,13 +71,6 @@ function dict<Tk as arraykey, Tv>(
   TypeSpec<Tv> $tsv,
 ): TypeSpec<dict<Tk, Tv>> {
   return new __Private\DictSpec($tsk, $tsv);
-}
-
-function dict_like_array<Tk as arraykey, Tv>(
-  TypeSpec<Tk> $tsk,
-  TypeSpec<Tv> $tsv,
-): TypeSpec<array<Tk, Tv>> {
-  return new __Private\DictLikeArraySpec('array', $tsk, $tsv);
 }
 
 function enum<
@@ -164,15 +157,11 @@ function untyped_array(): TypeSpec<array> {
 }
 
 function varray<Tv>(TypeSpec<Tv> $tsv): TypeSpec<varray<Tv>> {
-  return new __Private\VecLikeArraySpec('varray', $tsv);
+  return new __Private\VarraySpec($tsv);
 }
 
 function vec<Tv>(TypeSpec<Tv> $inner): TypeSpec<vec<Tv>> {
   return new __Private\VecSpec($inner);
-}
-
-function vec_like_array<Tv>(TypeSpec<Tv> $tsv): TypeSpec<array<Tv>> {
-  return new __Private\VecLikeArraySpec('array', $tsv);
 }
 
 function vector<Tv>(TypeSpec<Tv> $inner): TypeSpec<Vector<Tv>> {

@@ -297,19 +297,19 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         array(123),
-        vec['array[0]'],
+        vec['varray[0]'],
       ),
       'int keys in array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         array(123 => 'bar', 123 => 'derp'),
-        vec['array<Tk, _>'],
+        vec['darray<Tk, _>'],
       ),
       'int values in array<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringArray'),
         /* HHAST_IGNORE_ERROR[NoPHPArrayLiterals] */
         array('foo' => 123, 'bar' => 456),
-        vec['array<_, Tv>'],
+        vec['darray<_, Tv>'],
       ),
       '0 as ?string' => tuple(
         type_structure(TypeConstants::class, 'TNullableString'),

@@ -13,12 +13,10 @@ namespace Facebook\TypeSpec\__Private;
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
-/* HH_IGNORE_ERROR[4045] array without generics */
-final class UntypedArraySpec extends TypeSpec<array> {
+final class UntypedArraySpec extends TypeSpec<varray_or_darray<mixed>> {
 
   <<__Override>>
-  /* HH_IGNORE_ERROR[4045] array without generics */
-  public function coerceType(mixed $value): array {
+  public function coerceType(mixed $value): varray_or_darray<mixed> {
     if (!$value is KeyedTraversable<_, _>) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'array', $value);
@@ -32,18 +30,20 @@ final class UntypedArraySpec extends TypeSpec<array> {
   }
 
   <<__Override>>
-  /* HH_IGNORE_ERROR[4045] array without generics */
-  public function assertType(mixed $value): array {
+  public function assertType(mixed $value): varray_or_darray<mixed> {
     if (!\is_array($value)) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'array', $value);
     }
 
-    return $value;
+    if (varray($value) === $value) {
+      return varray($value);
+    }
+    return darray($value);
   }
 
   <<__Override>>
   public function toString(): string {
-    return 'array';
+    return 'varray_or_darray<mixed>';
   }
 }

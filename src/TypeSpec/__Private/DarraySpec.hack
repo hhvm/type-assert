@@ -15,63 +15,60 @@ use type Facebook\TypeSpec\TypeSpec;
 
 use namespace HH\Lib\{Dict, Str};
 
-final class DictLikeArraySpec<Tk as arraykey, Tv>
-  extends TypeSpec<array<Tk, Tv>> {
+final class DarraySpec<Tk as arraykey, Tv>
+  extends TypeSpec<darray<Tk, Tv>> {
 
   public function __construct(
-    private string $name,
     private TypeSpec<Tk> $tsk,
     private TypeSpec<Tv> $tsv,
   ) {
   }
 
   <<__Override>>
-  public function coerceType(mixed $value): array<Tk, Tv> {
+  public function coerceType(mixed $value): darray<Tk, Tv> {
     if (!$value is KeyedTraversable<_, _>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
-        $this->name.'<Tk, Tv>',
+        'darray<Tk, Tv>',
         $value,
       );
     }
 
-    $kt = $this->getTrace()->withFrame($this->name.'<Tk, _>');
-    $vt = $this->getTrace()->withFrame($this->name.'<_, Tv>');
+    $kt = $this->getTrace()->withFrame('darray<Tk, _>');
+    $vt = $this->getTrace()->withFrame('darray<_, Tv>');
 
     return Dict\pull_with_key(
       $value,
       ($_k, $v) ==> $this->tsv->withTrace($vt)->coerceType($v),
       ($k, $_v) ==> $this->tsk->withTrace($kt)->coerceType($k),
-    )
-      |> /* HH_IGNORE_ERROR[4007] PHP array cast */ (array)$$;
+    ) |> darray($$);
   }
 
   <<__Override>>
-  public function assertType(mixed $value): array<Tk, Tv> {
+  public function assertType(mixed $value): darray<Tk, Tv> {
     if (!\is_array($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
-        $this->name.'<Tk, Tv>',
+        $this->toString(),
         $value,
       );
     }
 
-    $kt = $this->getTrace()->withFrame($this->name.'<Tk, _>');
-    $vt = $this->getTrace()->withFrame($this->name.'<_, Tv>');
+    $kt = $this->getTrace()->withFrame('darray<Tk, _>');
+    $vt = $this->getTrace()->withFrame('darray<_, Tv>');
 
     return Dict\pull_with_key(
       $value,
       ($_k, $v) ==> $this->tsv->withTrace($vt)->assertType($v),
       ($k, $_v) ==> $this->tsk->withTrace($kt)->assertType($k),
     )
-      |> /* HH_IGNORE_ERROR[4007] PHP array cast */ (array)$$;
+      |> darray($$);
   }
 
   <<__Override>>
   public function toString(): string {
     return Str\format(
-      '%s<%s, %s>',
-      $this->name,
+      'darray<%s, %s>',
       $this->tsk->toString(),
       $this->tsv->toString(),
     );

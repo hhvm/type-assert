@@ -12,7 +12,6 @@ namespace Facebook\TypeAssert;
 
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
-use function Facebook\FBExpect\expect;
 
 final class VArraySpecTest extends TypeSpecTest<varray<mixed>> {
   <<__Override>>
@@ -51,23 +50,6 @@ final class VArraySpecTest extends TypeSpecTest<varray<mixed>> {
     return vec[
       tuple(TypeSpec\varray(TypeSpec\string()), 'varray<string>'),
       tuple(TypeSpec\varray(TypeSpec\int()), 'varray<int>'),
-      tuple(TypeSpec\vec_like_array(TypeSpec\string()), 'array<string>'),
-      tuple(TypeSpec\vec_like_array(TypeSpec\int()), 'array<int>'),
     ];
-  }
-
-  public function testVecLikeArrayIsVArray(): void {
-    $vec_like_array = (
-      (): array<int> ==>
-        TypeSpec\vec_like_array(TypeSpec\int())->assertType(varray[123])
-    )();
-    expect($vec_like_array)->toEqual(varray[123]);
-    $varray_asserted = (
-      (): varray<int> ==>
-        TypeSpec\varray(TypeSpec\int())->assertType($vec_like_array)
-    )();
-    expect($varray_asserted)->toEqual($vec_like_array);
-    $varray_verbatim = ((): varray<int> ==> $vec_like_array)();
-    expect($varray_verbatim)->toEqual($vec_like_array);
   }
 }

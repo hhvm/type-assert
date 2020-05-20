@@ -80,8 +80,8 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
       /* HH_IGNORE_ERROR[4110] */
       return $tuple;
     }
-    /* HH_IGNORE_ERROR[4007] */
-    return (array)$tuple;
+    /* HH_IGNORE_ERROR[4110] */
+    return varray($tuple);
   }
 
   <<__Override>>

@@ -12,7 +12,6 @@ namespace Facebook\TypeAssert;
 
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
-use function Facebook\FBExpect\expect;
 
 final class DArraySpecTest extends TypeSpecTest<darray<arraykey, mixed>> {
   <<__Override>>
@@ -57,34 +56,6 @@ final class DArraySpecTest extends TypeSpecTest<darray<arraykey, mixed>> {
         TypeSpec\darray(TypeSpec\int(), TypeSpec\string()),
         'darray<int, string>',
       ),
-      tuple(
-        TypeSpec\dict_like_array(TypeSpec\string(), TypeSpec\int()),
-        'array<string, int>',
-      ),
-      tuple(
-        TypeSpec\dict_like_array(TypeSpec\int(), TypeSpec\string()),
-        'array<int, string>',
-      ),
-
     ];
-  }
-
-  public function testDictLikeArrayIsDArray(): void {
-    $dict_like_array = (
-      (): array<string, int> ==> TypeSpec\dict_like_array(
-        TypeSpec\string(),
-        TypeSpec\int(),
-      )->assertType(darray['foo' => 123])
-    )();
-    expect($dict_like_array)->toEqual(darray['foo' => 123]);
-    $darray_asserted = (
-      (): darray<string, int> ==> TypeSpec\darray(
-        TypeSpec\string(),
-        TypeSpec\int(),
-      )->assertType($dict_like_array)
-    )();
-    expect($darray_asserted)->toEqual($dict_like_array);
-    $darray_verbatim = ((): darray<string, int> ==> $dict_like_array)();
-    expect($darray_verbatim)->toEqual($dict_like_array);
   }
 }
