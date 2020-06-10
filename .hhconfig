@@ -8,3 +8,4 @@ disallow_invalid_arraykey = true
 disallow_stringish_magic = true
 user_attributes=
 error_php_lambdas = true
+allowed_fixme_codes_strict = 2011, 2049, 2050, 2053, 4027, 4045, 4106, 4108, 4110, 4128, 4135, 4188, 4200, 4240, 4248, 4297, 4323
