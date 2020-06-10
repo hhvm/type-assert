@@ -48,14 +48,14 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     }
 
     if ($changed === false && \is_a($value, $this->what)) {
-      return /* HH_IGNORE_ERROR[4110] */ $value;
+      return /* HH_FIXME[4110] */ $value;
     }
 
     if ($this->what === Vector::class) {
-      return /* HH_IGNORE_ERROR[4110] */ $out;
+      return /* HH_FIXME[4110] */ $out;
     }
 
-    return /* HH_IGNORE_ERROR[4110] */ $out->immutable();
+    return /* HH_FIXME[4110] */ $out->immutable();
   }
 
   <<__Override>>
@@ -80,16 +80,16 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     });
 
     if (!$changed) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $value;
     }
 
     $value = new Vector($new_value);
     if ($this->what === Vector::class) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $value;
     }
-    /* HH_IGNORE_ERROR[4110] */
+    /* HH_FIXME[4110] */
     return $value->immutable();
   }
 

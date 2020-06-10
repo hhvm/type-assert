@@ -67,7 +67,7 @@ final class TraversableSpec<Tinner, T as Traversable<Tinner>>
     foreach ($value as $v) {
       $this->inner->withTrace($trace)->assertType($v);
     }
-    return /* HH_IGNORE_ERROR[4110] */ $value;
+    return /* HH_FIXME[4110] */ $value;
   }
 
   <<__Override>>

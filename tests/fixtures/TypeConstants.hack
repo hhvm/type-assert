@@ -34,7 +34,6 @@ class TypeConstants {
   const type TStringIntKeyedTraversable = KeyedTraversable<string, int>;
   const type TStringIntKeyedContainer = KeyedContainer<string, int>;
 
-  /* HH_FIXME[3033] no optional shape fields in 3.21 or 3.22 */
   const type TFlatShape = shape(
     'someString' => string,
     'someNullable' => ?string,
@@ -46,7 +45,6 @@ class TypeConstants {
     'someString' => string,
   );
 
-  /* HH_FIXME[0003] no unknown shape fields in 3.21 */
   const type TShapeWithOneFieldAndImplicitSubtypes = shape(
     'someString' => string,
     ...
@@ -66,11 +64,11 @@ class TypeConstants {
   const type TStringStringVecDict = dict<string, vec<string>>;
   const type TStringKeyset = keyset<string>;
 
-  /* HH_IGNORE_ERROR[4045] array without generics */
+  /* HH_FIXME[4045] array without generics */
   const type TArrayWithoutGenerics = array;
   const type TShapeWithArrayWithoutGenerics = shape(
     'one' => bool,
-    /* HH_IGNORE_ERROR[4045] array without generics */
+    /* HH_FIXME[4045] array without generics */
     'two' => array,
   );
   const type TVArrayOrDArray = varray_or_darray<int>;

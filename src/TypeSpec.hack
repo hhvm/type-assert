@@ -75,7 +75,7 @@ function dict<Tk as arraykey, Tv>(
 
 function enum<
   Tinner as arraykey,
-  T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>,
+  T as /* HH_FIXME[2053] */ \HH\BuiltinEnum<Tinner>,
 >(classname<T> $what): TypeSpec<T> {
   return new __Private\EnumSpec($what);
 }
@@ -151,7 +151,7 @@ function string(): TypeSpec<string> {
   return new __Private\StringSpec();
 }
 
-/* HH_IGNORE_ERROR[4045] untyped array */
+/* HH_FIXME[4045] untyped array */
 function untyped_array(): TypeSpec<array> {
   return new __Private\UntypedArraySpec();
 }

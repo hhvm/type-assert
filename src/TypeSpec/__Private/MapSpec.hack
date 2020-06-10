@@ -59,16 +59,16 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
       $changed === false &&
       \is_a($value, $this->what, /* allow_string = */ true)
     ) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $value;
     }
 
     if ($this->what === Map::class) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $out;
     }
 
-    /* HH_IGNORE_ERROR[4110] */
+    /* HH_FIXME[4110] */
     return $out->immutable();
   }
 
@@ -100,16 +100,16 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
       },
     );
     if (!$changed) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $value;
     }
 
     $value = new Map(Dict\from_entries($tuples));
     if ($this->what === Map::class) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $value;
     }
-    /* HH_IGNORE_ERROR[4110] */
+    /* HH_FIXME[4110] */
     return $value->immutable();
   }
 

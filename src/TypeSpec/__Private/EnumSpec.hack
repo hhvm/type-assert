@@ -13,10 +13,9 @@ namespace Facebook\TypeSpec\__Private;
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 
-final class
-  EnumSpec<
-    Tinner as arraykey,
-    T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>,
+final class EnumSpec<
+  Tinner as arraykey,
+    T as /* HH_FIXME[2053] */ \HH\BuiltinEnum<Tinner>,
   > extends TypeSpec<T> {
   public function __construct(private classname<T> $what) {
   }
@@ -25,7 +24,7 @@ final class
   public function coerceType(mixed $value): T {
     $what = $this->what;
     try {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $what::assert($value);
     } catch (\UnexpectedValueException $_e) {
       throw TypeCoercionException::withValue($this->getTrace(), $what, $value);
@@ -36,7 +35,7 @@ final class
   public function assertType(mixed $value): T {
     $what = $this->what;
     try {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $what::assert($value);
     } catch (\UnexpectedValueException $_e) {
       throw IncorrectTypeException::withValue($this->getTrace(), $what, $value);

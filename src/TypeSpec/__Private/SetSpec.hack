@@ -47,15 +47,15 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     }
 
     if ($changed === false && \is_a($value, $this->what)) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $value;
     }
 
     if ($this->what === Set::class) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $out;
     }
-    /* HH_IGNORE_ERROR[4110] */
+    /* HH_FIXME[4110] */
     return $out->immutable();
   }
 
@@ -76,7 +76,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
       $this->inner->withTrace($trace)->assertType($x);
       return false;
     });
-    /* HH_IGNORE_ERROR[4110] */
+    /* HH_FIXME[4110] */
     return $value;
   }
 

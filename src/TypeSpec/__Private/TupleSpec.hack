@@ -23,8 +23,11 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
   <<__Override>>
   public function coerceType(mixed $value): BogusTuple {
     if (!(\is_array($value) || ($value is vec<_>))) {
-      throw
-        TypeCoercionException::withValue($this->getTrace(), 'tuple', $value);
+      throw TypeCoercionException::withValue(
+        $this->getTrace(),
+        'tuple',
+        $value,
+      );
     }
     assert($value is Traversable<_>);
     $values = vec($value);
@@ -52,8 +55,11 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     if (\is_array($value)) {
       $value = vec($value);
     } else if (!($value is vec<_>)) {
-      throw
-        IncorrectTypeException::withValue($this->getTrace(), 'tuple', $value);
+      throw IncorrectTypeException::withValue(
+        $this->getTrace(),
+        'tuple',
+        $value,
+      );
     }
     $values = $value;
 
@@ -77,10 +83,10 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
 
   private static function vecToTuple(vec<mixed> $tuple): BogusTuple {
     if (tuple('foo') is vec<_>) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $tuple;
     }
-    /* HH_IGNORE_ERROR[4110] */
+    /* HH_FIXME[4110] */
     return varray($tuple);
   }
 

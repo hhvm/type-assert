@@ -38,7 +38,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
       );
     }
 
-    $value = dict(/* HH_IGNORE_ERROR[4323] */$value);
+    $value = dict(
+      /* HH_FIXME[4323] KeyedTraversable may have non arraykey keys*/
+      $value
+    );
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
@@ -115,10 +118,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
     dict<arraykey, mixed> $shape,
   ): shape() {
     if (shape() is dict<_, _>) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_FIXME[4110] */
       return $shape;
     }
-    return /* HH_IGNORE_ERROR[4110] */ darray($shape);
+    return /* HH_FIXME[4110] */ darray($shape);
   }
 
   <<__Override>>

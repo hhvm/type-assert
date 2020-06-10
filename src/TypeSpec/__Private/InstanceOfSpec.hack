@@ -22,11 +22,14 @@ final class InstanceOfSpec<T> extends TypeSpec<T> {
   <<__Override>>
   public function assertType(mixed $value): T {
     if (\is_a($value, $this->what)) {
-      /* HH_IGNORE_ERROR[4110] unsafe for generics */
+      /* HH_FIXME[4110] unsafe for generics */
       return $value;
     }
-    throw
-      IncorrectTypeException::withValue($this->getTrace(), $this->what, $value);
+    throw IncorrectTypeException::withValue(
+      $this->getTrace(),
+      $this->what,
+      $value,
+    );
   }
 
   <<__Override>>

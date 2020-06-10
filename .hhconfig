@@ -1,11 +1,4 @@
-assume_php=false
-enable_experimental_tc_features = no_fallback_in_namespaces, unpacking_check_arity, disallow_refs_in_array, disallow_untyped_lambda_as_non_function_type
 ignored_paths = [ "vendor/.+/tests/.+", "vendor/hhvm/hhast/.+" ]
-safe_array = true
-safe_vector_array = true
-disallow_destruct = true
 disallow_invalid_arraykey = true
-disallow_stringish_magic = true
-user_attributes=
 error_php_lambdas = true
 allowed_fixme_codes_strict = 2011, 2049, 2050, 2053, 4027, 4045, 4106, 4108, 4110, 4128, 4135, 4188, 4200, 4240, 4248, 4297, 4323
