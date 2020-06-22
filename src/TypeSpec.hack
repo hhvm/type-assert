@@ -151,11 +151,6 @@ function string(): TypeSpec<string> {
   return new __Private\StringSpec();
 }
 
-/* HH_IGNORE_ERROR[4045] untyped array */
-function untyped_array(): TypeSpec<array> {
-  return new __Private\UntypedArraySpec();
-}
-
 function varray<Tv>(TypeSpec<Tv> $tsv): TypeSpec<varray<Tv>> {
   return new __Private\VarraySpec($tsv);
 }

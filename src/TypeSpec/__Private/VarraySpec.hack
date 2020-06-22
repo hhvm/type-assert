@@ -31,12 +31,12 @@ final class VarraySpec<T> extends TypeSpec<varray<T>> {
     }
 
     return Vec\map($value, $inner ==> $this->inner->coerceType($inner))
-      |> \array_values($$);
+      |> varray($$);
   }
 
   <<__Override>>
   public function assertType(mixed $value): varray<T> {
-    if (!\is_array($value)) {
+    if (/* HH_FIXME[2049] */ /* HH_FIXME[4107] */ !is_varray($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'varray<T>',
@@ -53,7 +53,7 @@ final class VarraySpec<T> extends TypeSpec<varray<T>> {
     )();
 
     return Vec\map_with_key(
-      $value,
+      $value as KeyedTraversable<_, _>,
       ($k, $inner) ==> {
         $counter->next();
         $i = $counter->current();

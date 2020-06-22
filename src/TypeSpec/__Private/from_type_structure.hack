@@ -68,23 +68,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
     case TypeStructureKind::OF_FUNCTION:
       throw new UnsupportedTypeException('OF_FUNCTION');
     case TypeStructureKind::OF_ARRAY:
-      $generics = $ts['generic_types'] ?? vec[];
-      switch (C\count($generics)) {
-        case 0:
-          /* HH_IGNORE_ERROR[4110] */
-          return new UntypedArraySpec();
-        case 1:
-          /* HH_IGNORE_ERROR[4110] */
-          return new VarraySpec(from_type_structure($generics[0]));
-        case 2:
-          /* HH_IGNORE_ERROR[4110] */
-          return new DarraySpec(
-            from_type_structure($generics[0]),
-            from_type_structure($generics[1]),
-          );
-        default:
-          invariant_violation('OF_ARRAY with > 2 generics');
-      }
+      throw new UnsupportedTypeException('OF_ARRAY');
     case TypeStructureKind::OF_VARRAY:
       $generics = $ts['generic_types'] as nonnull;
       invariant(C\count($generics) === 1, 'got varray with multiple generics');

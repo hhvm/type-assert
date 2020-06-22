@@ -2,9 +2,9 @@
   "name": "hhvm/type-assert",
   "description": "Convert untyped data to typed data",
   "license": "MIT",
-  "keywords": ["hack", "TypeAssert" ],
+  "keywords": ["hack", "TypeAssert"],
   "require": {
-    "hhvm": "^4.30",
+    "hhvm": "^4.60",
     "hhvm/hsl": "^4.0"
   },
   "extra": {
