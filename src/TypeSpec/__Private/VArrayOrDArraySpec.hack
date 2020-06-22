@@ -39,11 +39,11 @@ final class VArrayOrDArraySpec<T> extends UnionSpec<varray_or_darray<T>> {
     } catch (\Throwable $_) {
     }
 
-    if ($value is vec<_> || $value is Vector<_> || $value is ImmVector<_> ) {
+    if ($value is vec<_> || $value is ConstVector<_>) {
       return $this->varraySpec->coerceType($value);
     }
 
-    if ($value is dict<_, _> || $value is Map<_, _> || $value is ImmMap<_, _>) {
+    if ($value is dict<_, _> || $value is ConstMap<_, _>) {
       return $this->darraySpec->coerceType($value);
     }
 
