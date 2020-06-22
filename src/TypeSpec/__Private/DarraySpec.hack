@@ -46,7 +46,7 @@ final class DarraySpec<Tk as arraykey, Tv>
 
   <<__Override>>
   public function assertType(mixed $value): darray<Tk, Tv> {
-    if (!\is_array($value)) {
+    if (/* HH_FIXME[2049] */ /* HH_FIXME[4107] */ !is_darray($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         $this->toString(),
@@ -58,7 +58,7 @@ final class DarraySpec<Tk as arraykey, Tv>
     $vt = $this->getTrace()->withFrame('darray<_, Tv>');
 
     return Dict\pull_with_key(
-      $value,
+      $value as KeyedTraversable<_, _>,
       ($_k, $v) ==> $this->tsv->withTrace($vt)->assertType($v),
       ($k, $_v) ==> $this->tsk->withTrace($kt)->assertType($k),
     )

@@ -20,7 +20,7 @@ abstract class UnionSpec<+T> extends TypeSpec<T> {
   }
 
   <<__Override>>
-  final public function coerceType(mixed $value): T {
+  public function coerceType(mixed $value): T {
     try {
       return $this->assertType($value);
     } catch (IncorrectTypeException $_) {

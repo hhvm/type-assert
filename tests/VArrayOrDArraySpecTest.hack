@@ -25,6 +25,8 @@ final class VArrayOrDArraySpecTest
   public function getValidCoercions(): vec<(mixed, varray_or_darray<int>)> {
     return vec[
       tuple(vec[], varray[]),
+      tuple(dict[], darray[]),
+      tuple(keyset[], darray[]),
       tuple(vec['123'], varray[123]),
       tuple(varray['123'], varray[123]),
       tuple(varray[123], varray[123]),

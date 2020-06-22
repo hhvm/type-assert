@@ -18,9 +18,7 @@ class TypeConstants {
   const type TNum = num;
   const type TArrayKey = arraykey;
   const type TTuple = (string, int);
-  const type TStringArray = array<string>;
   const type TStringVArray = varray<string>;
-  const type TStringStringArray = array<string, string>;
   const type TStringStringDArray = darray<string, string>;
 
   const type TNullableString = ?string;
@@ -66,12 +64,5 @@ class TypeConstants {
   const type TStringStringVecDict = dict<string, vec<string>>;
   const type TStringKeyset = keyset<string>;
 
-  /* HH_IGNORE_ERROR[4045] array without generics */
-  const type TArrayWithoutGenerics = array;
-  const type TShapeWithArrayWithoutGenerics = shape(
-    'one' => bool,
-    /* HH_IGNORE_ERROR[4045] array without generics */
-    'two' => array,
-  );
   const type TVArrayOrDArray = varray_or_darray<int>;
 }

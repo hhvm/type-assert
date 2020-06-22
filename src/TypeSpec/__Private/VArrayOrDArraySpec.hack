@@ -10,19 +10,51 @@
 
 namespace Facebook\TypeSpec\__Private;
 
+use namespace HH\Lib\{C, Vec};
 use namespace Facebook\TypeSpec;
 
 final class VArrayOrDArraySpec<T> extends UnionSpec<varray_or_darray<T>> {
+  private TypeSpec\TypeSpec<darray<arraykey, T>> $darraySpec;
+  private TypeSpec\TypeSpec<varray<T>> $varraySpec;
+
   public function __construct(private TypeSpec\TypeSpec<T> $inner) {
+    $this->darraySpec = TypeSpec\darray(TypeSpec\arraykey(), $inner);
+    $this->varraySpec = TypeSpec\varray($inner);
     parent::__construct(
       'varray_or_darray',
-      TypeSpec\darray(TypeSpec\arraykey(), $inner),
-      TypeSpec\varray($inner),
+      $this->darraySpec,
+      $this->varraySpec,
     );
   }
 
   <<__Override>>
   public function toString(): string {
     return 'varray_or_darray<'.$this->inner->toString().'>';
+  }
+
+  <<__Override>>
+  public function coerceType(mixed $value): varray_or_darray<T> {
+    try {
+      return $this->assertType($value);
+    } catch (\Throwable $_) {
+    }
+
+    if ($value is vec<_> || $value is Vector<_> || $value is ImmVector<_> ) {
+      return $this->varraySpec->coerceType($value);
+    }
+
+    if ($value is dict<_, _> || $value is Map<_, _> || $value is ImmMap<_, _>) {
+      return $this->darraySpec->coerceType($value);
+    }
+
+    $new = $this->darraySpec->coerceType($value);
+    if ($new === darray[]) {
+      return $new;
+    }
+
+    if (Vec\keys($new) === Vec\range(0, C\count($new) - 1)) {
+      return varray($new);
+    }
+    return $new;
   }
 }
