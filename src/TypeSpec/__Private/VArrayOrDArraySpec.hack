@@ -39,11 +39,11 @@ final class VArrayOrDArraySpec<T> extends UnionSpec<varray_or_darray<T>> {
     } catch (\Throwable $_) {
     }
 
-    if ($value is vec<_> || $value is ConstVector<_>) {
+    if ($value is vec<_> || $value is /* HH_FIXME[2049] */ ConstVector<_>) {
       return $this->varraySpec->coerceType($value);
     }
 
-    if ($value is dict<_, _> || $value is ConstMap<_, _>) {
+    if ($value is dict<_, _> || $value is /* HH_FIXME[2049] */ ConstMap<_, _>) {
       return $this->darraySpec->coerceType($value);
     }
 
