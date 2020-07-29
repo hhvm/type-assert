@@ -426,7 +426,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     );
   }
 
-  const type TUnsupported = array<string>;
+  const type TUnsupported = (function(): void);
   public function testUnsupportedType(): void {
     $ts = type_structure(self::class, 'TUnsupported');
 
