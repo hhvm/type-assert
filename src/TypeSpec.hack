@@ -73,10 +73,7 @@ function dict<Tk as arraykey, Tv>(
   return new __Private\DictSpec($tsk, $tsv);
 }
 
-function enum<
-  Tinner as arraykey,
-  T as /* HH_IGNORE_ERROR[2053] */ \HH\BuiltinEnum<Tinner>,
->(classname<T> $what): TypeSpec<T> {
+function enum<T as arraykey>(\HH\enumname<T> $what): TypeSpec<T> {
   return new __Private\EnumSpec($what);
 }
 

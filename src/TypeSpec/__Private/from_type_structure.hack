@@ -195,7 +195,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
       throw new UnsupportedTypeException('OF_TRAIT');
     case TypeStructureKind::OF_ENUM:
       $enum = TypeAssert\not_null($ts['classname']);
-      /* HH_IGNORE_ERROR[4323] */
+      /* HH_IGNORE_ERROR[4110] */
       return new EnumSpec($enum);
     case TypeStructureKind::OF_NULL:
       /* HH_IGNORE_ERROR[4110] unsafe generics */
