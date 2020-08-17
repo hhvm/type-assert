@@ -31,7 +31,7 @@ final class UntypedArraySpec extends TypeSpec<varray_or_darray<mixed>> {
 
   <<__Override>>
   public function assertType(mixed $value): varray_or_darray<mixed> {
-    if (!\is_array($value)) {
+    if (!\HH\is_php_array($value)) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'array', $value);
     }

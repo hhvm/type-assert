@@ -67,7 +67,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
 
   <<__Override>>
   public function assertType(mixed $value): shape() {
-    if (!(\is_array($value) || ($value is dict<_, _>))) {
+    if (!\HH\is_dict_or_darray($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'shape',
@@ -80,7 +80,9 @@ final class ShapeSpec extends TypeSpec<shape()> {
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
       if (C\contains_key($value, $key)) {
-        $out[$key] = $spec->withTrace($trace)->assertType($value[$key] ?? null);
+        // Using idx() even though we just checked the key's existence, to avoid
+        // a Hack error.
+        $out[$key] = $spec->withTrace($trace)->assertType(idx($value, $key));
         continue;
       }
 
