@@ -69,7 +69,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
       );
     }
 
-    assert($value is \ConstSet<_>);
+    $value = $value as \ConstSet<_>;
 
     $trace = $this->getTrace()->withFrame($this->what.'<T>');
     $value->filter($x ==> {

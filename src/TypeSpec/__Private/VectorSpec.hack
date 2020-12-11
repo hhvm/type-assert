@@ -67,7 +67,7 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
         $value,
       );
     }
-    assert($value is \ConstVector<_>);
+    $value = $value as \ConstVector<_>;
 
     // TupleSpec and ShapeSpec may change their values, and can be nested here
     $changed = false;

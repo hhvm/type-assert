@@ -67,20 +67,18 @@ final class ShapeSpec extends TypeSpec<shape()> {
 
   <<__Override>>
   public function assertType(mixed $value): shape() {
-    if (!(\HH\is_php_array($value) || ($value is dict<_, _>))) {
+    if (!\HH\is_dict_or_darray($value)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'shape',
         $value,
       );
     }
-    assert($value is KeyedContainer<_, _>);
-
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
       if (C\contains_key($value, $key)) {
-        $out[$key] = $spec->withTrace($trace)->assertType($value[$key] ?? null);
+        $out[$key as arraykey] = $spec->withTrace($trace)->assertType($value[$key as dynamic] ?? null);
         continue;
       }
 

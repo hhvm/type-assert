@@ -81,7 +81,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
         $value,
       );
     }
-    assert($value is \ConstMap<_, _>);
+    invariant($value is \ConstMap<_, _>, 'Should have exit from `is_a` check');
 
     $tsk = $this->tsk;
     $tsv = $this->tsv;
