@@ -39,7 +39,7 @@ final class RelationshipsTest extends \Facebook\HackTest\HackTest {
   public function testObjectInstanceOfTypechecks(): void {
     return; // this test is just here for hh_client
 
-    $f = (ParentClass $x) ==> {
+    $f = (ParentClass $_x) ==> {
     };
     $f(namespace\instance_of(ParentClass::class, new ParentClass()));
     $f(namespace\instance_of(ParentClass::class, new ChildClass()));
@@ -70,7 +70,7 @@ final class RelationshipsTest extends \Facebook\HackTest\HackTest {
   public function testClassnameOfTypechecks(): void {
     return; // this test is just here for hh_client
 
-    $f = (classname<ParentClass> $x) ==> {
+    $f = (classname<ParentClass> $_x) ==> {
     };
     $f(namespace\classname_of(ParentClass::class, ParentClass::class));
     $f(namespace\classname_of(ParentClass::class, ChildClass::class));

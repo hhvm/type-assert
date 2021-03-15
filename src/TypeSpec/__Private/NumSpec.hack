@@ -10,7 +10,6 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-
 final class NumSpec extends UnionSpec<num> {
   public function __construct() {
     parent::__construct('num', new IntSpec(), new FloatSpec());

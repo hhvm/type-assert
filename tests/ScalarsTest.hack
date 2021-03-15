@@ -103,12 +103,12 @@ final class ScalarsTest extends \Facebook\HackTest\HackTest {
   public function testIsNotNullTypechecks(): void {
     return; // this test is just here for hh_client
 
-    $wants_int = (int $x) ==> {
+    $wants_int = (int $_x) ==> {
     };
     $wants_int(TypeAssert\not_null(123));
     $wants_int(TypeAssert\not_null(null));
 
-    $wants_string = (string $x) ==> {
+    $wants_string = (string $_x) ==> {
     };
     $wants_string(TypeAssert\not_null('foo bar'));
     $wants_string(TypeAssert\not_null(null));

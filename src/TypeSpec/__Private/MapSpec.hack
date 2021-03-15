@@ -45,7 +45,6 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     $tsk = $this->tsk->withTrace($kt);
     $tsv = $this->tsv->withTrace($vt);
 
-
     $out = Map {};
     $changed = false;
     foreach ($value as $k => $v) {

@@ -131,7 +131,6 @@ function nullable<T>(TypeSpec<T> $inner): TypeSpec<?T> {
   return new __Private\NullableSpec($inner);
 }
 
-
 function num(): TypeSpec<num> {
   return new __Private\NumSpec();
 }

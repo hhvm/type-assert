@@ -10,7 +10,6 @@
 
 namespace Facebook\TypeSpec\__Private;
 
-
 final class ArrayKeySpec extends UnionSpec<arraykey> {
   public function __construct() {
     parent::__construct('arraykey', new StringSpec(), new IntSpec());
