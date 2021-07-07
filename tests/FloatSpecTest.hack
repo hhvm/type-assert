@@ -32,6 +32,7 @@ final class FloatSpecTest extends TypeSpecTest<float> {
       tuple('.23', .23),
       tuple('1e2', 1e2),
       tuple('1.23e45', 1.23e45),
+      tuple('1.23e-45', 1.23e-45),
       tuple('.12e34', .12e34),
       tuple(new TestStringable('1.23'), 1.23),
       tuple(Math\INT64_MAX, (float)Math\INT64_MAX),
