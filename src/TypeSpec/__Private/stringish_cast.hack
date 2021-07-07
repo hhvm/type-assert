@@ -11,14 +11,7 @@ namespace Facebook\TypeSpec\__Private;
 function stringish_cast(\Stringish $stringish, string $caller): string {
   if ($stringish is string) {
     return $stringish;
-  } else if (\HH\is_fun($stringish)) {
-    return \HH\fun_get_function($stringish);
-  } else {
-    invariant(
-      $stringish is \StringishObject,
-      'Expected Stringish to be either a string or a StringishObject, got %s',
-      \get_class($stringish) ?: \gettype($stringish),
-    );
+  } else if ($stringish is \StringishObject) {
     \trigger_error(
       'Stringish is being deprecated. '.
       'Passing an object that implements __toString to '.
@@ -26,7 +19,10 @@ function stringish_cast(\Stringish $stringish, string $caller): string {
       '() may not work in a future release.',
       \E_USER_DEPRECATED,
     );
-    /*HH_FIXME[4128] stringish_cast() can't be used in the future.*/
     return $stringish->__toString();
+  } else {
+    invariant_violation(
+      'Unknown Stringish subtype, expected string|StringishObject.',
+    );
   }
 }

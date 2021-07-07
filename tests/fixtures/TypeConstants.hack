@@ -32,7 +32,6 @@ class TypeConstants {
   const type TStringIntKeyedTraversable = KeyedTraversable<string, int>;
   const type TStringIntKeyedContainer = KeyedContainer<string, int>;
 
-  /* HH_FIXME[3033] no optional shape fields in 3.21 or 3.22 */
   const type TFlatShape = shape(
     'someString' => string,
     'someNullable' => ?string,
@@ -44,7 +43,6 @@ class TypeConstants {
     'someString' => string,
   );
 
-  /* HH_FIXME[0003] no unknown shape fields in 3.21 */
   const type TShapeWithOneFieldAndImplicitSubtypes = shape(
     'someString' => string,
     ...
