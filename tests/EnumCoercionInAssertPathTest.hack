@@ -16,14 +16,14 @@ use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 
 final class EnumCoercionInAssertPathTest extends HackTest {
-  public function test_coercion_does_warn(): void {
+  public function testCoercionDoesWarn(): void {
     expect(() ==> TypeAssert\matches<IntegralKeyCoercionEnum>('3'))
       ->toTriggerAnError(\E_USER_DEPRECATED, 'does contain the int value 3');
     expect(() ==> TypeAssert\matches<IntegralKeyCoercionEnum>(2))
       ->toTriggerAnError(\E_USER_DEPRECATED, 'does contain the string value 2');
   }
 
-  public function test_coersion_does_not_warn_if_both_int_and_string_exist(
+  public function testCoersionDoesNotWarnIfBothIntAndStringExist(
   ): void {
     try {
       \set_error_handler(() ==> {
