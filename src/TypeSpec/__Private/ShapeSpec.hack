@@ -14,7 +14,7 @@ use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
 use namespace HH\Lib\{C, Dict, Str, Vec};
 
-final class ShapeSpec extends TypeSpec<shape()> {
+final class ShapeSpec extends TypeSpec<shape(...)> {
   private bool $allowUnknownFields;
 
   private static function isOptionalField<Tany>(TypeSpec<Tany> $spec): bool {
@@ -29,7 +29,7 @@ final class ShapeSpec extends TypeSpec<shape()> {
   }
 
   <<__Override>>
-  public function coerceType(mixed $value): shape() {
+  public function coerceType(mixed $value): shape(...) {
     if (!$value is KeyedTraversable<_, _>) {
       throw TypeCoercionException::withValue(
         $this->getTrace(),
@@ -38,7 +38,8 @@ final class ShapeSpec extends TypeSpec<shape()> {
       );
     }
 
-    $value = dict(/* HH_IGNORE_ERROR[4323] */$value);
+    /* HH_IGNORE_ERROR[4323] KeyedTraversable may have non arraykey keys */
+    $value = dict($value);
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
@@ -66,8 +67,8 @@ final class ShapeSpec extends TypeSpec<shape()> {
   }
 
   <<__Override>>
-  public function assertType(mixed $value): shape() {
-    if (!\HH\is_dict_or_darray($value)) {
+  public function assertType(mixed $value): shape(...) {
+    if (!$value is dict<_, _>) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
         'shape',
@@ -78,7 +79,8 @@ final class ShapeSpec extends TypeSpec<shape()> {
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
       if (C\contains_key($value, $key)) {
-        $out[$key as arraykey] = $spec->withTrace($trace)->assertType($value[$key as dynamic] ?? null);
+        $out[$key as arraykey] =
+          $spec->withTrace($trace)->assertType($value[$key as dynamic] ?? null);
         continue;
       }
 
@@ -111,12 +113,9 @@ final class ShapeSpec extends TypeSpec<shape()> {
 
   private static function dictToShapeUNSAFE(
     dict<arraykey, mixed> $shape,
-  ): shape() {
-    if (shape() is dict<_, _>) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $shape;
-    }
-    return /* HH_IGNORE_ERROR[4110] */ darray($shape);
+  ): shape(...) {
+    /* HH_IGNORE_ERROR[4110] Depends on runtime representation of shapes being dict */
+    return $shape;
   }
 
   <<__Override>>
