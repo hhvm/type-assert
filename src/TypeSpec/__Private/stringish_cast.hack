@@ -14,6 +14,11 @@ function stringish_cast(\Stringish $stringish, string $caller): string {
   } else if (\HH\is_fun($stringish)) {
     return \HH\fun_get_function($stringish);
   } else {
+    invariant(
+      $stringish is \StringishObject,
+      'Expected Stringish to be either a string or a StringishObject, got %s',
+      \get_class($stringish) ?: \gettype($stringish),
+    );
     \trigger_error(
       'Stringish is being deprecated. '.
       'Passing an object that implements __toString to '.
