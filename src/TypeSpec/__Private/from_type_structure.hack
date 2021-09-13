@@ -54,6 +54,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
       return TypeSpec\arraykey();
     case TypeStructureKind::OF_NORETURN:
       throw new UnsupportedTypeException('OF_NORETURN');
+    case TypeStructureKind::OF_DYNAMIC:
     case TypeStructureKind::OF_MIXED:
       /* HH_IGNORE_ERROR[4110] */
       return new MixedSpec();
