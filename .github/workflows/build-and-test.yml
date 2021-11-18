@@ -19,11 +19,6 @@ jobs:
     runs-on: ${{matrix.os}}-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Alias master for Composer `dev-master` version resolution
-        run: |
-          if [ ! -e .git/refs/heads/master ]; then
-            git branch master HEAD
-          fi
       - uses: hhvm/actions/hack-lint-test@master
         with:
           hhvm: ${{matrix.hhvm}}
