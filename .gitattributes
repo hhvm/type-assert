@@ -1,3 +1,4 @@
 tests/ export-ignore
 .hhconfig export-ignore
+.hhvmconfig.hdf export-ignore
 *.hack linguist-language=Hack
