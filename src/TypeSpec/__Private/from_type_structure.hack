@@ -63,7 +63,7 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
       return new TupleSpec(
         Vec\map(
           TypeAssert\not_null($ts['elem_types']),
-          $elem ==> from_type_structure($elem),
+          from_type_structure<>,
         ),
       );
     case TypeStructureKind::OF_FUNCTION:
