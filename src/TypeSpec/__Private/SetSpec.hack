@@ -95,7 +95,7 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
       return $out;
     }
 
-    /* HH_IGNORE_ERROR[4110] Return ImmSet when the user asks for ConstSet or ImmSet. 
+    /* HH_IGNORE_ERROR[4110] Return ImmSet when the user asks for ConstSet or ImmSet.
        This immutability for ConstSet is not needed, but kept for consistency with MapSpec and VectorSpec. */
     return $out->immutable();
   }
