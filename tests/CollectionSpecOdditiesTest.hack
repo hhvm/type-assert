@@ -10,9 +10,7 @@
 
 namespace Facebook\TypeAssert;
 
-use namespace Facebook\TypeSpec;
 use type Facebook\HackTest\HackTest;
-use type Facebook\TypeSpec\TypeSpec;
 use type Facebook\TypeAssert\TestFixtures\IntishStringEnum;
 use function Facebook\FBExpect\expect;
 

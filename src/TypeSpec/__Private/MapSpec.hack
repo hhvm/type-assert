@@ -12,7 +12,7 @@ namespace Facebook\TypeSpec\__Private;
 
 use type Facebook\TypeAssert\{IncorrectTypeException, TypeCoercionException};
 use type Facebook\TypeSpec\TypeSpec;
-use namespace HH\Lib\{C, Dict, Str};
+use namespace HH\Lib\{C, Str};
 
 final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
   extends TypeSpec<T> {
@@ -109,7 +109,7 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
       return $out;
     }
 
-    /* HH_IGNORE_ERROR[4110] Return ImmMap when the user asks for ConstMap or ImmMap. 
+    /* HH_IGNORE_ERROR[4110] Return ImmMap when the user asks for ConstMap or ImmMap.
        This immutability for ConstMap is not needed, but kept for backwards compatibility. */
     return $out->immutable();
   }

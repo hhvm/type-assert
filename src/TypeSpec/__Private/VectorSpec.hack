@@ -94,7 +94,7 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
       return $out;
     }
 
-    /* HH_IGNORE_ERROR[4110] Return ImmVector when the user asks for ConstVector or ImmVector. 
+    /* HH_IGNORE_ERROR[4110] Return ImmVector when the user asks for ConstVector or ImmVector.
        This immutability for ConstVector is not needed, but kept for backwards compatibility. */
     return $out->immutable();
   }
