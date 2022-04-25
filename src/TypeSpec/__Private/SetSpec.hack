@@ -69,15 +69,35 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
       );
     }
 
-    $value = $value as \ConstSet<_>;
+    $value as \ConstSet<_>;
+    $out = Set {};
+    $out->reserve($value->count());
 
-    $trace = $this->getTrace()->withFrame($this->what.'<T>');
-    $value->filter($x ==> {
-      $this->inner->withTrace($trace)->assertType($x);
-      return false;
-    });
-    /* HH_IGNORE_ERROR[4110] */
-    return $value;
+    $spec =
+      $this->inner->withTrace($this->getTrace()->withFrame($this->what.'<T>'));
+
+    // EnumSpec may change its values, and can be nested here
+    $changed = false;
+    foreach ($value as $element) {
+      $new_element = $spec->assertType($element);
+      $changed = $changed || $new_element !== $element;
+      $out[] = $new_element;
+    }
+
+    if (!$changed) {
+      /* HH_IGNORE_ERROR[4110] is_a() ensures the collection type
+         and $spec->assertType() ensures the inner type. */
+      return $value;
+    }
+
+    if ($this->what === Set::class) {
+      /* HH_IGNORE_ERROR[4110] $out is a Set and $this->what is also Set. */
+      return $out;
+    }
+
+    /* HH_IGNORE_ERROR[4110] Return ImmSet when the user asks for ConstSet or ImmSet. 
+       This immutability for ConstSet is not needed, but kept for consistency with MapSpec and VectorSpec. */
+    return $out->immutable();
   }
 
   <<__Override>>

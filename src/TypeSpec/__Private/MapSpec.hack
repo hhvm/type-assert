@@ -80,36 +80,38 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
         $value,
       );
     }
-    invariant($value is \ConstMap<_, _>, 'Should have exit from `is_a` check');
+    $value as \ConstMap<_, _>;
+    $out = Map {};
+    $out->reserve($value->count());
 
-    $tsk = $this->tsk;
-    $tsv = $this->tsv;
-    $kt = $this->getTrace()->withFrame($this->what.'<Tk, _>');
-    $vt = $this->getTrace()->withFrame($this->what.'<_, Tv>');
+    $key_spec = $this->tsk
+      ->withTrace($this->getTrace()->withFrame($this->what.'<Tk, _>'));
+    $value_spec = $this->tsv
+      ->withTrace($this->getTrace()->withFrame($this->what.'<_, Tv>'));
 
-    // TupleSpec and ShapeSpec may change their values, and can be nested here
+    // EnumSpec may change its values, and can be nested here
     $changed = false;
+    foreach ($value as $key => $element) {
+      $new_key = $key_spec->assertType($key);
+      $new_element = $value_spec->assertType($element);
+      $changed = $changed || $new_key !== $key || $new_element !== $element;
+      $out[$new_key] = $new_element;
+    }
 
-    $tuples = $value->mapWithKey(
-      ($k, $v) ==> {
-        $k2 = $tsk->withTrace($kt)->assertType($k);
-        $v2 = $tsv->withTrace($vt)->assertType($v);
-        $changed = $changed || $k2 !== $k || $v2 !== $v;
-        return tuple($k2, $v2);
-      },
-    );
     if (!$changed) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_IGNORE_ERROR[4110] is_a() ensure the collection type
+         and $spec->assertType() ensures the inner type. */
       return $value;
     }
 
-    $value = new Map(Dict\from_entries($tuples));
     if ($this->what === Map::class) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $value;
+      /* HH_IGNORE_ERROR[4110] $out is a Map and $this->what is also Map. */
+      return $out;
     }
-    /* HH_IGNORE_ERROR[4110] */
-    return $value->immutable();
+
+    /* HH_IGNORE_ERROR[4110] Return ImmMap when the user asks for ConstMap or ImmMap. 
+       This immutability for ConstMap is not needed, but kept for backwards compatibility. */
+    return $out->immutable();
   }
 
   <<__Override>>

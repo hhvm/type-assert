@@ -67,30 +67,36 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
         $value,
       );
     }
-    $value = $value as \ConstVector<_>;
+    $value as \ConstVector<_>;
 
-    // TupleSpec and ShapeSpec may change their values, and can be nested here
+    $out = Vector {};
+    $out->reserve($value->count());
+
+    $spec =
+      $this->inner->withTrace($this->getTrace()->withFrame($this->what.'<T>'));
+
+    // EnumSpec may change its values, and can be nested here
     $changed = false;
-
-    $trace = $this->getTrace()->withFrame($this->what.'<T>');
-    $new_value = $value->map($x ==> {
-      $y = $this->inner->withTrace($trace)->assertType($x);
-      $changed = $changed || $x !== $y;
-      return $y;
-    });
+    foreach ($value as $element) {
+      $new_element = $spec->assertType($element);
+      $changed = $changed || $new_element !== $element;
+      $out[] = $new_element;
+    }
 
     if (!$changed) {
-      /* HH_IGNORE_ERROR[4110] */
+      /* HH_IGNORE_ERROR[4110] is_a() ensure the collection type
+         and $spec->assertType() ensures the inner type. */
       return $value;
     }
 
-    $value = new Vector($new_value);
     if ($this->what === Vector::class) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $value;
+      /* HH_IGNORE_ERROR[4110] $out is a Vector and $this->what is also Vector. */
+      return $out;
     }
-    /* HH_IGNORE_ERROR[4110] */
-    return $value->immutable();
+
+    /* HH_IGNORE_ERROR[4110] Return ImmVector when the user asks for ConstVector or ImmVector. 
+       This immutability for ConstVector is not needed, but kept for backwards compatibility. */
+    return $out->immutable();
   }
 
   <<__Override>>
