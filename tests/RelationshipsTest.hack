@@ -7,7 +7,7 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-
+/* HHAST_IGNORE_ALL[UnreachableCode] Intentional unreachable code for test purpose */
 namespace Facebook\TypeAssert;
 
 use type Facebook\TypeAssert\TestFixtures\{ChildClass, ParentClass};

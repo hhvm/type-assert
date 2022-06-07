@@ -10,7 +10,7 @@
 
 namespace Facebook\TypeAssert\TestFixtures;
 
-class TypeConstants {
+final class TypeConstants {
   const type TInt = int;
   const type TBool = bool;
   const type TFloat = float;

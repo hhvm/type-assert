@@ -7,7 +7,7 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-
+/* HHAST_IGNORE_ALL[FinalOrAbstractClass] Intentional non-final classes for test purpose */
 namespace Facebook\TypeAssert\TestFixtures;
 
 class ParentClass {
