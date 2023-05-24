@@ -16,7 +16,7 @@ use type Facebook\TypeSpec\TypeSpec;
 final class VArraySpecTest extends TypeSpecTest<varray<mixed>> {
   <<__Override>>
   public function getTypeSpec(): TypeSpec<varray<int>> {
-    return TypeSpec\varray(TypeSpec\int());
+    return TypeSpec\of<vec<int>>();
   }
 
   <<__Override>>
@@ -48,8 +48,8 @@ final class VArraySpecTest extends TypeSpecTest<varray<mixed>> {
   public function getToStringExamples(
   ): vec<(TypeSpec<varray<mixed>>, string)> {
     return vec[
-      tuple(TypeSpec\varray(TypeSpec\string()), 'varray<string>'),
-      tuple(TypeSpec\varray(TypeSpec\int()), 'varray<int>'),
+      tuple(TypeSpec\of<varray<string>>(), vec::class.'<string>'),
+      tuple(TypeSpec\of<varray<int>>(), vec::class.'<int>'),
     ];
   }
 }

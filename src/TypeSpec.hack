@@ -59,13 +59,6 @@ function constvector<Tv>(TypeSpec<Tv> $inner): TypeSpec<\ConstVector<Tv>> {
   return new __Private\VectorSpec(\ConstVector::class, $inner);
 }
 
-function darray<Tk as arraykey, Tv>(
-  TypeSpec<Tk> $tsk,
-  TypeSpec<Tv> $tsv,
-): TypeSpec<darray<Tk, Tv>> {
-  return new __Private\DarraySpec($tsk, $tsv);
-}
-
 function dict<Tk as arraykey, Tv>(
   TypeSpec<Tk> $tsk,
   TypeSpec<Tv> $tsv,
@@ -147,22 +140,12 @@ function string(): TypeSpec<string> {
   return new __Private\StringSpec();
 }
 
-function varray<Tv>(TypeSpec<Tv> $tsv): TypeSpec<varray<Tv>> {
-  return new __Private\VarraySpec($tsv);
-}
-
 function vec<Tv>(TypeSpec<Tv> $inner): TypeSpec<vec<Tv>> {
   return new __Private\VecSpec($inner);
 }
 
 function vector<Tv>(TypeSpec<Tv> $inner): TypeSpec<Vector<Tv>> {
   return new __Private\VectorSpec(Vector::class, $inner);
-}
-
-function varray_or_darray<Tv>(
-  TypeSpec<Tv> $inner,
-): TypeSpec<varray_or_darray<Tv>> {
-  return new __Private\VArrayOrDArraySpec($inner);
 }
 
 function of<reify T>(): TypeSpec<T> {

@@ -16,7 +16,7 @@ use type Facebook\TypeSpec\TypeSpec;
 final class DArraySpecTest extends TypeSpecTest<darray<arraykey, mixed>> {
   <<__Override>>
   public function getTypeSpec(): TypeSpec<darray<arraykey, int>> {
-    return TypeSpec\darray(TypeSpec\arraykey(), TypeSpec\int());
+    return TypeSpec\of<darray<arraykey, int>>();
   }
 
   <<__Override>>
@@ -48,14 +48,8 @@ final class DArraySpecTest extends TypeSpecTest<darray<arraykey, mixed>> {
   public function getToStringExamples(
   ): vec<(TypeSpec<darray<arraykey, mixed>>, string)> {
     return vec[
-      tuple(
-        TypeSpec\darray(TypeSpec\string(), TypeSpec\int()),
-        'darray<string, int>',
-      ),
-      tuple(
-        TypeSpec\darray(TypeSpec\int(), TypeSpec\string()),
-        'darray<int, string>',
-      ),
+      tuple(TypeSpec\of<darray<string, int>>(), dict::class.'<string, int>'),
+      tuple(TypeSpec\of<darray<int, string>>(), dict::class.'<int, string>'),
     ];
   }
 }

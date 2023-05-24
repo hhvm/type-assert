@@ -73,25 +73,20 @@ function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
     case TypeStructureKind::OF_VARRAY:
       $generics = $ts['generic_types'] as nonnull;
       invariant(C\count($generics) === 1, 'got varray with multiple generics');
+      // When given a legacy varray<_> type, we can return a vec<_> spec instead.
       /* HH_IGNORE_ERROR[4110] */
-      return TypeSpec\varray(from_type_structure($generics[0]));
+      return TypeSpec\vec(from_type_structure($generics[0]));
     case TypeStructureKind::OF_DARRAY:
       $generics = $ts['generic_types'] as nonnull;
       invariant(
         C\count($generics) === 2,
         'darrays must have exactly 2 generics',
       );
+      // When given a legacy darray<_, _> type, we can return a dict<_, _> spec instead.
       /* HH_IGNORE_ERROR[4110] */
-      return TypeSpec\darray(from_type_structure($generics[0]), from_type_structure($generics[1]));
+      return TypeSpec\dict(from_type_structure($generics[0]), from_type_structure($generics[1]));
     case TypeStructureKind::OF_VARRAY_OR_DARRAY:
-      $generics = $ts['generic_types'] as nonnull;
-      invariant(
-        C\count($generics) === 1,
-        'got varray_or_darray with multiple generics',
-      );
-      /* HH_IGNORE_ERROR[4110] */
-			return TypeSpec\varray_or_darray(from_type_structure($generics[0]));
-
+      throw new UnsupportedTypeException('OF_VARRAY_OR_DARRAY');
     case TypeStructureKind::OF_DICT:
       $generics = TypeAssert\not_null($ts['generic_types']);
       invariant(C\count($generics) === 2, 'dicts must have 2 generics');
