@@ -26,7 +26,6 @@ function stringish_cast(\Stringish $stringish, string $caller): string {
       '() may not work in a future release.',
       \E_USER_DEPRECATED,
     );
-    /*HH_FIXME[4128] stringish_cast() can't be used in the future.*/
     return $stringish->__toString();
   }
 }

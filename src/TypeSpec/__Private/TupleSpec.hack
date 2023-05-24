@@ -43,7 +43,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
         ->withTrace($this->getTrace()->withFrame('tuple['.$i.']'))
         ->coerceType($values[$i]);
     }
-    return self::vecToTuple($out);
+    return $out as BogusTuple;
   }
 
   <<__Override>>
@@ -68,12 +68,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
         ->withTrace($this->getTrace()->withFrame('tuple['.$i.']'))
         ->assertType($value[$i]);
     }
-    return self::vecToTuple($out);
-  }
-
-  private static function vecToTuple(vec<mixed> $tuple): BogusTuple {
-    /* HH_IGNORE_ERROR[4110] */
-    return $tuple;
+    return $out as BogusTuple;
   }
 
   <<__Override>>

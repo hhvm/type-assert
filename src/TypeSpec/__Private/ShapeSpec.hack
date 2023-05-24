@@ -35,7 +35,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
         TypeCoercionException::withValue($this->getTrace(), 'shape', $value);
     }
 
-    $value = dict(/* HH_IGNORE_ERROR[4323] */$value);
+    $value = dict(\HH\FIXME\UNSAFE_CAST<
+      KeyedTraversable<mixed, mixed>,
+      KeyedTraversable<arraykey, mixed>,
+    >($value));
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
@@ -59,7 +62,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
       }
     }
 
-    return self::dictToShapeUNSAFE($out);
+    return \HH\FIXME\UNSAFE_CAST<dict<arraykey, mixed>, shape()>(
+      $out,
+      'Can not use $out as shape(...), because the generic is closed.',
+    );
   }
 
   <<__Override>>
@@ -101,14 +107,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
       }
     }
 
-    return self::dictToShapeUNSAFE($out);
-  }
-
-  private static function dictToShapeUNSAFE(
-    dict<arraykey, mixed> $shape,
-  ): shape() {
-    /* HH_IGNORE_ERROR[4110] */
-    return $shape;
+    return \HH\FIXME\UNSAFE_CAST<dict<arraykey, mixed>, shape()>(
+      $out,
+      'Can not use $out as shape(...), because the generic is closed.',
+    );
   }
 
   <<__Override>>

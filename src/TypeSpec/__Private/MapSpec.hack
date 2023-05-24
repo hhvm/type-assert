@@ -58,17 +58,14 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
       $changed === false &&
       \is_a($value, $this->what, /* allow_string = */ true)
     ) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $value;
+      return \HH\FIXME\UNSAFE_CAST<KeyedTraversable<mixed, mixed>, T>($value);
     }
 
     if ($this->what === Map::class) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $out;
+      return \HH\FIXME\UNSAFE_CAST<Map<arraykey, mixed>, T>($out);
     }
 
-    /* HH_IGNORE_ERROR[4110] */
-    return $out->immutable();
+    return \HH\FIXME\UNSAFE_CAST<ImmMap<arraykey, mixed>, T>($out->immutable());
   }
 
   <<__Override>>
@@ -99,19 +96,25 @@ final class MapSpec<Tk as arraykey, Tv, T as \ConstMap<Tk, Tv>>
     }
 
     if (!$changed) {
-      /* HH_IGNORE_ERROR[4110] is_a() ensure the collection type
-         and $spec->assertType() ensures the inner type. */
-      return $value;
+      // $value has an undenotable type Tk#1, so mixed.
+      return \HH\FIXME\UNSAFE_CAST<mixed, T>(
+        $value,
+        'is_a() ensures the collection type and $spec->assertType() ensures the inner type.',
+      );
     }
 
     if ($this->what === Map::class) {
-      /* HH_IGNORE_ERROR[4110] $out is a Map and $this->what is also Map. */
-      return $out;
+      return \HH\FIXME\UNSAFE_CAST<Map<Tk, Tv>, T>(
+        $out,
+        '$out is a Map and $this->what is also Map.',
+      );
     }
 
-    /* HH_IGNORE_ERROR[4110] Return ImmMap when the user asks for ConstMap or ImmMap.
-       This immutability for ConstMap is not needed, but kept for backwards compatibility. */
-    return $out->immutable();
+    return \HH\FIXME\UNSAFE_CAST<ImmMap<Tk, Tv>, T>(
+      $out->immutable(),
+      'Return ImmMap when the user asks for ConstMap or ImmMap.
+       This immutability for ConstMap is not needed, but kept for backwards compatibility.',
+    );
   }
 
   <<__Override>>

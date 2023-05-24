@@ -47,16 +47,13 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     }
 
     if ($changed === false && \is_a($value, $this->what)) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $value;
+      return \HH\FIXME\UNSAFE_CAST<Traversable<mixed>, T>($value);
     }
 
     if ($this->what === Set::class) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $out;
+      return \HH\FIXME\UNSAFE_CAST<Set<Tv>, T>($out);
     }
-    /* HH_IGNORE_ERROR[4110] */
-    return $out->immutable();
+    return \HH\FIXME\UNSAFE_CAST<ImmSet<Tv>, T>($out->immutable());
   }
 
   <<__Override>>
@@ -85,19 +82,24 @@ final class SetSpec<Tv as arraykey, T as \ConstSet<Tv>> extends TypeSpec<T> {
     }
 
     if (!$changed) {
-      /* HH_IGNORE_ERROR[4110] is_a() ensures the collection type
-         and $spec->assertType() ensures the inner type. */
-      return $value;
+      return \HH\FIXME\UNSAFE_CAST<\ConstSet<arraykey>, T>(
+        $value,
+        'is_a() ensures the collection type and $spec->assertType() ensures the inner type.',
+      );
     }
 
     if ($this->what === Set::class) {
-      /* HH_IGNORE_ERROR[4110] $out is a Set and $this->what is also Set. */
-      return $out;
+      return \HH\FIXME\UNSAFE_CAST<\ConstSet<Tv>, T>(
+        $out,
+        '$out is a Set and $this->what is also Set.',
+      );
     }
 
-    /* HH_IGNORE_ERROR[4110] Return ImmSet when the user asks for ConstSet or ImmSet.
-       This immutability for ConstSet is not needed, but kept for consistency with MapSpec and VectorSpec. */
-    return $out->immutable();
+    return \HH\FIXME\UNSAFE_CAST<ImmSet<Tv>, T>(
+      $out->immutable(),
+      'Return ImmSet when the user asks for ConstSet or ImmSet.
+       This immutability for ConstSet is not needed, but kept for consistency with MapSpec and VectorSpec.',
+    );
   }
 
   <<__Override>>

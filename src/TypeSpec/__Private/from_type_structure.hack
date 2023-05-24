@@ -18,11 +18,15 @@ use namespace Facebook\{TypeAssert, TypeSpec};
 function from_type_structure<T>(TypeStructure<T> $ts): TypeSpec<T> {
   if ($ts['optional_shape_field'] ?? false) {
     $ts['optional_shape_field'] = false;
-    return new OptionalSpec(from_type_structure(as_type_structure_UNSAFE($ts)));
+    return new OptionalSpec(from_type_structure(
+      \HH\FIXME\UNSAFE_CAST<shape(...), TypeStructure<T>>($ts),
+    ));
   }
   if ($ts['nullable'] ?? false) {
     $ts['nullable'] = false;
-    return new NullableSpec(from_type_structure(as_type_structure_UNSAFE($ts)))
+    return new NullableSpec(from_type_structure(
+      \HH\FIXME\UNSAFE_CAST<shape(...), TypeStructure<T>>($ts),
+    ))
       |> as_type_spec_UNSAFE($$);
   }
 
