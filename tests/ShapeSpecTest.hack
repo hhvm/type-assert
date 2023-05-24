@@ -29,10 +29,8 @@ final class ShapeSpecTest extends TypeSpecTest<shape(...)> {
 
   <<__Override>>
   public function getInvalidValues(): vec<(mixed)> {
-    return Vec\filter(
-      parent::getInvalidValues(),
-      $it ==> !$it[0] is dict<_, _>,
-    );
+    return
+      Vec\filter(parent::getInvalidValues(), $it ==> !$it[0] is dict<_, _>);
   }
 
   <<__Override>>
@@ -109,7 +107,8 @@ final class ShapeSpecTest extends TypeSpecTest<shape(...)> {
   <<__Override>>
   public function getToStringExamples(): vec<(TypeSpec<shape(...)>, string)> {
     return vec[tuple(
-      $this->getTypeSpec(), <<<EOF
+      $this->getTypeSpec(),
+      <<<EOF
 shape(
   'string_field' => string,
   ?'optional_string_field' => string,
