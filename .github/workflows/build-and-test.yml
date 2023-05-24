@@ -16,7 +16,7 @@ jobs:
           - "4.128"
           - latest
           - nightly
-    runs-on: ${{matrix.os}}-latest
+    runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
       - uses: hhvm/actions/hack-lint-test@master
