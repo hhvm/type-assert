@@ -48,14 +48,14 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     }
 
     if ($changed === false && \is_a($value, $this->what)) {
-      return /* HH_IGNORE_ERROR[4110] */ $value;
+      return \HH\FIXME\UNSAFE_CAST<Traversable<mixed>, T>($value);
     }
 
     if ($this->what === Vector::class) {
-      return /* HH_IGNORE_ERROR[4110] */ $out;
+      return \HH\FIXME\UNSAFE_CAST<Vector<Tv>, T>($out);
     }
 
-    return /* HH_IGNORE_ERROR[4110] */ $out->immutable();
+    return \HH\FIXME\UNSAFE_CAST<ImmVector<Tv>, T>($out->immutable());
   }
 
   <<__Override>>
@@ -84,19 +84,24 @@ final class VectorSpec<Tv, T as \ConstVector<Tv>> extends TypeSpec<T> {
     }
 
     if (!$changed) {
-      /* HH_IGNORE_ERROR[4110] is_a() ensure the collection type
-         and $spec->assertType() ensures the inner type. */
-      return $value;
+      return \HH\FIXME\UNSAFE_CAST<\ConstVector<mixed>, T>(
+        $value,
+        'is_a() ensures the collection type and $spec->assertType() ensures the inner type.',
+      );
     }
 
     if ($this->what === Vector::class) {
-      /* HH_IGNORE_ERROR[4110] $out is a Vector and $this->what is also Vector. */
-      return $out;
+      return \HH\FIXME\UNSAFE_CAST<Vector<Tv>, T>(
+        $out,
+        '$out is a Vector and $this->what is also Vector.',
+      );
     }
 
-    /* HH_IGNORE_ERROR[4110] Return ImmVector when the user asks for ConstVector or ImmVector.
-       This immutability for ConstVector is not needed, but kept for backwards compatibility. */
-    return $out->immutable();
+    return \HH\FIXME\UNSAFE_CAST<ImmVector<Tv>, T>(
+      $out->immutable(),
+      'Return ImmVector when the user asks for ConstVector or ImmVector.
+       This immutability for ConstVector is not needed, but kept for backwards compatibility.',
+    );
   }
 
   <<__Override>>

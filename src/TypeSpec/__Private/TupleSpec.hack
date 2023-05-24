@@ -22,7 +22,7 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
 
   <<__Override>>
   public function coerceType(mixed $value): BogusTuple {
-    if (!\HH\is_vec_or_varray($value)) {
+    if (!$value is vec<_>) {
       throw
         TypeCoercionException::withValue($this->getTrace(), 'tuple', $value);
     }
@@ -43,20 +43,17 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
         ->withTrace($this->getTrace()->withFrame('tuple['.$i.']'))
         ->coerceType($values[$i]);
     }
-    return self::vecToTuple($out);
+    return $out as BogusTuple;
   }
 
   <<__Override>>
   public function assertType(mixed $value): BogusTuple {
-    if (\HH\is_vec_or_varray($value)) {
-      $value = vec($value);
-    } else if (!($value is vec<_>)) {
+    if (!$value is vec<_>) {
       throw
         IncorrectTypeException::withValue($this->getTrace(), 'tuple', $value);
     }
-    $values = $value;
 
-    $count = \count($values);
+    $count = \count($value);
     if ($count !== \count($this->inners)) {
       throw IncorrectTypeException::withValue(
         $this->getTrace(),
@@ -69,18 +66,9 @@ final class TupleSpec extends TypeSpec<BogusTuple> {
     for ($i = 0; $i < $count; ++$i) {
       $out[] = $this->inners[$i]
         ->withTrace($this->getTrace()->withFrame('tuple['.$i.']'))
-        ->assertType($values[$i]);
+        ->assertType($value[$i]);
     }
-    return self::vecToTuple($out);
-  }
-
-  private static function vecToTuple(vec<mixed> $tuple): BogusTuple {
-    if (tuple('foo') is vec<_>) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $tuple;
-    }
-    /* HH_IGNORE_ERROR[4110] */
-    return varray($tuple);
+    return $out as BogusTuple;
   }
 
   <<__Override>>

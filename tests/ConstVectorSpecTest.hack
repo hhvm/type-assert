@@ -24,8 +24,8 @@ final class ConstVectorSpecTest extends TypeSpecTest<\ConstVector<mixed>> {
     return vec[
       tuple(vec[], ImmVector {}),
       tuple(vec['123'], ImmVector {123}),
-      tuple(varray['123'], ImmVector {123}),
-      tuple(darray[123 => '123'], ImmVector {123}),
+      tuple(vec['123'], ImmVector {123}),
+      tuple(dict[123 => '123'], ImmVector {123}),
       tuple(ImmVector {'123'}, ImmVector {123}),
       tuple(Vector {'123'}, ImmVector {123}),
       tuple(Vector {123}, Vector {123}),

@@ -31,14 +31,14 @@ final class ShapeSpec extends TypeSpec<shape()> {
   <<__Override>>
   public function coerceType(mixed $value): shape() {
     if (!$value is KeyedTraversable<_, _>) {
-      throw TypeCoercionException::withValue(
-        $this->getTrace(),
-        'shape',
-        $value,
-      );
+      throw
+        TypeCoercionException::withValue($this->getTrace(), 'shape', $value);
     }
 
-    $value = dict(/* HH_IGNORE_ERROR[4323] */$value);
+    $value = dict(\HH\FIXME\UNSAFE_CAST<
+      KeyedTraversable<mixed, mixed>,
+      KeyedTraversable<arraykey, mixed>,
+    >($value));
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
@@ -62,23 +62,24 @@ final class ShapeSpec extends TypeSpec<shape()> {
       }
     }
 
-    return self::dictToShapeUNSAFE($out);
+    return \HH\FIXME\UNSAFE_CAST<dict<arraykey, mixed>, shape()>(
+      $out,
+      'Can not use $out as shape(...), because the generic is closed.',
+    );
   }
 
   <<__Override>>
   public function assertType(mixed $value): shape() {
-    if (!\HH\is_dict_or_darray($value)) {
-      throw IncorrectTypeException::withValue(
-        $this->getTrace(),
-        'shape',
-        $value,
-      );
+    if (!$value is dict<_, _>) {
+      throw
+        IncorrectTypeException::withValue($this->getTrace(), 'shape', $value);
     }
     $out = dict[];
     foreach ($this->inners as $key => $spec) {
       $trace = $this->getTrace()->withFrame('shape['.$key.']');
       if (C\contains_key($value, $key)) {
-        $out[$key as arraykey] = $spec->withTrace($trace)->assertType($value[$key as dynamic] ?? null);
+        $out[$key as arraykey] =
+          $spec->withTrace($trace)->assertType($value[$key as dynamic] ?? null);
         continue;
       }
 
@@ -106,17 +107,10 @@ final class ShapeSpec extends TypeSpec<shape()> {
       }
     }
 
-    return self::dictToShapeUNSAFE($out);
-  }
-
-  private static function dictToShapeUNSAFE(
-    dict<arraykey, mixed> $shape,
-  ): shape() {
-    if (shape() is dict<_, _>) {
-      /* HH_IGNORE_ERROR[4110] */
-      return $shape;
-    }
-    return /* HH_IGNORE_ERROR[4110] */ darray($shape);
+    return \HH\FIXME\UNSAFE_CAST<dict<arraykey, mixed>, shape()>(
+      $out,
+      'Can not use $out as shape(...), because the generic is closed.',
+    );
   }
 
   <<__Override>>

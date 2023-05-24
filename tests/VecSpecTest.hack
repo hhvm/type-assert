@@ -24,11 +24,11 @@ final class VecSpecTest extends TypeSpecTest<vec<mixed>> {
     return vec[
       tuple(vec[], vec[]),
       tuple(vec['123'], vec[123]),
-      tuple(varray['123'], vec[123]),
-      tuple(varray[123], vec[123]),
+      tuple(vec['123'], vec[123]),
+      tuple(vec[123], vec[123]),
       tuple(dict['foo' => '456'], vec[456]),
       tuple(Vector {123}, vec[123]),
-      tuple(darray['foo' => 123], vec[123]),
+      tuple(dict['foo' => 123], vec[123]),
       tuple(keyset['123'], vec[123]),
     ];
   }

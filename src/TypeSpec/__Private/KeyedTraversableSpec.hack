@@ -71,7 +71,7 @@ final class KeyedTraversableSpec<Tk, Tv, T as KeyedTraversable<Tk, Tv>>
       $tsk->assertType($k);
       $tsv->assertType($v);
     }
-    return /* HH_IGNORE_ERROR[4110] */ $value;
+    return \HH\FIXME\UNSAFE_CAST<KeyedContainer<arraykey, mixed>, T>($value);
   }
 
   <<__Override>>
