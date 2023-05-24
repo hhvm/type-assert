@@ -46,7 +46,7 @@ final class ShapeSpecTest extends TypeSpecTest<shape(...)> {
   public function getValidCoercions(): vec<(mixed, shape(...))> {
     return vec[
       tuple(
-        darray['string_field' => 'foo', 'nullable_string_field' => null],
+        dict['string_field' => 'foo', 'nullable_string_field' => null],
         shape('string_field' => 'foo', 'nullable_string_field' => null),
       ),
       tuple(
@@ -54,11 +54,11 @@ final class ShapeSpecTest extends TypeSpecTest<shape(...)> {
         shape('string_field' => 'foo', 'nullable_string_field' => null),
       ),
       tuple(
-        darray['string_field' => 123, 'nullable_string_field' => 'bar'],
+        dict['string_field' => 123, 'nullable_string_field' => 'bar'],
         shape('string_field' => '123', 'nullable_string_field' => 'bar'),
       ),
       tuple(
-        darray[
+        dict[
           'string_field' => 123,
           'nullable_string_field' => 'bar',
           'optional_string_field' => 123,
@@ -70,7 +70,7 @@ final class ShapeSpecTest extends TypeSpecTest<shape(...)> {
         ),
       ),
       tuple(
-        darray[
+        dict[
           'string_field' => 123,
           'nullable_string_field' => 'bar',
           'optional_nullable_string_field' => 123,
@@ -82,7 +82,7 @@ final class ShapeSpecTest extends TypeSpecTest<shape(...)> {
         ),
       ),
       tuple(
-        darray[
+        dict[
           'string_field' => 123,
           'nullable_string_field' => 'bar',
           'optional_nullable_string_field' => null,

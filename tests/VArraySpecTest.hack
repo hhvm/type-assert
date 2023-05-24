@@ -13,23 +13,26 @@ namespace Facebook\TypeAssert;
 use namespace Facebook\TypeSpec;
 use type Facebook\TypeSpec\TypeSpec;
 
-final class VArraySpecTest extends TypeSpecTest<varray<mixed>> {
+// This type is a misnomer (now).
+// VArraySpecTest tests the behavior of `TypeSpec\of<varray<_>>()`,
+// but the type under test is `VecSpec<_>`.
+final class VArraySpecTest extends TypeSpecTest<vec<mixed>> {
   <<__Override>>
-  public function getTypeSpec(): TypeSpec<varray<int>> {
-    return TypeSpec\of<vec<int>>();
+  public function getTypeSpec(): TypeSpec<vec<int>> {
+    return TypeSpec\of<varray<int>>();
   }
 
   <<__Override>>
-  public function getValidCoercions(): vec<(mixed, varray<int>)> {
+  public function getValidCoercions(): vec<(mixed, vec<int>)> {
     return vec[
-      tuple(vec[], varray[]),
-      tuple(vec['123'], varray[123]),
-      tuple(varray['123'], varray[123]),
-      tuple(varray[123], varray[123]),
-      tuple(dict['foo' => '456'], varray[456]),
-      tuple(Vector {123}, varray[123]),
-      tuple(darray['foo' => 123], varray[123]),
-      tuple(keyset['123'], varray[123]),
+      tuple(vec[], vec[]),
+      tuple(vec['123'], vec[123]),
+      tuple(vec['123'], vec[123]),
+      tuple(vec[123], vec[123]),
+      tuple(dict['foo' => '456'], vec[456]),
+      tuple(Vector {123}, vec[123]),
+      tuple(dict['foo' => 123], vec[123]),
+      tuple(keyset['123'], vec[123]),
     ];
   }
 
@@ -38,7 +41,7 @@ final class VArraySpecTest extends TypeSpecTest<varray<mixed>> {
     return vec[
       tuple(false),
       tuple(123),
-      tuple(varray['foo']),
+      tuple(vec['foo']),
       tuple(vec['foo']),
       tuple(keyset['foo']),
     ];
@@ -46,7 +49,7 @@ final class VArraySpecTest extends TypeSpecTest<varray<mixed>> {
 
   <<__Override>>
   public function getToStringExamples(
-  ): vec<(TypeSpec<varray<mixed>>, string)> {
+  ): vec<(TypeSpec<vec<mixed>>, string)> {
     return vec[
       tuple(TypeSpec\of<varray<string>>(), vec::class.'<string>'),
       tuple(TypeSpec\of<varray<int>>(), vec::class.'<int>'),

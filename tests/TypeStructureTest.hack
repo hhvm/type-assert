@@ -36,13 +36,13 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TTuple'),
         tuple('foo', 123),
       ),
-      'varray<string>' => tuple(
-        type_structure(TypeConstants::class, 'TStringVArray'),
-        varray['123', '456'],
+      'vec<string>' => tuple(
+        type_structure(TypeConstants::class, 'TStringVec'),
+        vec['123', '456'],
       ),
-      'darray<string, string>' => tuple(
-        type_structure(TypeConstants::class, 'TStringStringDArray'),
-        darray['foo' => 'bar', 'herp' => 'derp'],
+      'dict<string, string>' => tuple(
+        type_structure(TypeConstants::class, 'TStringStringDict'),
+        dict['foo' => 'bar', 'herp' => 'derp'],
       ),
       'string as ?string' => tuple(
         type_structure(TypeConstants::class, 'TNullableString'),
@@ -66,7 +66,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'array as Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
-        varray[123, 456],
+        vec[123, 456],
       ),
       'Container<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntContainer'),
@@ -80,9 +80,9 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
         Map {'foo' => 123},
       ),
-      'darray as KeyedContainer<string, int>' => tuple(
+      'dict as KeyedContainer<string, int>' => tuple(
         type_structure(TypeConstants::class, 'TStringIntKeyedContainer'),
-        darray['foo' => 123],
+        dict['foo' => 123],
       ),
       'empty Map<string, string>' =>
         tuple(type_structure(TypeConstants::class, 'TStringStringMap'), Map {}),
@@ -142,11 +142,11 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'shape with empty container' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
-        darray['container' => Vector {}],
+        dict['container' => Vector {}],
       ),
       'shape with non-empty container' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
-        darray['container' => Vector {'foo'}],
+        dict['container' => Vector {'foo'}],
       ),
       'enum' =>
         tuple(type_structure(TypeConstants::class, 'TEnum'), ExampleEnum::DERP),
@@ -178,14 +178,6 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         type_structure(TypeConstants::class, 'TStringKeyset'),
         keyset['foo', 'bar', 'baz', 'herp', 'derp'],
       ),
-      'varray<int> as varray_or_darray<int>' => tuple(
-        type_structure(TypeConstants::class, 'TVArrayOrDArray'),
-        varray[123],
-      ),
-      'darray<int> as varray_or_darray<int>' => tuple(
-        type_structure(TypeConstants::class, 'TVArrayOrDArray'),
-        darray['foo' => 123],
-      ),
     ];
   }
 
@@ -196,8 +188,6 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
   }
 
   public function testAssertedShapeAsShape(): void {
-    // most of the runtime is fine with actual PHP arrays, but we need a real
-    // darray for the `as` operator
     $x = shape('someString' => 'foo');
     $y = TypeAssert\matches_type_structure(
       type_structure(TypeConstants::class, 'TShapeWithOneField'),
@@ -356,12 +346,12 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
       ),
       'shape with missing container field' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
-        darray[],
+        dict[],
         vec['shape[container]'],
       ),
       'shape with container of wrong kind' => tuple(
         type_structure(TypeConstants::class, 'TShapeWithContainer'),
-        darray['container' => Vector {123}],
+        dict['container' => Vector {123}],
         vec['shape[container]', 'HH\\Vector<T>'],
       ),
       'enum' => tuple(
@@ -448,9 +438,9 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         vec[new TestStringable('foo')],
         keyset['foo'],
       ),
-      'varray<intish string> to vec<int>' => tuple(
+      'vec<intish string> to vec<int>' => tuple(
         type_structure(TypeConstants::class, 'TIntVec'),
-        varray['123'],
+        vec['123'],
         vec[123],
       ),
       'array<intish string> to keyset<string>' => tuple(
@@ -458,9 +448,9 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
         vec['123'],
         keyset['123'],
       ),
-      'darray<string, int> to dict<string, string>' => tuple(
+      'dict<string, int> to dict<string, string>' => tuple(
         type_structure(TypeConstants::class, 'TStringStringDict'),
-        darray['foo' => 123, 'bar' => 456],
+        dict['foo' => 123, 'bar' => 456],
         dict['foo' => '123', 'bar' => '456'],
       ),
       'shape with implicit subtyping and extra fields' => tuple(
@@ -523,7 +513,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     // - likely future changes to the implementation of shapes
     $shape = shape('someString' => 'foobar', 'someNullable' => null);
     $dict = dict['someString' => 'foobar', 'someNullable' => null];
-    $array = darray['someString' => 'foobar', 'someNullable' => null];
+    $array = dict['someString' => 'foobar', 'someNullable' => null];
     $ts = type_structure(TypeConstants::class, 'TFlatShape');
 
     expect(TypeAssert\matches_type_structure($ts, $dict))->toBeSame($shape);
@@ -536,7 +526,7 @@ final class TypeStructureTest extends \Facebook\HackTest\HackTest {
     // - likely future changes to the implementation of tuples
     $tuple = tuple('foo', 123);
     $vec = vec['foo', 123];
-    $array = varray['foo', 123];
+    $array = vec['foo', 123];
     $ts = type_structure(TypeConstants::class, 'TTuple');
 
     expect(TypeAssert\matches_type_structure($ts, $vec))->toBeSame($tuple);

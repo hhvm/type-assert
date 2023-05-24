@@ -39,14 +39,9 @@ final class ReifiedGenericsTest extends \Facebook\HackTest\HackTest {
 
   public function testShapeOfVecAndDicts(): void {
     $valid = shape('vec' => vec['foo', 'bar'], 'dict' => dict[1 => 2]);
-    $coercable = dict['vec' => vec['foo', 'bar'], 'dict' => darray[1 => 2]];
+    $coercable = dict['vec' => vec['foo', 'bar'], 'dict' => dict[1 => 2]];
 
     expect(matches<this::TShapeOfVecAndDicts>($valid))->toBeSame($valid);
-    if (darray[] !== dict[]) {
-      // They are equivalent as of v4.103
-      expect(() ==> matches<this::TShapeOfVecAndDicts>($coercable))
-        ->toThrow(IncorrectTypeException::class);
-    }
     expect(TypeCoerce\match<this::TShapeOfVecAndDicts>($coercable))
       ->toBeSame($valid);
     expect(() ==> TypeCoerce\match<this::TShapeOfVecAndDicts>('hello'))

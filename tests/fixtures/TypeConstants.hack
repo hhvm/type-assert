@@ -18,8 +18,8 @@ final class TypeConstants {
   const type TNum = num;
   const type TArrayKey = arraykey;
   const type TTuple = (string, int);
-  const type TStringVArray = varray<string>;
-  const type TStringStringDArray = darray<string, string>;
+  const type TStringVec = vec<string>;
+  const type TStringStringDict = dict<string, string>;
 
   const type TNullableString = ?string;
 
@@ -60,9 +60,6 @@ final class TypeConstants {
 
   const type TIntVec = vec<int>;
   const type TIntVecVec = vec<vec<int>>;
-  const type TStringStringDict = dict<string, string>;
   const type TStringStringVecDict = dict<string, vec<string>>;
   const type TStringKeyset = keyset<string>;
-
-  const type TVArrayOrDArray = varray_or_darray<int>;
 }
